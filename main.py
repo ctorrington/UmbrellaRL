@@ -57,4 +57,4 @@ class ThousandStateRandomWalk:
                 }
 
             # Policy.
-            
+            # Random policy - choose action during episode.
