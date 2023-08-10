@@ -58,3 +58,9 @@ class ThousandStateRandomWalk:
 
             # Policy.
             # Random policy - choose action during episode.
+
+    
+
+if __name__ == "__main__":
+    I_WILL_WALK_1K = ThousandStateRandomWalk()
+    
