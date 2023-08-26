@@ -2,9 +2,11 @@
 Constants.
 """
 
+from enum import Enum
+
 class Constants:
 
-    class ACTIONS:
+    class ACTIONS(Enum):
         LEFT = "LEFT"
         RIGHT = "RIGHT"
 

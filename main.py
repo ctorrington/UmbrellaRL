@@ -17,6 +17,7 @@ All other transitions have a reward of 0.
 import math
 
 from constants import Constants
+from random_walk import RandomWalk
 
 # Constants
 ACTIONS = Constants.ACTIONS
@@ -26,6 +27,8 @@ class ThousandStateRandomWalk:
 
     def __init__(self) -> None:
         """Initialse the environment."""
+
+        self.number_of_episodes = 1000
 
         # State space values.
         self.number_of_states = 1000
@@ -51,7 +54,7 @@ class ThousandStateRandomWalk:
             }
 
             # Actions for each state.
-            for action in ACTIONS:
+            for action in ACTIONS.as_tuple():
                 self.state_space[state]["actions"][action] = {
                     "value": 0,
                     "cumulative weight": 0,
@@ -66,7 +69,13 @@ class ThousandStateRandomWalk:
         self.current_block = math.floor(self.current_state /
                                         self.states_per_block)
         
-    def 
+    def generate_random_walk(self) -> None:
+        """Creates the random walk with the given parameters."""
+
+        RandomWalk(self.number_of_episodes,
+                   self.number_of_states,
+                   self.state_space)
 
 if __name__ == "__main__":
     I_WILL_WALK_1K = ThousandStateRandomWalk()
+    I_WILL_WALK_1K.generate_random_walk()
