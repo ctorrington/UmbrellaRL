@@ -31,9 +31,10 @@ class RandomWalk:
     def generate_episode(self):
         """Single episode for the random walk."""
 
-        print(self.make_action())
+        action = self.make_action()
+        next_state = self.determine_next_state(action)
+        reward = self.state_space
 
-    
     def make_action(self) -> ACTIONS:
         """Take an action according to the policy."""
 
@@ -48,3 +49,16 @@ class RandomWalk:
 
         # This is here to pacify the linter.
         return random.choice(ACTIONS.as_tuple())
+    
+    def determine_next_state(self, action: ACTIONS) -> int:
+        """Determine which state is next based on the action chosen."""
+
+        # Left action was chosen.
+        if action == ACTIONS.LEFT:
+            next_state = random.choice(range(0, self.current_state - 1))
+        # Right action was chosen.
+        else:
+            next_state = random.choice(range(self.current_state + 1,
+                                             self.number_of_states))
+
+        return next_state

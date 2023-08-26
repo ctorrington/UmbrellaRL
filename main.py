@@ -44,13 +44,14 @@ class ThousandStateRandomWalk:
         
         # State space set up.
         self.state_space = {}
-        for state in range(self.number_of_states):
+        for state in range(0, self.number_of_states - 1):
             # Properties for each state.
             self.state_space[state] = {
                 "actions": {},
                 "policy": {},
                 "estimated return": 0,
                 "state entries": 0,
+                "reward": 0
             }
 
             # Actions for each state.
@@ -63,6 +64,10 @@ class ThousandStateRandomWalk:
             # Policy.
             # Random policy.
             self.state_space[state]["policy"] = "random"
+
+        # Terminal rewards.
+        self.state_space[0]["reward"] = -1
+        self.state_space[self.number_of_states - 1] = 1
 
     def set_current_block(self) -> None:
         """Updates the current block that the agent is currently in."""
