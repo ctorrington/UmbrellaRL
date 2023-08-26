@@ -65,6 +65,9 @@ class ThousandStateRandomWalk:
             # Random policy.
             self.state_space[state]["policy"] = "random"
 
+        # Terminal states.
+        self.terminal_states = [0, self.number_of_states - 1]
+
         # Terminal rewards.
         self.state_space[0]["reward"] = -1
         self.state_space[self.number_of_states - 1] = 1
@@ -80,7 +83,8 @@ class ThousandStateRandomWalk:
         RandomWalk(self.number_of_episodes,
                    self.number_of_states,
                    self.state_space,
-                   self.current_state)
+                   self.terminal_states,
+                   self.current_state,)
 
 if __name__ == "__main__":
     I_WILL_WALK_1K = ThousandStateRandomWalk()
