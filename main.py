@@ -74,7 +74,8 @@ class ThousandStateRandomWalk:
 
         RandomWalk(self.number_of_episodes,
                    self.number_of_states,
-                   self.state_space)
+                   self.state_space,
+                   self.current_state)
 
 if __name__ == "__main__":
     I_WILL_WALK_1K = ThousandStateRandomWalk()
