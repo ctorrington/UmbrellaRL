@@ -14,9 +14,9 @@ Termination on the right produces a reward of +1.
 All other transitions have a reward of 0.
 """
 
-from constants import Constants
-
 import math
+
+from constants import Constants
 
 # Constants
 ACTIONS = Constants.ACTIONS
@@ -36,12 +36,13 @@ class ThousandStateRandomWalk:
         self.starting_state = math.floor(self.number_of_states / 2)
         self.current_state = self.starting_state
 
-        self.current_block = math.floor(self.current_state / (self.states_per_block))
+        self.current_block = math.floor(self.current_state /
+                                         self.states_per_block)
         
         # State space set up.
         self.state_space = {}
         for state in range(self.number_of_states):
-            # Values for each state.
+            # Properties for each state.
             self.state_space[state] = {
                 "actions": {},
                 "policy": {},
@@ -59,6 +60,11 @@ class ThousandStateRandomWalk:
             # Policy.
             # Random policy.
             self.state_space[state]["policy"] = "random"
+
+    def set_current_block(self) -> None:
+        """Updates the current block that the agent is currently in."""
+        self.current_block = math.floor(self.current_state /
+                                        self.states_per_block)
 
 if __name__ == "__main__":
     I_WILL_WALK_1K = ThousandStateRandomWalk()
