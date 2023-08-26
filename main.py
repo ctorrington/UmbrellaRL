@@ -65,6 +65,8 @@ class ThousandStateRandomWalk:
         """Updates the current block that the agent is currently in."""
         self.current_block = math.floor(self.current_state /
                                         self.states_per_block)
+        
+    def 
 
 if __name__ == "__main__":
     I_WILL_WALK_1K = ThousandStateRandomWalk()
