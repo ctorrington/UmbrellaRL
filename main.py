@@ -28,7 +28,7 @@ class ThousandStateRandomWalk:
     def __init__(self) -> None:
         """Initialse the environment."""
 
-        self.number_of_episodes = 1000
+        # self.number_of_episodes = 1000
         self.number_of_episodes = 1
 
         # State space values.

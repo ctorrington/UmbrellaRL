@@ -32,7 +32,8 @@ class RandomWalk:
         # Generate the random walk.
         for episode_number in range(self.number_of_episodes):
             episode = self.generate_episode()
-            self.display_episode(episode)
+            # self.display_episode(episode)
+            self.display_episode_stats(episode)
 
     def generate_episode(self) -> list:
         """Single episode for the random walk."""
@@ -148,6 +149,15 @@ class RandomWalk:
         The state space is aggregated for this exercise."""
 
         return math.floor(self.current_state / self.states_per_block)
+    
+    def get_block_for_state(self, state: int) -> int:
+        """Return the block for a given state.
+        
+        This is necessary for different aggregation sizes."""
+        # I don't know if it is better to just set an optional parameter for
+        # get_current_block().
+
+        return math.floor(state / self.states_per_block)
 
     def get_current_block_range(self, current_block: int) -> range:
         """Return the range of states for the given block of states.
@@ -172,3 +182,60 @@ class RandomWalk:
             counter += 1
 
             input()
+
+    def display_episode_stats(self, episode: list[dict]) -> None:
+        """Display the stats for the generated episode."""
+
+        action_taken_tracker = {}
+        states_visited_tracker = {}
+        blocks_visited_tracker = {}
+        episode_length_tracker = {}
+        episode_length_counter = 0
+        terminal_state = None
+
+        for timestep in episode:
+            # Actions taken tracker.
+            if timestep["action"] not in action_taken_tracker:
+                action_taken_tracker[timestep["action"]] = 1
+            else:
+                action_taken_tracker[timestep["action"]] += 1
+
+            # States visited tracker.
+            if timestep["state"] not in states_visited_tracker:
+                states_visited_tracker[timestep["state"]] = 1
+            else:
+                states_visited_tracker[timestep["state"]] += 1
+
+            # Blocks visited tracker.
+            block = self.get_block_for_state(timestep["state"])
+            if block not in blocks_visited_tracker:
+                blocks_visited_tracker[block] = 1
+            else:
+                blocks_visited_tracker[block] += 1
+
+            # Terminal state.
+            if timestep["next state"] in self.terminal_states:
+                terminal_state = timestep["next state"]
+
+
+            episode_length_counter += 1
+
+        # Episode length tracker.
+        if episode_length_counter not in episode_length_tracker:
+            episode_length_tracker[episode_length_counter] = 1
+        else:
+            episode_length_tracker[episode_length_counter] += 1
+
+        print(f"Number of episodes generated: {self.number_of_episodes}.")
+        print(f"Maximum episode length: ")
+        print(f"Minimum episode length: ")
+        print(f"Average episode length: ")
+        print(f"Number of {ACTIONS.LEFT} actions taken: {action_taken_tracker[ACTIONS.LEFT]}.")
+        print(f"Number of {ACTIONS.RIGHT} actions taken: {action_taken_tracker[ACTIONS.RIGHT]}.")
+        # print(f"State visited | Number of times visted.")
+        # for state in states_visited_tracker:
+            # print(f"{state} | {states_visited_tracker[state]}")
+        print(f"Block visited | Number of times visted.")
+        for block in blocks_visited_tracker:
+            print(f"{block} | {blocks_visited_tracker[block]}")
+        print(f"Episode terminated in state: {terminal_state}.")
