@@ -24,10 +24,6 @@ class RandomWalk:
         self.terminal_states = terminal_states
         self.states_per_block = states_per_block
         self.current_state = current_state
-        # self.estimated_value = 0
-        # self.alpha = 0.00002
-        # self.dimensionality = 1000
-        # self.weights = [0 for i in range(self.dimensionality)]
 
         # Generate the random walk.
         for episode_number in range(self.number_of_episodes):
