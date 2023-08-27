@@ -32,13 +32,13 @@ class RandomWalk:
         # Generate the random walk.
         for episode_number in range(self.number_of_episodes):
             episode = self.generate_episode()
-            print(episode)
+            self.display_episode(episode)
 
     def generate_episode(self) -> list:
         """Single episode for the random walk."""
 
         episode = []
-        
+
         while self.current_state not in self.terminal_states:
 
             timestep = {}
@@ -46,12 +46,13 @@ class RandomWalk:
             action = self.make_action()
             next_state = self.determine_next_state(action)
             reward = self.state_space
-            self.current_state = next_state
 
             timestep["state"] = self.current_state
             timestep["action"] = action
             timestep["next state"] = next_state
             timestep["reward"] = self.state_space[next_state]
+
+            self.current_state = next_state
 
             episode.append(timestep)
 
@@ -74,6 +75,8 @@ class RandomWalk:
     
     def determine_next_state(self, action: ACTIONS) -> int:
         """Determine which state is next based on the action chosen."""
+
+        # TODO ERROR: Start state 500 went to next state of 700
 
         current_block = self.get_current_block()
 
@@ -134,7 +137,7 @@ class RandomWalk:
                     self.get_current_block_range(current_block)
                 )
                 if next_state < self.current_state:
-                    next_state = self.number_of_states
+                    next_state = self.number_of_states - 1
                 elif next_state == self.current_state:
                     # The agent has to move.
                     self.determine_next_state(action)
@@ -157,3 +160,17 @@ class RandomWalk:
 
         return range(current_block_start,
                      current_block_start + self.states_per_block + 1)
+
+    def display_episode(self, episode: list[dict]) -> None:
+        """Display the generated episode."""
+
+        counter = 0
+        for timestamp in episode:
+            print(f"Timestep: {counter}")
+            print(f"State: {timestamp['state']}")
+            print(f"Action: {timestamp['action']}")
+            print(f"Next State: {timestamp['next state']}\n")
+
+            counter += 1
+
+            input()
