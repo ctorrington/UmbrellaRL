@@ -34,10 +34,7 @@ class RandomWalk:
             episode = self.generate_episode()
             print(episode)
 
-            input()
-
-
-    def generate_episode(self):
+    def generate_episode(self) -> list:
         """Single episode for the random walk."""
 
         episode = []
@@ -57,6 +54,8 @@ class RandomWalk:
             timestep["reward"] = self.state_space[next_state]
 
             episode.append(timestep)
+
+        return episode
         
     def make_action(self) -> ACTIONS:
         """Take an action according to the policy."""
@@ -76,15 +75,69 @@ class RandomWalk:
     def determine_next_state(self, action: ACTIONS) -> int:
         """Determine which state is next based on the action chosen."""
 
+        current_block = self.get_current_block()
+
         # Left action was chosen.
         if action == ACTIONS.LEFT:
-            # TODO only move one state (block) left (or right).
-            # choose a state randomly within that one.
-            next_state = random.choice(range(0, self.current_state - 1))
+            # Check if possible to move left.
+            if current_block > 0:
+                # Possible to move left.
+
+                # Move left.
+                current_block -= 1
+                # Choice a state within the new aggregated block.
+                # All states within the new block are chosen with equal
+                # probability.
+                next_state = random.choice(
+                    self.get_current_block_range(current_block)
+                )
+            else:
+                # Not possible to move left. Already in the left most block.
+                # The number of states less than the number of states per block
+                # add to the probability of the terminal state.
+
+                # To include the probabilities of the missing states into the
+                # probability of selecting the terminal state I include all
+                # states in the current block & select a next state from an
+                # equally random distribution. This way any state still to the
+                # left is chosen fairly, but if any state to the right is
+                # chosen - it is taken as the terminal state.
+                next_state = random.choice(
+                    self.get_current_block_range(current_block)
+                )
+                if next_state > self.current_state:
+                    next_state = 0
+                elif next_state == self.current_state:
+                    # The agent has to move
+                    self.determine_next_state(action)
+                    # TODO I would rather come straight be to next_state,
+                    # rather than restarting the entire function
+
         # Right action was chosen.
         else:
-            next_state = random.choice(range(self.current_state + 1,
-                                             self.number_of_states))
+            # Check if it is possible to move right.
+            if current_block < math.floor(self.number_of_states /
+                                          self.states_per_block) - 1:
+                # Possible to move right.
+                current_block += 1
+                next_state = random.choice(
+                    self.get_current_block_range(current_block)
+                )
+
+            else:
+                # Not possible to move right.
+                # Pick a state with from the states remaining in the last block
+                # to the right of the current state; adding the states missing
+                # to the probability of terminating in the last state (same as
+                # the process for the left action).
+                next_state = random.choice(
+                    self.get_current_block_range(current_block)
+                )
+                if next_state < self.current_state:
+                    next_state = self.number_of_states
+                elif next_state == self.current_state:
+                    # The agent has to move.
+                    self.determine_next_state(action)
 
         return next_state
 
@@ -94,3 +147,13 @@ class RandomWalk:
         The state space is aggregated for this exercise."""
 
         return math.floor(self.current_state / self.states_per_block)
+
+    def get_current_block_range(self, current_block: int) -> range:
+        """Return the range of states for the given block of states.
+        
+        This is for the state aggregation."""
+
+        current_block_start = current_block * self.states_per_block
+
+        return range(current_block_start,
+                     current_block_start + self.states_per_block + 1)
