@@ -45,7 +45,7 @@ class ThousandStateRandomWalk:
 
         # State space set up.
         self.state_space = {}
-        for state in range(0, self.number_of_states - 1):
+        for state in range(0, self.number_of_states):
             # Properties for each state.
             self.state_space[state] = {
                 "actions": {},
