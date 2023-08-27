@@ -76,8 +76,6 @@ class RandomWalk:
     def determine_next_state(self, action: ACTIONS) -> int:
         """Determine which state is next based on the action chosen."""
 
-        # TODO ERROR: Start state 500 went to next state of 700
-
         current_block = self.get_current_block()
 
         # Left action was chosen.
@@ -159,7 +157,7 @@ class RandomWalk:
         current_block_start = current_block * self.states_per_block
 
         return range(current_block_start,
-                     current_block_start + self.states_per_block + 1)
+                     current_block_start + self.states_per_block - 1)
 
     def display_episode(self, episode: list[dict]) -> None:
         """Display the generated episode."""
