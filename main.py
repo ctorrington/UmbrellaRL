@@ -33,7 +33,7 @@ class ThousandStateRandomWalk:
         # State space values.
         self.number_of_states = 1000
         self.number_of_aggregated_states = 10
-        self.states_per_block = (
+        self.states_per_block = math.floor(
             self.number_of_states / self.number_of_aggregated_states
         )
         self.starting_state = math.floor(self.number_of_states / 2)
@@ -84,6 +84,7 @@ class ThousandStateRandomWalk:
                    self.number_of_states,
                    self.state_space,
                    self.terminal_states,
+                   self.states_per_block,
                    self.current_state,)
 
 if __name__ == "__main__":

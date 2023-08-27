@@ -3,6 +3,7 @@ Random walk configuration.
 """
 
 import random
+import math
 
 from constants import Constants
 
@@ -14,12 +15,14 @@ class RandomWalk:
                  number_of_states: int,
                  state_space: dict[int, dict],
                  terminal_states: list[int],
+                 states_per_block: int,
                  current_state: int) -> None:
         
         self.number_of_episodes = number_of_episodes
         self.number_of_states = number_of_states
         self.state_space = state_space
         self.terminal_states = terminal_states
+        self.states_per_block = states_per_block
         self.current_state = current_state
         # self.estimated_value = 0
         # self.alpha = 0.00002
@@ -75,6 +78,8 @@ class RandomWalk:
 
         # Left action was chosen.
         if action == ACTIONS.LEFT:
+            # TODO only move one state (block) left (or right).
+            # choose a state randomly within that one.
             next_state = random.choice(range(0, self.current_state - 1))
         # Right action was chosen.
         else:
@@ -82,3 +87,10 @@ class RandomWalk:
                                              self.number_of_states))
 
         return next_state
+
+    def get_current_block(self) -> int:
+        """Returns the current block the agent is in.
+        
+        The state space is aggregated for this exercise."""
+
+        return math.floor(self.current_state / self.states_per_block)
