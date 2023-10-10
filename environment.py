@@ -95,4 +95,12 @@ class Environment:
                 return [state - 1]
             case ACTIONS.RIGHT:
                 return [state + 1]
+            
+    def get_state_transition_probability(self, state: int,
+                                         action: ACTIONS,
+                                         next_state: int) -> float | int:
+        """Return the probability of transitioning from a given state to another
+        state with a given action."""
+        
+        return 1
     
