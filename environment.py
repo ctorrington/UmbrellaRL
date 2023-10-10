@@ -53,3 +53,8 @@ class Environment:
         self.current_block = math.floor(
             self.current_block / self.states_per_block
         )
+        
+    def get_terminal_states(self) -> list[int]:
+        """Return the terminal states of the state space."""
+        
+        return self.terminal_states
