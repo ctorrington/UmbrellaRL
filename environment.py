@@ -74,3 +74,8 @@ class Environment:
         
         return self.state_space[state]["estimated return"]
     
+    def get_possible_actions(self, state: int) -> list[ACTIONS]:
+        """Return a list of the actions possible from the given state."""
+        
+        return self.state_space[state]["actions"]
+    
