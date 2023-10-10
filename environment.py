@@ -47,3 +47,9 @@ class Environment:
         # Terminal states rewards.
         self.state_space[0]["reward"] = -1
         self.state_space[self.number_of_states - 1]["reward"] = 1
+        
+    def set_current_block(self) -> None:
+        """Update the current block that the agent is in."""
+        self.current_block = math.floor(
+            self.current_block / self.states_per_block
+        )
