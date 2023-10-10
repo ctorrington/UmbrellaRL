@@ -104,3 +104,8 @@ class Environment:
         
         return 1
     
+    def get_state_reward(self, state: int) -> int | float:
+        """Return the reward for the given state."""
+        
+        return self.state_space[state]["reward"]
+    
