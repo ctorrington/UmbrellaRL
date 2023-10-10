@@ -58,3 +58,8 @@ class Environment:
         """Return the terminal states of the state space."""
         
         return self.terminal_states
+    
+    def get_state_space(self) -> dict[str, list | int]:
+        """Return the state space."""
+        
+        return self.state_space
