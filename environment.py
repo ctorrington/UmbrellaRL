@@ -41,4 +41,5 @@ class Environment:
             for action in ACTIONS.as_tuple():
                 self.state_space[state]["actions"].append(action)
                 
-            
+        # Terminal states.
+        self.terminal_states = [0, self.number_of_states - 1]
