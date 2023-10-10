@@ -31,10 +31,14 @@ class Environment:
         for state in range(self.number_of_states):
             # State properties.
             self.state_space[state] = {
-                "actions": {},
+                "actions": [],
                 "policy": {},
                 "estimated return": 0,
                 "state entries": 0,
                 "reward": 0,
             }
+            
+            # State actions.
+            for action in ACTIONS.as_tuple():
+                self.state_space[state]["actions"].append(action)
             
