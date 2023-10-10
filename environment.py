@@ -54,6 +54,11 @@ class Environment:
             self.current_block / self.states_per_block
         )
         
+    def set_state_return(self, state: int, value: int | float) -> None:
+        """Set the expected return for a state."""
+        
+        self.state_space[state]["estimated return"] = value
+        
     def get_terminal_states(self) -> list[int]:
         """Return the terminal states of the state space."""
         
