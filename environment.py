@@ -109,3 +109,7 @@ class Environment:
         
         return self.state_space[state]["reward"]
     
+    def get_state_return(self, state: int) -> int | float:
+        """Return the expected return for the given state."""
+        
+        return self.state_space[state]["estimated return"]
