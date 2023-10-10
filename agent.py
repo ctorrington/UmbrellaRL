@@ -8,9 +8,22 @@ ACTIONS = Constants.ACTIONS
 class Agent:
     """RL Agent."""
     
-    def __init__(self) -> None:
-        self.environment = Environment
+    def __init__(self, environment) -> None:
+        self.environment = environment
         self.policy = "random"
         self.gamma = 0.9
         self.theta = 0.001
         self.history: list[Environment] = []
+
+    def determine_value_function_over_state_space(self) -> None:
+        """Determine the value of all states across the state space."""
+        
+        pass
+    
+    def set_state_value(self, state) -> None:
+        """
+        Update the estimated return for the given state.
+        This method uses the state value function.
+        """
+        pass
+        
