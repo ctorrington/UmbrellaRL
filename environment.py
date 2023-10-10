@@ -79,3 +79,20 @@ class Environment:
         
         return self.state_space[state]["actions"]
     
+    def get_next_states(self, state: int, action: ACTIONS) -> list[int]:
+        """
+        Return the next states from the from the current state by following
+        the given action.
+        
+        This returns a list for some future proofing (trying to get some best
+        practises in). There is a chance for multiple states from a single
+        action.
+        """
+
+        match action:
+            # Left action.
+            case ACTIONS.LEFT:
+                return [state - 1]
+            case ACTIONS.RIGHT:
+                return [state + 1]
+    
