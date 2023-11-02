@@ -6,6 +6,7 @@ then the state space should be injected into the environment.
 """
 
 from State import State
+from Services.StateSpaceService import StateSpaceService
 
 class StateSpace(dict[int, State]):
     """Environmnet State Space dependency."""
@@ -20,8 +21,7 @@ class StateSpace(dict[int, State]):
             self[state].is_terminal = True
             
         # Terminal state rewards.
-        self[0].reward = -1
-        self[number_of_states - 1].reward = 1
+        StateSpaceService.set_rewards(self, terminal_states_rewards)
         
     def __getattr__(self, key):
         if key in self:

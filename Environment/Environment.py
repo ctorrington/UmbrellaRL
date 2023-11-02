@@ -2,7 +2,6 @@
 
 import math
 from constants import Constants
-from State import State
 from StateSpace import StateSpace
 
 ACTIONS = Constants.ACTIONS
@@ -32,13 +31,4 @@ class Environment:
         # Environment state space.
         self.state_space: StateSpace = StateSpace(number_of_states,
                                                   terminal_state_rewards)
-        self.state_space[0].reward = 0
     
-    def get_next_states(self, state: int, action: ACTIONS) -> list[int]:
-        """Return the next states from the current state."""
-        
-        match action:
-            case ACTIONS.LEFT:
-                return [state - 1]
-            case ACTIONS.RIGHT:
-                return [state - 1]
