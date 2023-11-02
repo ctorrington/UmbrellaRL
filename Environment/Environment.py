@@ -1,15 +1,18 @@
 """Environment."""
 
 import math
-import constants
+from constants import Constants
+from State import State
 
-ACTIONS = constants.Constants.ACTIONS
+ACTIONS = Constants.ACTIONS
 
 class Environment:
-    def __init__(self, number_of_states: int) -> None:
+    def __init__(self, number_of_episodes: int) -> None:
         """Environment."""
         
-        self.number_of_episodes: int = number_of_states
+        # TODO BRING IN THE STATESPACE WITH DI.
+        
+        self.number_of_episodes: int = number_of_episodes
         
         # Environment properties.
         self.number_of_states: int = 1000
@@ -24,17 +27,10 @@ class Environment:
         )
         
         # Environment state space.
-        self.state_space = {}
+        self.state_space: dict[int, State] = {}
         for state in range(self.number_of_states):
-            # State properties.
-            self.state_space[state] = {
-                "actions": [],
-                "estimated return": 0,
-                "state entries": 0,
-                "reward": 0
-            }
-            
-            # State actions.
+            self.state_space[state] = State()
+        
             for action in ACTIONS.as_tuple():
                 self.state_space[state]["actions"].append(action)
                 
