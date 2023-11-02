@@ -24,7 +24,7 @@ class Environment:
         )
         
         # Environment state space.
-        self.state_space: dict[int, dict[str, list[ACTIONS] | int]] = {}
+        self.state_space = {}
         for state in range(self.number_of_states):
             # State properties.
             self.state_space[state] = {
@@ -33,3 +33,11 @@ class Environment:
                 "state entries": 0,
                 "reward": 0
             }
+            
+            # State actions.
+            for action in ACTIONS.as_tuple():
+                self.state_space[state]["actions"].append(action)
+                
+        # Terminal states.
+        self.state_space[0]["reward"] = -1
+        self.state_space[self.number_of_states - 1]["reward"] = 1
