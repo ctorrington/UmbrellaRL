@@ -56,14 +56,14 @@ class Agent:
         This method uses the state value function.
         """
         
-        state_return = self.environment.get_state_return(state)
+        # state_return = self.environment.get_state_return(state)
         possible_actions = self.environment.get_possible_actions(state)
         action_probability_distribution = self.get_action_probability_distribution(state)
         
         expected_return = 0
         
         # Loop for every possible action in the state.
-        for action in self.environment.get_possible_actions(state):
+        for action in possible_actions:
             action_probability = action_probability_distribution[action]
             possible_next_states = self.environment.get_next_states(state, action)
             
@@ -76,7 +76,8 @@ class Agent:
                 action_reward = next_state_probability * (next_state_reward + (self.gamma * next_state_return))
                 expected_return += action_probability * action_reward
                 
-        state_value = expected_return
+        # state_value = expected_return
         
-        return state_value
+        # return state_value
+        return expected_return
         
