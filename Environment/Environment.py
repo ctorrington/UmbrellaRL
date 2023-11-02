@@ -27,7 +27,7 @@ class Environment:
         )
         
         # Environment state space.
-        self.state_space: dict[int, State] = {}
+        self.pace: dict[int, State] = {}
         for state in range(self.number_of_states):
             self.state_space[state] = State()
         
@@ -38,3 +38,11 @@ class Environment:
         self.state_space[0].reward = -1
         self.state_space[self.number_of_states - 1].reward = 1
         
+    def get_next_states(self, state: int, action: ACTIONS) -> list[int]:
+        """Return the next states from the current state."""
+        
+        match action:
+            case ACTIONS.LEFT:
+                return [state - 1]
+            case ACTIONS.RIGHT:
+                return [state - 1]
