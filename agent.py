@@ -49,6 +49,14 @@ class Agent:
                 if state not in self.environment.get_terminal_states():
                     previous_state_return = self.environment.get_state_return(state)
                     self.environment.set_state_return(state, self.determine_state_value(state))
+                    state_return_difference = abs(
+                        previous_state_return - self.environment.get_state_return(state)
+                    )
+                    delta = max(delta, state_return_difference)
+                    
+            # Check for convergence (accuracy of the value function).
+            if delta < self.theta:
+                break
             
     def determine_state_value(self, state: int) -> int | float:
         """
