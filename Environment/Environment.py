@@ -31,13 +31,10 @@ class Environment:
         for state in range(self.number_of_states):
             self.state_space[state] = State()
         
-            for action in ACTIONS.as_tuple():
-                self.state_space[state]["actions"].append(action)
-                
         # Terminal states.
         self.terminal_states: list[int] = [0, self.number_of_states - 1]
         
         # Terminal states rewards.
-        self.state_space[0]["reward"] = -1
-        self.state_space[self.number_of_states - 1]["reward"] = 1
+        self.state_space[0].reward = -1
+        self.state_space[self.number_of_states - 1].reward = 1
         
