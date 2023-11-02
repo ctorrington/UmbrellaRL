@@ -3,16 +3,13 @@
 import math
 from constants import Constants
 from State import State
+from StateSpace import StateSpace
 
 ACTIONS = Constants.ACTIONS
 
 class Environment:
-    def __init__(self, number_of_episodes: int) -> None:
+    def __init__(self, number_of_states: int) -> None:
         """Environment."""
-        
-        # TODO BRING IN THE STATESPACE WITH DI.
-        
-        self.number_of_episodes: int = number_of_episodes
         
         # Environment properties.
         self.number_of_states: int = 1000
@@ -26,18 +23,16 @@ class Environment:
             self.current_state / self.states_per_block
         )
         
+       # Terminal states & rewards.
+        terminal_state_rewards: dict[int, int] = {
+           0: -1,
+           number_of_states: 1,
+       } 
+        
         # Environment state space.
-        self.pace: dict[int, State] = {}
-        for state in range(self.number_of_states):
-            self.state_space[state] = State()
-        
-        # Terminal states.
-        self.terminal_states: list[int] = [0, self.number_of_states - 1]
-        
-        # Terminal states rewards.
-        self.state_space[0].reward = -1
-        self.state_space[self.number_of_states - 1].reward = 1
-        
+        self.state_space: StateSpace = StateSpace(number_of_states,
+                                                  terminal_state_rewards)
+    
     def get_next_states(self, state: int, action: ACTIONS) -> list[int]:
         """Return the next states from the current state."""
         
