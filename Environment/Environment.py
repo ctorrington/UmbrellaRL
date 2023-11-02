@@ -32,6 +32,7 @@ class Environment:
         # Environment state space.
         self.state_space: StateSpace = StateSpace(number_of_states,
                                                   terminal_state_rewards)
+        self.state_space[0].reward = 0
     
     def get_next_states(self, state: int, action: ACTIONS) -> list[int]:
         """Return the next states from the current state."""

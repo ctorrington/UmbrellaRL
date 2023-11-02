@@ -7,7 +7,7 @@ then the state space should be injected into the environment.
 
 from State import State
 
-class StateSpace(dict):
+class StateSpace(dict[int, State]):
     """Environmnet State Space dependency."""
     
     def __init__(self, number_of_states: int,
