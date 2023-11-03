@@ -12,7 +12,8 @@ class StateSpace(dict[int, State]):
     """Environmnet State Space dependency."""
     
     def __init__(self, number_of_states: int,
-                 terminal_states_rewards: dict[int, int]) -> None:
+                 terminal_states_rewards: dict[int, int],
+                 state_space_service: StateSpaceService) -> None:
         for state in range(number_of_states):
             self[state] = State()
             
@@ -21,13 +22,18 @@ class StateSpace(dict[int, State]):
             self[state].is_terminal = True
             
         # Terminal state rewards.
-        StateSpaceService.set_rewards(self, terminal_states_rewards)
+        state_space_service.set_rewards(self, terminal_states_rewards)
         
-    def __getattr__(self, key):
+    def __getattr__(self, key: int):
         if key in self:
             return self[key]
         else:
             raise AttributeError(f"'StateSpace' object has not attribute '{key}'")
  
-    def __setattr__(self, key, value):
-        self[key] = value
+    # def __setattr__(self, key: str, value: State):
+    #     self[key] = value
+
+
+state_space = StateSpace(10, {}, StateSpaceService())
+
+print(state_space)

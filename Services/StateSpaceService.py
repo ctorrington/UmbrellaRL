@@ -1,12 +1,11 @@
 """State Space service."""
 
-from StateSpace import StateSpace
+import StateSpace
 
 class StateSpaceService:
     """Service class for the StateSpace."""
     
-    @classmethod
-    def set_rewards(cls, state_space: StateSpace,
+    def set_rewards(self, state_space: StateSpace.StateSpace,
                     rewards: dict[int, int]) -> None:
         """Set the rewards for the State Space."""
         
