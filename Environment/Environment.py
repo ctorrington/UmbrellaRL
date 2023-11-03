@@ -40,3 +40,7 @@ class Environment:
                                                 )
         
         self.environment_service: EnvironmentService = environment_service
+        
+    def get_next_states(self, current_state: int,
+                        action: ACTIONS) -> list[int]:
+        return self.environment_service.get_next_states(current_state, action)
