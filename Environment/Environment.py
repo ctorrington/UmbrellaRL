@@ -3,12 +3,14 @@
 import math
 from constants import Constants
 from StateSpace import StateSpace
+from Services.EnvironmentService import EnvironmentService
 # from Services.StateSpaceService import StateSpaceService
 
 ACTIONS = Constants.ACTIONS
 
 class Environment:
-    def __init__(self, number_of_states: int) -> None:
+    def __init__(self, number_of_states: int,
+                 environment_service: EnvironmentService) -> None:
         """Environment."""
         
         # Environment properties.
@@ -29,9 +31,12 @@ class Environment:
            number_of_states: 1,
        } 
         
+        # Dependencies.
+        
         # Environment state space.
         self.state_space: StateSpace = StateSpace(number_of_states,
                                                   terminal_state_rewards,
                                                 #   StateSpaceService()
                                                 )
-    
+        
+        self.environment_service: EnvironmentService = environment_service

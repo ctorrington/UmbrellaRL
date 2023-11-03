@@ -40,8 +40,3 @@ class StateSpace(dict[int, State]):
         
         for state in rewards:
             self[state].reward = rewards[state]
-
-
-state_space = StateSpace(10, {0: -1})
-
-print(state_space[0].reward)
