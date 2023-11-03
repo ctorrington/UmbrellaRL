@@ -3,7 +3,7 @@
 import math
 from constants import Constants
 from StateSpace import StateSpace
-from Services.StateSpaceService import StateSpaceService
+# from Services.StateSpaceService import StateSpaceService
 
 ACTIONS = Constants.ACTIONS
 
@@ -32,5 +32,6 @@ class Environment:
         # Environment state space.
         self.state_space: StateSpace = StateSpace(number_of_states,
                                                   terminal_state_rewards,
-                                                  StateSpaceService())
+                                                #   StateSpaceService()
+                                                )
     

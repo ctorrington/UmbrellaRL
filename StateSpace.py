@@ -6,14 +6,15 @@ then the state space should be injected into the environment.
 """
 
 from State import State
-from Services.StateSpaceService import StateSpaceService
+# from Services.StateSpaceService import StateSpaceService
 
 class StateSpace(dict[int, State]):
     """Environmnet State Space dependency."""
     
     def __init__(self, number_of_states: int,
                  terminal_states_rewards: dict[int, int],
-                 state_space_service: StateSpaceService) -> None:
+                #  state_space_service: StateSpaceService
+                ) -> None:
         for state in range(number_of_states):
             self[state] = State()
             
@@ -22,7 +23,8 @@ class StateSpace(dict[int, State]):
             self[state].is_terminal = True
             
         # Terminal state rewards.
-        state_space_service.set_rewards(self, terminal_states_rewards)
+        # state_space_service.set_rewards(self, terminal_states_rewards)
+        self.set_rewards(terminal_states_rewards)
         
     def __getattr__(self, key: int):
         if key in self:
@@ -32,8 +34,14 @@ class StateSpace(dict[int, State]):
  
     # def __setattr__(self, key: str, value: State):
     #     self[key] = value
+    
+    def set_rewards(self, rewards: dict[int, int]) -> None:
+        """Set the rewards fro the State Space."""
+        
+        for state in rewards:
+            self[state].reward = rewards[state]
 
 
-state_space = StateSpace(10, {}, StateSpaceService())
+state_space = StateSpace(10, {0: -1})
 
-print(state_space)
+print(state_space[0].reward)
