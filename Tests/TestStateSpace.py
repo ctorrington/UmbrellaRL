@@ -27,5 +27,3 @@ class TestStateSpace(unittest.TestCase):
             else:
                 self.assertTrue(state_space[state].is_terminal)
                 self.assertEqual(state_space[state].reward, terminal_states_rewards[state])
-                
-        
