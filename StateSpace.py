@@ -35,8 +35,12 @@ class StateSpace(dict[int, State]):
     # def __setattr__(self, key: str, value: State):
     #     self[key] = value
     
+    # TODO StateSpaceService.
     def set_rewards(self, rewards: dict[int, int]) -> None:
         """Set the rewards fro the State Space."""
         
         for state in rewards:
             self[state].reward = rewards[state]
+            
+    # TODO StateSpaceService.
+    def set_next_states(self)
