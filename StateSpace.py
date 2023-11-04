@@ -35,9 +35,6 @@ class StateSpace(dict[int, State]):
         else:
             raise AttributeError(f"'StateSpace' object has not attribute '{key}'")
  
-    # def __setattr__(self, key: str, value: State):
-    #     self[key] = value
-    
     # TODO StateSpaceService.
     def set_rewards(self, rewards: dict[int, int]) -> None:
         """Set the rewards fro the State Space."""
