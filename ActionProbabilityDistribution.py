@@ -8,7 +8,7 @@ from StateSpace import StateSpace
 
 ACTIONS = Constants.ACTIONS
 
-class ActionProbability(dict[int, dict[ACTIONS, float]]):
+class ActionProbabilityDistribution(dict[int, dict[ACTIONS, float]]):
     """
     Class for representing the action probability distribution for reinforcement
     learning agents.
