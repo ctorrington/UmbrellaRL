@@ -10,12 +10,13 @@ ACTIONS = Constants.ACTIONS
 
 class Environment:
     def __init__(self, number_of_states: int,
+                 number_of_aggregated_states: int,
                  environment_service: EnvironmentService) -> None:
         """Environment."""
         
         # Environment properties.
-        self.number_of_states: int = 1000
-        self.number_of_aggregated_states: int = 10
+        self.number_of_states: int = number_of_states
+        self.number_of_aggregated_states: int = number_of_aggregated_states
         self.states_per_block: int = math.floor(
             self.number_of_states / self.number_of_aggregated_states
         )
