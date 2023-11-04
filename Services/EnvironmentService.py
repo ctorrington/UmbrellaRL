@@ -13,7 +13,7 @@ class EnvironmentService:
         
         
     def get_next_states(self, current_state: int,
-                        action: ACTIONS) -> list[int]
+                        action: ACTIONS) -> list[int]:
         """Return the next states from the current state following an action."""
         
         match action:
