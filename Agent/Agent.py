@@ -3,13 +3,16 @@
 from ActionProbability import ActionProbability
 from StateSpace import StateSpace
 from State import State
+from Environment.Environment import Environment
 
 class Agent:
     """RL Agent."""
     
-    def __init__(self):
+    def __init__(self, environment: Environment):
         number_of_states = 1000
         state_rewards = {0: -1, number_of_states - 1: 1}
+        
+        self.environment = environment
         
         self.state_space: StateSpace = StateSpace(
             number_of_states,
