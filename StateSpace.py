@@ -26,7 +26,7 @@ class StateSpace(dict[int, State]):
             self[state].is_terminal = True
             
         # Terminal state rewards.
-        # state_space_service.set_rewards(self, terminal_states_rewards)
+        # TODO StateSpaceService.
         self.set_rewards(terminal_states_rewards)
         
     def __getattr__(self, key: int):
