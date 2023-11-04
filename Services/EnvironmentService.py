@@ -11,7 +11,6 @@ class EnvironmentService:
     def __init__(self, state_space: StateSpace) -> None:
         self.state_space = state_space
         
-        
     def get_next_states(self, current_state: int,
                         action: ACTIONS) -> list[int]:
         """Return the next states from the current state following an action."""
@@ -24,7 +23,7 @@ class EnvironmentService:
             
     def get_state_transition_probability(self, current_state_index: int,
                                          action: ACTIONS,
-                                         next_state_index: int):
+                                         next_state_index: int) -> float:
         """
         Return the probability of transitioning from one state to another
         given an action.
