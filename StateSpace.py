@@ -12,6 +12,7 @@ from constants import Constants
 ACTIONS = Constants.ACTIONS
 
 class StateSpace(dict[int, State]):
+    # TODO Seperation of concerns.
     """Environmnet State Space dependency."""
     
     def __init__(self, number_of_states: int,
