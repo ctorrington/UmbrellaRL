@@ -11,7 +11,8 @@ class TestStateSpace(unittest.TestCase):
         terminal_states_rewards: dict[int, int] = {0: -1, number_of_states - 1: 1}
         
         state_space = StateSpace(number_of_states,
-                                 terminal_states_rewards)
+                                 terminal_states_rewards,
+                                 state_class = State)
         
         # Check correct amountof states are created.
         self.assertEqual(len(state_space), number_of_states)

@@ -2,6 +2,7 @@
 
 from ActionProbability import ActionProbability
 from StateSpace import StateSpace
+from State import State
 
 class Agent:
     """RL Agent."""
@@ -12,7 +13,8 @@ class Agent:
         
         self.state_space: StateSpace = StateSpace(
             number_of_states,
-            state_rewards
+            state_rewards,
+            state_class = State
         )
         self.action_probability: ActionProbability = ActionProbability(
             self.state_space

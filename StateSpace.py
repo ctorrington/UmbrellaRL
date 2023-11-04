@@ -9,6 +9,8 @@ from State import State
 from constants import Constants
 # from Services.StateSpaceService import StateSpaceService
 
+from typing import Type
+
 ACTIONS = Constants.ACTIONS
 
 class StateSpace(dict[int, State]):
@@ -18,9 +20,10 @@ class StateSpace(dict[int, State]):
     def __init__(self, number_of_states: int,
                  terminal_states_rewards: dict[int, int],
                 #  state_space_service: StateSpaceService
+                state_class: Type[State] = State
                 ) -> None:
         for state in range(number_of_states):
-            self[state] = State()
+            self[state] = state_class()
 
         # Terminal states.
         for state in terminal_states_rewards:
