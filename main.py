@@ -14,21 +14,11 @@ Termination on the right produces a reward of +1.
 All other transitions have a reward of 0.
 """
 
-from agent import Agent
+from Agent.Agent import Agent
 
-    def generate_random_walk(self) -> None:
-        """Creates the random walk with the given parameters."""
-
-        RandomWalk(self.number_of_episodes,
-                   self.number_of_states,
-                   self.state_space,
-                   self.terminal_states,
-                   self.states_per_block,
-                   self.current_state,)
+def main() -> None:
+    agent = Agent()
+    agent.learn()
 
 if __name__ == "__main__":
-    
-    agent = Agent()
-    
-    I_WILL_WALK_1K = ThousandStateRandomWalk()
-    I_WILL_WALK_1K.generate_random_walk()
+    main()
