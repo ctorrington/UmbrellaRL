@@ -8,7 +8,7 @@ class Agent:
     
     def __init__(self):
         number_of_states = 1000
-        state_rewards = {0: -1, number_of_states: 1}
+        state_rewards = {0: -1, number_of_states - 1: 1}
         
         self.state_space: StateSpace = StateSpace(
             number_of_states,
