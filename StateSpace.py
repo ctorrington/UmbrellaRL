@@ -14,22 +14,22 @@ ACTIONS = Constants.ACTIONS
 class StateSpace(dict[int, State]):
     # TODO Seperation of concerns.
     """Environmnet State Space dependency."""
-    
+
     def __init__(self, number_of_states: int,
                  terminal_states_rewards: dict[int, int],
                 #  state_space_service: StateSpaceService
                 ) -> None:
         for state in range(number_of_states):
             self[state] = State()
-            
+
         # Terminal states.
         for state in terminal_states_rewards:
             self[state].is_terminal = True
-            
+
         # Terminal state rewards.
         # TODO StateSpaceService.
         self.set_rewards(terminal_states_rewards)
-        
+
     def __getattr__(self, key: int):
         if key in self:
             return self[key]
@@ -42,4 +42,3 @@ class StateSpace(dict[int, State]):
         
         for state in rewards:
             self[state].reward = rewards[state]
-            
