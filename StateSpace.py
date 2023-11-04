@@ -6,7 +6,10 @@ then the state space should be injected into the environment.
 """
 
 from State import State
+from constants import Constants
 # from Services.StateSpaceService import StateSpaceService
+
+ACTIONS = Constants.ACTIONS
 
 class StateSpace(dict[int, State]):
     """Environmnet State Space dependency."""
@@ -42,5 +45,3 @@ class StateSpace(dict[int, State]):
         for state in rewards:
             self[state].reward = rewards[state]
             
-    # TODO StateSpaceService.
-    def set_next_states(self)
