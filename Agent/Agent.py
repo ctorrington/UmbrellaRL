@@ -5,6 +5,9 @@ from ActionProbabilityDistribution import ActionProbabilityDistribution
 from StateSpace import StateSpace
 from Environment.Environment import Environment
 from Policy.BasePolicy import BasePolicy
+from constants import Constants
+
+ACTIONS = Constants.ACTIONS
 
 class Agent:
     """RL Agent."""
@@ -52,3 +55,7 @@ class Agent:
         Calcualte the value of the given state following the given policy
         in the given environment.
         """
+        
+        for action in ACTIONS.as_tuple():
+            
+            action_probability: float = self.policy
