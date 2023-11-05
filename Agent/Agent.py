@@ -30,4 +30,8 @@ class Agent:
         self.evaluate_policy()
         
     def evaluate_policy(self) -> None:
-        pass
+        """
+        Evaluate the policy.
+        
+        Determine the state-value function for the policy.
+        """
