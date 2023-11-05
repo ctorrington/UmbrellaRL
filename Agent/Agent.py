@@ -4,12 +4,14 @@
 from ActionProbabilityDistribution import ActionProbabilityDistribution
 from StateSpace import StateSpace
 from Environment.Environment import Environment
+from Policy.BasePolicy import BasePolicy
 
 class Agent:
     """RL Agent."""
     
     def __init__(self, environment: Environment,
                  state_space: StateSpace,
+                 policy: BasePolicy,
                  action_probability_distribution: ActionProbabilityDistribution):
         
         # Dependencies. 
