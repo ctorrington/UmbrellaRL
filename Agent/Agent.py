@@ -20,6 +20,8 @@ class Agent:
         self.state_space: StateSpace = state_space
         
         self.action_probability_distribution: ActionProbabilityDistribution = action_probability_distribution
+        
+        self.policy: BasePolicy = policy
     
     def learn(self):
         self.interact_with_environment()
