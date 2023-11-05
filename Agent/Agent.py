@@ -14,6 +14,8 @@ class Agent:
                  policy: BasePolicy,
                  action_probability_distribution: ActionProbabilityDistribution):
         
+        self.theta: float = 0.01
+        
         # Dependencies. 
         self.environment: Environment = environment
         
@@ -34,4 +36,19 @@ class Agent:
         Evaluate the policy.
         
         Determine the state-value function for the policy.
+        """
+        
+        while True:
+            delta = 0
+            
+            for state in self.state_space:
+                
+                current_value = self.state_space[state].estimated_return
+                
+                updated_value = self.calculate_value()
+                
+    def calcualte_value(self) -> float:
+        """
+        Calcualte the value of the given state following the given policy
+        in the given environment.
         """
