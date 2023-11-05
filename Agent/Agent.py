@@ -1,27 +1,23 @@
 """RL Agent."""
 
-from ActionProbability import ActionProbability
+# Dependencies.
+from ActionProbabilityDistribution import ActionProbabilityDistribution
 from StateSpace import StateSpace
-from State import State
 from Environment.Environment import Environment
 
 class Agent:
     """RL Agent."""
     
-    def __init__(self, environment: Environment):
-        number_of_states = 1000
-        state_rewards = {0: -1, number_of_states - 1: 1}
+    def __init__(self, environment: Environment,
+                 state_space: StateSpace,
+                 action_probability_distribution: ActionProbabilityDistribution):
         
-        self.environment = environment
+        # Dependencies. 
+        self.environment: Environment = environment
         
-        self.state_space: StateSpace = StateSpace(
-            number_of_states,
-            state_rewards,
-            state_class = State
-        )
-        self.action_probability: ActionProbability = ActionProbability(
-            self.state_space
-        )
+        self.state_space: StateSpace = state_space
+        
+        self.action_probability_distribution: ActionProbabilityDistribution = action_probability_distribution
     
     def learn(self):
         self.interact_with_environment()
