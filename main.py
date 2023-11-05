@@ -35,6 +35,7 @@ def main() -> None:
     
     environment: Environment = Environment(number_of_states,
                                            number_of_aggregated_states,
+                                           state_space,
                                            environment_service)
     
     action_probability_distribution: ActionProbabilityDistribution = ActionProbabilityDistribution(state_space)
