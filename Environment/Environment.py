@@ -11,6 +11,7 @@ ACTIONS = Constants.ACTIONS
 class Environment:
     def __init__(self, number_of_states: int,
                  number_of_aggregated_states: int,
+                 state_space: StateSpace,
                  environment_service: EnvironmentService) -> None:
         """Environment."""
         
@@ -27,18 +28,19 @@ class Environment:
         )
         
        # Terminal states & rewards.
-        terminal_state_rewards: dict[int, int] = {
-           0: -1,
-           number_of_states: 1,
-       } 
+    #     terminal_state_rewards: dict[int, int] = {
+    #        0: -1,
+    #        number_of_states: 1,
+    #    } 
         
         # Dependencies.
         
         # Environment state space.
-        self.state_space: StateSpace = StateSpace(number_of_states,
-                                                  terminal_state_rewards,
-                                                #   StateSpaceService()
-                                                )
+        self.state_space: StateSpace = state_space
+        # self.state_space: StateSpace = StateSpace(number_of_states,
+        #                                           terminal_state_rewards,
+        #                                         #   StateSpaceService()
+        #                                         )
         
         self.environment_service: EnvironmentService = environment_service
         
