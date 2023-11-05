@@ -15,9 +15,33 @@ All other transitions have a reward of 0.
 """
 
 from Agent.Agent import Agent
+from Environment.Environment import Environment
+from Services.EnvironmentService import EnvironmentService
+from StateSpace import StateSpace
+from State import State
+from ActionProbabilityDistribution import ActionProbabilityDistribution
 
 def main() -> None:
-    agent = Agent()
+    
+    number_of_states: int = 1000
+    number_of_aggregated_states: int = 100
+    terminal_states_rewards: dict[int, int] = {0: -1, number_of_states - 1: 1}
+    
+    state_space: StateSpace = StateSpace(number_of_states,
+                                         terminal_states_rewards,
+                                         state_class = State)
+    
+    environment_service: EnvironmentService = EnvironmentService(state_space)
+    
+    environment: Environment = Environment(number_of_states,
+                                           number_of_aggregated_states,
+                                           environment_service)
+    
+    action_probability_distribution: ActionProbabilityDistribution = ActionProbabilityDistribution(state_space)
+    
+    agent = Agent(environment,
+                  state_space,
+                  action_probability_distribution)
     agent.learn()
 
 if __name__ == "__main__":
