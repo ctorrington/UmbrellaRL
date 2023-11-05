@@ -16,7 +16,7 @@ class GridWorldStateSpace(StateSpace[Tuple[int, int], GridWorldAction]):
                 ) -> None:
         
         # TODO will probably have some config file for these terminal states. 
-        terminal_states: List[Tuple[int, int]] = [(number_of_rows - 1, number_of_columns - 1)]
+        terminal_states: List[Tuple[int, int]] = [(0, 0), (number_of_rows - 1, number_of_columns - 1)]
         
         self.number_of_rows = number_of_rows
         
