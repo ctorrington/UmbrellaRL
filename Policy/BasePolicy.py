@@ -5,15 +5,14 @@ learning agent.
 
 from abc import ABC, abstractmethod
 
-from ActionProbabilityDistribution import ActionProbabilityDistribution
+from ActionProbabilityDistribution import ActionProbabilityDistribution2
 from constants import Constants
 
 ACTIONS = Constants.ACTIONS
 
-class BasePolicy(ABC):
+class BasePolicy(ABC, dict[int, ActionProbabilityDistribution2]):
     @abstractmethod
-    def choose_action(self, state: int,
-                      action_probability_distribution: ActionProbabilityDistribution) -> ACTIONS:
+    def choose_action(self, state: int) -> ACTIONS:
         """
         Abstracted method to be implemented by Policy subclasses.
         
@@ -22,3 +21,4 @@ class BasePolicy(ABC):
         """
         
         pass
+    

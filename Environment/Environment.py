@@ -27,20 +27,8 @@ class Environment:
             self.current_state / self.states_per_block
         )
         
-       # Terminal states & rewards.
-    #     terminal_state_rewards: dict[int, int] = {
-    #        0: -1,
-    #        number_of_states: 1,
-    #    } 
-        
         # Dependencies.
-        
-        # Environment state space.
         self.state_space: StateSpace = state_space
-        # self.state_space: StateSpace = StateSpace(number_of_states,
-        #                                           terminal_state_rewards,
-        #                                         #   StateSpaceService()
-        #                                         )
         
         self.environment_service: EnvironmentService = environment_service
         

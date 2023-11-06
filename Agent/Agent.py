@@ -29,9 +29,6 @@ class Agent:
         self.policy: BasePolicy = policy
     
     def learn(self):
-        self.interact_with_environment()
-        
-    def interact_with_environment(self) -> None:
         self.evaluate_policy()
         
     def evaluate_policy(self) -> None:
@@ -46,11 +43,11 @@ class Agent:
             
             for state in self.state_space:
                 
-                current_value = self.state_space[state].estimated_return
+                current_state_value: float = self.state_space[state].estimated_return
                 
-                updated_value = self.calculate_value()
+                updated_state_value: float = self.calculate_state_value()
                 
-    def calcualte_value(self) -> float:
+    def calcualte_state_value(self) -> float:
         """
         Calcualte the value of the given state following the given policy
         in the given environment.
