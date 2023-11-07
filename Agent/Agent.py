@@ -49,6 +49,8 @@ class Agent:
                 
                 updated_state_value: float = self.calculate_state_value(state)
                 
+                self.assign_new_state_value(state, updated_state_value)
+                
     def calculate_state_value(self,
                               state: int
                              ) -> float:
@@ -85,3 +87,8 @@ class Agent:
                 new_state_value += action_probability * next_state_probability * (next_state_reward + (self.gamma * next_state_value))
                 
         return new_state_value
+    
+    def assign_new_state_value(self,
+                               state: int,
+                               value: float
+                              ) -> None:
