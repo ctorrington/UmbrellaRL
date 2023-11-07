@@ -3,7 +3,6 @@ Policy class used for managing action selection for a reinforcement
 learning agent.
 """
 
-from typing import Type
 import random
 
 from ActionProbabilityDistribution import ActionProbabilityDistribution
