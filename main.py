@@ -28,25 +28,33 @@ def main() -> None:
     number_of_aggregated_states: int = 100
     terminal_states_rewards: dict[int, int] = {0: -1, number_of_states - 1: 1}
     
-    state_space: StateSpace = StateSpace(number_of_states,
-                                         terminal_states_rewards,
-                                         state_class = State)
+    state_space: StateSpace = StateSpace(
+        number_of_states,
+        terminal_states_rewards,
+        state_class = State
+        )
     
-    environment_service: EnvironmentService = EnvironmentService(state_space)
+    environment_service: EnvironmentService = EnvironmentService(
+        state_space
+        )
     
-    environment: Environment = Environment(number_of_states,
-                                           number_of_aggregated_states,
-                                           state_space,
-                                           environment_service)
+    environment: Environment = Environment(
+        number_of_states,
+        number_of_aggregated_states,
+        state_space,
+        environment_service
+        )
     
-    action_probability_distribution: ActionProbabilityDistribution = ActionProbabilityDistribution(state_space)
+    policy: EquiprobablePolicy = EquiprobablePolicy(
+        number_of_states,
+        action_probability_class = ActionProbabilityDistribution
+        )
     
-    policy: EquiprobablePolicy = EquiprobablePolicy(action_probability_distribution)
-    
-    agent = Agent(environment,
-                  state_space,
-                  policy,
-                  action_probability_distribution)
+    agent = Agent(
+        environment,
+        state_space,
+        policy
+        )
     agent.learn()
 
 if __name__ == "__main__":
