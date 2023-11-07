@@ -22,25 +22,25 @@ from State import State
 from Policy.EquiprobablePolicy import EquiprobablePolicy
 
 def main() -> None:
-    
+
     number_of_states: int = 10
     terminal_states_rewards: dict[int, int] = {0: -1, number_of_states - 1: 1}
-    
+
     state_space: StateSpace = StateSpace(
         number_of_states,
         terminal_states_rewards,
         state_class = State
         )
-    
+
     environment_service: EnvironmentService = EnvironmentService(
         state_space
         )
-    
+
     environment: Environment = Environment(
         state_space,
         environment_service
         )
-    
+
     policy: EquiprobablePolicy = EquiprobablePolicy(
         state_space,
         )
