@@ -1,4 +1,4 @@
-"""Grid World allowable actions."""
+"""Grid World actions."""
 
 from Action import Action
 
