@@ -7,10 +7,8 @@ from abc import ABC, abstractmethod
 from typing import Type
 
 from ActionProbabilityDistribution import ActionProbabilityDistribution
-from constants import Constants
 from StateSpace import StateSpace
-
-ACTIONS = Constants.ACTIONS
+from Action import Action
 
 class BasePolicy(ABC, dict[int, ActionProbabilityDistribution]):
     def __init__(self,
@@ -21,7 +19,7 @@ class BasePolicy(ABC, dict[int, ActionProbabilityDistribution]):
             self[state] = action_probability_distribution_class({})
     
     @abstractmethod
-    def choose_action(self, state: int) -> ACTIONS:
+    def choose_action(self, state: int) -> Action:
         """
         Abstracted method to be implemented by Policy subclasses.
 

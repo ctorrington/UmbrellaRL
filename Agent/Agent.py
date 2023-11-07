@@ -5,9 +5,6 @@ from ActionProbabilityDistribution import ActionProbabilityDistribution
 from StateSpace import StateSpace
 from Environment.Environment import Environment
 from Policy.BasePolicy import BasePolicy
-from constants import Constants
-
-ACTIONS = Constants.ACTIONS
 
 class Agent:
     """RL Agent."""

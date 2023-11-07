@@ -6,14 +6,11 @@ then the state space should be injected into the environment.
 """
 
 from State import State
-from constants import Constants
 
 from typing import Type
-
-ACTIONS = Constants.ACTIONS
+from Action import Action
 
 class StateSpace(dict[int, State]):
-    # TODO Seperation of concerns.
     """Environmnet State Space dependency."""
 
     def __init__(self,
@@ -58,8 +55,8 @@ class StateSpace(dict[int, State]):
                 
                 # Check if the State can move right.
                 if state < len(self) - 1:
-                    self[state].actions.append(ACTIONS.RIGHT)
+                    self[state].actions.append(Action.right)
                 
                 # Check if the State can move left.
                 if state > 0:
-                    self[state].actions.append(ACTIONS.RIGHT)
+                    self[state].actions.append(Action.left)

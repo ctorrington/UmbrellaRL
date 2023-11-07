@@ -1,10 +1,8 @@
 """Environment."""
 
-from constants import Constants
 from StateSpace import StateSpace
 from Services.EnvironmentService import EnvironmentService
-
-ACTIONS = Constants.ACTIONS
+from Action import Action
 
 class Environment:
     def __init__(self,
@@ -23,13 +21,13 @@ class Environment:
         
     def get_next_states(self,
                         current_state: int,
-                        action: ACTIONS
+                        action: Action
                        ) -> list[int]:
         return self.environment_service.get_next_states(current_state, action)
     
     def get_state_transition_probability(self,
                                          current_state_index: int,
-                                         action: ACTIONS,
+                                         action: Action,
                                          next_state_index: int
                                         ) -> float:
         """

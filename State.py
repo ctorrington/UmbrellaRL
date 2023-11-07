@@ -1,14 +1,12 @@
 """State."""
 
-from constants import Constants
-
-ACTIONS = Constants.ACTIONS
+from Action import Action
 
 class State:
     """States representation."""
     
     def __init__(self):
-        self.actions: list[ACTIONS] = []
+        self.actions: list[Action] = []
         self.estimated_return: float = 0
         self.counter: int = 0
         self.reward: int = 0

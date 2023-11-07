@@ -3,11 +3,9 @@ Class for representing the action probability distribution for reinforcement
 learning agents.
 """
 
-from constants import Constants
+from Action import Action
 
-ACTIONS = Constants.ACTIONS
-
-class ActionProbabilityDistribution(dict[ACTIONS, float]):
+class ActionProbabilityDistribution(dict[Action, float]):
     """
     Class for representing the action probability distribution of each state.
     
@@ -15,7 +13,7 @@ class ActionProbabilityDistribution(dict[ACTIONS, float]):
     """
     
     def __init__(self,
-                 action_probability_distribution: dict[ACTIONS, float]
+                 action_probability_distribution: dict[Action, float]
                 ):
         self = action_probability_distribution
         
