@@ -19,7 +19,7 @@ class Agent:
                 ):
         
         self.theta: float = 0.01
-        self.gamma: float = 0.9
+        self.gamma: float = 0.9999
         
         # Dependencies. 
         self.environment: Environment = environment
@@ -49,7 +49,7 @@ class Agent:
                 
                 self.assign_new_state_estimated_return(state, updated_state_value)
                 
-                delta = max(delta, (old_state_value - updated_state_value))
+                delta = max(delta, (abs(old_state_value - updated_state_value)))
                 
             if delta < self.theta:
                 break
