@@ -8,19 +8,20 @@ import random
 from ActionProbabilityDistribution import ActionProbabilityDistribution
 from Policy.BasePolicy import BasePolicy
 from constants import Constants
+from StateSpace import StateSpace
 
 ACTIONS = Constants.ACTIONS
 
 class EquiprobablePolicy(BasePolicy):
     def __init__(self,
-                 number_of_states: int
+                 state_space: StateSpace
                 ) -> None:
-        super().__init__(number_of_states)
+        super().__init__(state_space)
         
         action_probability: float = 1/ len(ACTIONS.as_tuple())
         
-        for state in range(number_of_states):
-            for action in ACTIONS.as_tuple():
+        for state in state_space:
+            for action in state_space[state].actions:
                 self[state][action] = action_probability
             
     def choose_action(self, state: int) -> ACTIONS:

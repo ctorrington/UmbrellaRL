@@ -45,7 +45,7 @@ def main() -> None:
         )
     
     policy: EquiprobablePolicy = EquiprobablePolicy(
-        number_of_states,
+        state_space,
         )
     
     agent = Agent(

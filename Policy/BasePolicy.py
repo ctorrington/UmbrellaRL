@@ -8,15 +8,16 @@ from typing import Type
 
 from ActionProbabilityDistribution import ActionProbabilityDistribution
 from constants import Constants
+from StateSpace import StateSpace
 
 ACTIONS = Constants.ACTIONS
 
 class BasePolicy(ABC, dict[int, ActionProbabilityDistribution]):
     def __init__(self,
-                 number_of_states: int,
+                 state_space: StateSpace,
                  action_probability_distribution_class: Type[ActionProbabilityDistribution] = ActionProbabilityDistribution
                 ) -> None:
-        for state in range(number_of_states):
+        for state in state_space:
             self[state] = action_probability_distribution_class({})
     
     @abstractmethod
