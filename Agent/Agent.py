@@ -85,5 +85,3 @@ class Agent:
                 new_state_value += action_probability * next_state_probability * (next_state_reward + (self.gamma * next_state_value))
                 
         return new_state_value
-                
-                
