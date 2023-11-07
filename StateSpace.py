@@ -7,7 +7,6 @@ then the state space should be injected into the environment.
 
 from State import State
 from constants import Constants
-# from Services.StateSpaceService import StateSpaceService
 
 from typing import Type
 
@@ -17,7 +16,8 @@ class StateSpace(dict[int, State]):
     # TODO Seperation of concerns.
     """Environmnet State Space dependency."""
 
-    def __init__(self, number_of_states: int,
+    def __init__(self,
+                 number_of_states: int,
                  terminal_states_rewards: dict[int, int],
                 #  state_space_service: StateSpaceService
                 state_class: Type[State] = State
