@@ -1,6 +1,5 @@
 """Environment."""
 
-import math
 from constants import Constants
 from StateSpace import StateSpace
 from Services.EnvironmentService import EnvironmentService
@@ -9,24 +8,13 @@ ACTIONS = Constants.ACTIONS
 
 class Environment:
     def __init__(self,
-                 number_of_states: int,
-                 number_of_aggregated_states: int,
                  state_space: StateSpace,
                  environment_service: EnvironmentService
                 ) -> None:
         """Environment."""
         
         # Environment properties.
-        self.number_of_states: int = number_of_states
-        self.number_of_aggregated_states: int = number_of_aggregated_states
-        self.states_per_block: int = math.floor(
-            self.number_of_states / self.number_of_aggregated_states
-        )
-        self.starting_state: int = math.floor(self.number_of_states / 2)
-        self.current_state: int = self.starting_state
-        self.current_block: int = math.floor(
-            self.current_state / self.states_per_block
-        )
+        self.number_of_states: int = len(state_space)
         
         # Dependencies.
         self.state_space: StateSpace = state_space
