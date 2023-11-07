@@ -19,7 +19,6 @@ from Environment.Environment import Environment
 from Services.EnvironmentService import EnvironmentService
 from StateSpace import StateSpace
 from State import State
-from ActionProbabilityDistribution import ActionProbabilityDistribution
 from Policy.EquiprobablePolicy import EquiprobablePolicy
 
 def main() -> None:
@@ -47,7 +46,6 @@ def main() -> None:
     
     policy: EquiprobablePolicy = EquiprobablePolicy(
         number_of_states,
-        action_probability_class = ActionProbabilityDistribution
         )
     
     agent = Agent(
@@ -56,6 +54,6 @@ def main() -> None:
         policy
         )
     agent.learn()
-
+    
 if __name__ == "__main__":
     main()
