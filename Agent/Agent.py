@@ -26,8 +26,6 @@ class Agent:
         
         self.state_space: StateSpace = state_space
         
-        self.action_probability_distribution: ActionProbabilityDistribution = action_probability_distribution
-        
         self.policy: BasePolicy = policy
     
     def learn(self):
@@ -45,11 +43,16 @@ class Agent:
             
             for state in self.state_space:
                 
-                current_state_value: float = self.state_space[state].estimated_return
+                old_state_value: float = self.state_space[state].estimated_return
                 
                 updated_state_value: float = self.calculate_state_value(state)
                 
-                self.assign_new_state_value(state, updated_state_value)
+                self.assign_new_state_estimated_return(state, updated_state_value)
+                
+                delta = max(delta, (old_state_value - updated_state_value))
+                
+            if delta < self.theta:
+                break
                 
     def calculate_state_value(self,
                               state: int
@@ -88,7 +91,10 @@ class Agent:
                 
         return new_state_value
     
-    def assign_new_state_value(self,
+    def assign_new_state_estimated_return(self,
                                state: int,
                                value: float
                               ) -> None:
+        """Assign the new estimated return (value) to the given state."""
+        
+        self.state_space[state].estimated_return = value
