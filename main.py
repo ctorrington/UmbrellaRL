@@ -24,7 +24,6 @@ from Policy.EquiprobablePolicy import EquiprobablePolicy
 def main() -> None:
     
     number_of_states: int = 10
-    number_of_aggregated_states: int = 100
     terminal_states_rewards: dict[int, int] = {0: -1, number_of_states - 1: 1}
     
     state_space: StateSpace = StateSpace(
@@ -38,7 +37,6 @@ def main() -> None:
         )
     
     environment: Environment = Environment(
-        number_of_aggregated_states,
         state_space,
         environment_service
         )
