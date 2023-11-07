@@ -22,10 +22,10 @@ class StateSpace(dict[int, State]):
             self[state] = state_class()
 
         # Terminal states & their rewards.
-        # TODO StateSpaceService. 
+        # TODO StateSpaceService.
         self.set_terminal_states_rewards(terminal_states_rewards)
         
-        # TODO StateSpaceService. 
+        # TODO StateSpaceService.
         self.set_actions()
 
     def __getattr__(self, key: int):
@@ -36,7 +36,7 @@ class StateSpace(dict[int, State]):
  
     # TODO StateSpaceService.
     def set_terminal_states_rewards(self, terminal_state_rewards: dict[int, int]) -> None:
-        """Set the rewards fro the State Space."""
+        """Set the rewards & terminal properties for the terminal States."""
         
         for state in terminal_state_rewards:
             self[state].reward = terminal_state_rewards[state]
