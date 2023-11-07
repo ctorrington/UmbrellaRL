@@ -18,8 +18,7 @@ from Agent.Agent import Agent
 from Environment.Environment import Environment
 from Services.EnvironmentService import EnvironmentService
 from StateSpace import StateSpace
-from State import State
-from Policy.EquiprobablePolicy import EquiprobablePolicy
+from Policy.EquiprobablePolicy import BasePolicy, EquiprobablePolicy
 
 def main() -> None:
 
@@ -29,7 +28,6 @@ def main() -> None:
     state_space: StateSpace = StateSpace(
         number_of_states,
         terminal_states_rewards,
-        state_class = State
         )
 
     environment_service: EnvironmentService = EnvironmentService(
@@ -41,7 +39,7 @@ def main() -> None:
         environment_service
         )
 
-    policy: EquiprobablePolicy = EquiprobablePolicy(
+    policy: BasePolicy = EquiprobablePolicy(
         state_space,
         )
     
