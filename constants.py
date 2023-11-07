@@ -1,15 +1,15 @@
-"""
-Constants.
-"""
+# """
+# Constants.
+# """
 
-from enum import Enum
+# from enum import Enum
 
-class Constants:
+# class Constants:
 
-    class ACTIONS(Enum):
-        LEFT = "LEFT"
-        RIGHT = "RIGHT"
+#     class ACTIONS(Enum):
+#         LEFT = "LEFT"
+#         RIGHT = "RIGHT"
 
-        @staticmethod
-        def as_tuple():
-            return Constants.ACTIONS.LEFT, Constants.ACTIONS.RIGHT
+#         @staticmethod
+#         def as_tuple():
+#             return Constants.ACTIONS.LEFT, Constants.ACTIONS.RIGHT
