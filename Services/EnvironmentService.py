@@ -1,9 +1,7 @@
 """Environment Service."""
 
 from StateSpace import StateSpace
-from constants import Constants
-
-ACTIONS = Constants.ACTIONS
+from Action import Action
 
 class EnvironmentService:
     """Environment Service."""
@@ -13,19 +11,19 @@ class EnvironmentService:
         
     def get_next_states(self,
                         current_state: int,
-                        action: ACTIONS
+                        action: Action
                        ) -> list[int]:
         """Return the next states from the current state following an action."""
         
         match action:
-            case ACTIONS.LEFT:
+            case Action.left:
                 return [current_state - 1]
-            case ACTIONS.RIGHT:
+            case Action.right:
                 return [current_state + 1]
             
     def get_state_transition_probability(self,
                                          current_state_index: int,
-                                         action: ACTIONS,
+                                         action: Action,
                                          next_state_index: int
                                         ) -> float:
         """
