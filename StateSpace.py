@@ -16,21 +16,16 @@ class StateSpace(dict[int, State]):
     def __init__(self,
                  number_of_states: int,
                  terminal_states_rewards: dict[int, int],
-                #  state_space_service: StateSpaceService
-                state_class: Type[State] = State
+                 state_class: Type[State] = State
                 ) -> None:
         for state in range(number_of_states):
             self[state] = state_class()
 
-        # Terminal states.
-        for state in terminal_states_rewards:
-            self[state].is_terminal = True
-
-        # Terminal state rewards.
-        # TODO StateSpaceService.
-        self.set_rewards(terminal_states_rewards)
+        # Terminal states & their rewards.
+        # TODO StateSpaceService. 
+        self.set_terminal_states_rewards(terminal_states_rewards)
         
-        # TODO StateSpaceService.
+        # TODO StateSpaceService. 
         self.set_actions()
 
     def __getattr__(self, key: int):
@@ -40,12 +35,14 @@ class StateSpace(dict[int, State]):
             raise AttributeError(f"'StateSpace' object has not attribute '{key}'")
  
     # TODO StateSpaceService.
-    def set_rewards(self, rewards: dict[int, int]) -> None:
+    def set_terminal_states_rewards(self, terminal_state_rewards: dict[int, int]) -> None:
         """Set the rewards fro the State Space."""
         
-        for state in rewards:
-            self[state].reward = rewards[state]
-            
+        for state in terminal_state_rewards:
+            self[state].reward = terminal_state_rewards[state]
+            self[state].is_terminal = True
+
+    # TODO StateSpaceService.
     def set_actions(self) -> None:
         """Set the possible actions for each State in the State Space."""
         
