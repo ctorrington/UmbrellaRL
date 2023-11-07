@@ -9,10 +9,12 @@ from Services.EnvironmentService import EnvironmentService
 ACTIONS = Constants.ACTIONS
 
 class Environment:
-    def __init__(self, number_of_states: int,
+    def __init__(self,
+                 number_of_states: int,
                  number_of_aggregated_states: int,
                  state_space: StateSpace,
-                 environment_service: EnvironmentService) -> None:
+                 environment_service: EnvironmentService
+                ) -> None:
         """Environment."""
         
         # Environment properties.
@@ -32,13 +34,17 @@ class Environment:
         
         self.environment_service: EnvironmentService = environment_service
         
-    def get_next_states(self, current_state: int,
-                        action: ACTIONS) -> list[int]:
+    def get_next_states(self,
+                        current_state: int,
+                        action: ACTIONS
+                       ) -> list[int]:
         return self.environment_service.get_next_states(current_state, action)
     
-    def get_state_transition_probability(self, current_state_index: int,
+    def get_state_transition_probability(self,
+                                         current_state_index: int,
                                          action: ACTIONS,
-                                         next_state_index: int) -> float:
+                                         next_state_index: int
+                                        ) -> float:
         """
         Return the probability of transitioning from one state to another
         given an action.
