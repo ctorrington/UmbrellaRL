@@ -49,7 +49,7 @@ class Agent:
                 
                 updated_state_value: float = self.calculate_state_value(state)
                 
-    def calcualte_state_value(self,
+    def calculate_state_value(self,
                               state: int
                              ) -> float:
         """
