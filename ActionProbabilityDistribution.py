@@ -14,7 +14,8 @@ class ActionProbabilityDistribution(dict[ACTIONS, float]):
     Intended to be used within the Policy class.
     """
     
-    def __init__(self):
-        for action in ACTIONS.as_tuple():
-            self[action] = 1/ len(ACTIONS.as_tuple())
-            
+    def __init__(self,
+                 action_probability_distribution: dict[ACTIONS, float]
+                ):
+        self = action_probability_distribution
+        
