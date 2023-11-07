@@ -32,6 +32,9 @@ class StateSpace(dict[int, State]):
         # Terminal state rewards.
         # TODO StateSpaceService.
         self.set_rewards(terminal_states_rewards)
+        
+        # TODO StateSpaceService.
+        self.set_actions()
 
     def __getattr__(self, key: int):
         if key in self:
@@ -45,3 +48,18 @@ class StateSpace(dict[int, State]):
         
         for state in rewards:
             self[state].reward = rewards[state]
+            
+    def set_actions(self) -> None:
+        """Set the possible actions for each State in the State Space."""
+        
+        for state in self:
+            # Check if State is terminal. (Terminal States will have no actions).
+            if not self[state].is_terminal:
+                
+                # Check if the State can move right.
+                if state < len(self) - 1:
+                    self[state].actions.append(ACTIONS.RIGHT)
+                
+                # Check if the State can move left.
+                if state > 0:
+                    self[state].actions.append(ACTIONS.RIGHT)
