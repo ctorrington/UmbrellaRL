@@ -12,10 +12,11 @@ ACTIONS = Constants.ACTIONS
 class Agent:
     """RL Agent."""
     
-    def __init__(self, environment: Environment,
+    def __init__(self,
+                 environment: Environment,
                  state_space: StateSpace,
                  policy: BasePolicy,
-                 action_probability_distribution: ActionProbabilityDistribution):
+                ):
         
         self.theta: float = 0.01
         
