@@ -19,6 +19,7 @@ class Agent:
                 ):
         
         self.theta: float = 0.01
+        self.gamma: float = 0.9
         
         # Dependencies. 
         self.environment: Environment = environment
@@ -46,14 +47,43 @@ class Agent:
                 
                 current_state_value: float = self.state_space[state].estimated_return
                 
-                updated_state_value: float = self.calculate_state_value()
+                updated_state_value: float = self.calculate_state_value(state)
                 
-    def calcualte_state_value(self) -> float:
+    def calcualte_state_value(self,
+                              state: int
+                             ) -> float:
         """
         Calcualte the value of the given state following the given policy
         in the given environment.
         """
         
-        for action in ACTIONS.as_tuple():
+        new_state_value: float = 0
+        
+        state_action_probability_distribution: ActionProbabilityDistribution = self.policy.get_action_probability_distribution(state)
+        
+        for action in state_action_probability_distribution:
             
-            action_probability: float = self.policy
+            action_probability: float = state_action_probability_distribution[action]
+            
+            next_states: list[int] = self.environment.get_next_states(
+                state,
+                action
+            )
+            
+            for next_state in next_states:
+                
+                next_state_probability = self.environment.get_state_transition_probability(
+                    state,
+                    action,
+                    next_state
+                )
+                
+                next_state_reward = self.state_space[next_state].reward
+                
+                next_state_value: float = self.state_space[next_state].estimated_return
+                
+                new_state_value += action_probability * next_state_probability * (next_state_reward + (self.gamma * next_state_value))
+                
+        return new_state_value
+                
+                
