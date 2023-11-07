@@ -4,6 +4,7 @@ learning agent.
 """
 
 from abc import ABC, abstractmethod
+from typing import Type
 
 from ActionProbabilityDistribution import ActionProbabilityDistribution
 from constants import Constants
@@ -11,6 +12,13 @@ from constants import Constants
 ACTIONS = Constants.ACTIONS
 
 class BasePolicy(ABC, dict[int, ActionProbabilityDistribution]):
+    def __init__(self,
+                 number_of_states: int,
+                 action_probability_distribution_class: Type[ActionProbabilityDistribution] = ActionProbabilityDistribution
+                ) -> None:
+        for state in range(number_of_states):
+            self[state] = action_probability_distribution_class({})
+    
     @abstractmethod
     def choose_action(self, state: int) -> ACTIONS:
         """
