@@ -6,16 +6,17 @@ then the state space should be injected into the environment.
 """
 
 from State import State
-
-from typing import Type
 from Action import Action
+
+from typing import Type, List, Dict
 
 class StateSpace(dict[int, State]):
     """Environmnet State Space dependency."""
 
     def __init__(self,
                  number_of_states: int,
-                 terminal_states_rewards: dict[int, int],
+                 terminal_states_rewards: Dict[int, int],
+                 state_actions: Dict[int, List[Action]],
                  state_class: Type[State] = State
                 ) -> None:
         for state in range(number_of_states):
@@ -26,7 +27,7 @@ class StateSpace(dict[int, State]):
         self.set_terminal_states_rewards(terminal_states_rewards)
         
         # TODO StateSpaceService.
-        self.set_actions()
+        self.set_actions(state_actions)
 
     def __getattr__(self, key: int):
         if key in self:
@@ -43,17 +44,14 @@ class StateSpace(dict[int, State]):
             self[state].is_terminal = True
 
     # TODO StateSpaceService.
-    def set_actions(self) -> None:
+    def set_actions(self,
+                    state_actions: dict[int, list[Action]]) -> None:
         """Set the possible actions for each State in the State Space."""
         
-        for state in self:
-            # Check if State is terminal. (Terminal States will have no actions).
-            if not self[state].is_terminal:
-                
-                # Check if the State can move right.
-                if state < len(self) - 1:
-                    self[state].actions.append(Action.right)
-                
-                # Check if the State can move left.
-                if state > 0:
-                    self[state].actions.append(Action.left)
+        # Check all states have been provided actions.
+        if len(self) != len(state_actions):
+            raise TypeError("Provide actions for all states. The number of key within 'state_actions' is not equal to the length of the State Space.")
+        
+        for state in state_actions:
+            self[state].actions = state_actions[state]
+        
