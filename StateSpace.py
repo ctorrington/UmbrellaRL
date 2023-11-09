@@ -11,7 +11,11 @@ from Action import Action
 from typing import Type, List, Dict
 
 class StateSpace(dict[int, State]):
-    """Environmnet State Space dependency."""
+    """
+    Collection of States.
+    
+    Environmnet State Space dependency.
+    """
 
     def __init__(self,
                  number_of_states: int,
