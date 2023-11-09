@@ -8,7 +8,9 @@ then the state space should be injected into the environment.
 from State import State
 from Action import Action
 
-from typing import Type, List, Dict
+from typing import Type, List, Dict, TypeVar
+
+T = TypeVar('T', bound = 'Action')
 
 class StateSpace(dict[int, State]):
     """
@@ -20,12 +22,12 @@ class StateSpace(dict[int, State]):
     def __init__(self,
                  number_of_states: int,
                  terminal_states_rewards: Dict[int, int],
-                 state_actions: Dict[int, List[Action]],
+                 state_actions: Dict[int, List[T]], # Classes derived from Action.
                  state_class: Type[State] = State
                 ) -> None:
-        for state in range(number_of_states):
-            self[state] = state_class()
-
+        # for state in range(number_of_states):
+        #     self[state] = state_class()
+            
         # Terminal states & their rewards.
         # TODO StateSpaceService.
         self.set_terminal_states_rewards(terminal_states_rewards)
