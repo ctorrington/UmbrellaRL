@@ -21,4 +21,4 @@ class Action(Enum):
     def members(cls: Type[T]) -> List[T]:
         """Return all actions available."""
         
-        return list(cls)
+        return list(cls.__members__.values())
