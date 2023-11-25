@@ -2,10 +2,15 @@
 
 ## Structure
 
+- ### Agent
+
+The Agent represents the logic for reinforcement learning.
+It contains functions for policy evaluation & calculating a State's value.
+
 - ### Policy
 
-The policy object determines the actions taken by the agent.
-The policy object must inherit from the Base Policy class.
+The Policy object determines the actions taken by the agent.
+The Policy object must inherit from the Base Policy class.
 
 - ### Environment
 
