@@ -14,7 +14,7 @@ class Action(Enum):
     Generic Action class.
     
     Inherit from this class to define actions that can be taken by the agent.
-    Actions should be enum fields of the class.
+    Actions should be enum member fields of the class.
     """
     
     @classmethod
