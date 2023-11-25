@@ -51,7 +51,7 @@ class StateSpace(dict[int, State]):
 
     # TODO StateSpaceService.
     def set_actions(self,
-                    state_actions: dict[int, list[Action]]) -> None:
+                    state_actions: dict[int, list[T]]) -> None:
         """Set the possible actions for each State in the State Space."""
         
         # Check all states have been provided actions.
