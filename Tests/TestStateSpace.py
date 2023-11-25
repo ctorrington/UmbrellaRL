@@ -1,30 +1,52 @@
 """Test State Space."""
 
+import unittest
+from unittest.mock import Mock
+from typing import List, Dict
+
 from StateSpace import StateSpace
 from State import State
-
-import unittest
+from Action import Action
+from Services.StateSpaceService import StateSpaceService
 
 class TestStateSpace(unittest.TestCase):
-    def test_initialization(self):
-        number_of_states: int = 5
-        terminal_states_rewards: dict[int, int] = {0: -1, number_of_states - 1: 1}
+    class CustomState(State):
+        def __init__(self):
+            super().__init__()
+            self.custom_property: str = ""
         
-        state_space = StateSpace(number_of_states,
-                                 terminal_states_rewards,
-                                 state_class = State)
-        
-        # Check correct amountof states are created.
-        self.assertEqual(len(state_space), number_of_states)
-        
-        # Check States are correct type.
-        # Check state terminal properties are correct.
-        for state in state_space:
-            self.assertIsInstance(state_space[state], State)
-            
-            if state not in terminal_states_rewards:
-                self.assertFalse(state_space[state].is_terminal)
-                self.assertEqual(state_space[state].reward, 0)
-            else:
-                self.assertTrue(state_space[state].is_terminal)
-                self.assertEqual(state_space[state].reward, terminal_states_rewards[state])
+    def setUp(self) -> None:
+        self.number_of_states = 5
+        self.terminal_states_rewards = {3: 10.0, 4: 5.0}
+        self.state_actions: Dict[int, List[Action]] = {0: [Mock(spec=Action) for _ in range(3)], 2: [Mock(spec=Action)]}
+
+    def test_initialize_state_space(self):
+        state_space = StateSpace(self.number_of_states, self.terminal_states_rewards, self.state_actions)
+        self.assertEqual(len(state_space), self.number_of_states)
+
+    def test_set_terminal_states_rewards(self):
+        state_space = StateSpace(self.number_of_states, {}, {})
+        StateSpaceService.set_terminal_states_rewards(state_space, self.terminal_states_rewards)
+
+        for state, reward in self.terminal_states_rewards.items():
+            self.assertEqual(state_space[state].reward, reward)
+            self.assertTrue(state_space[state].is_terminal)
+
+    def test_set_state_actions(self):
+        state_space = StateSpace(self.number_of_states, {}, {})
+        StateSpaceService.set_state_actions(state_space, self.state_actions)
+
+        for state, actions in self.state_actions.items():
+            self.assertEqual(state_space[state].actions, actions)
+
+    def test_get_attribute(self):
+        state_space = StateSpace(self.number_of_states, {}, {}, self.CustomState)
+        state_space[0].custom_property = "custom_value" # type: ignore
+
+        self.assertEqual(state_space[0].custom_property, "custom_value") # type: ignore
+
+    def test_invalid_attribute(self):
+        state_space = StateSpace(self.number_of_states, {}, {}, self.CustomState)
+
+        with self.assertRaises(AttributeError):
+            _ = state_space.invalid_attribute # type: ignore
