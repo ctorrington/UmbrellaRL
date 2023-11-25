@@ -19,6 +19,6 @@ class State:
         self.actions: List[Action] = []
         self.estimated_return: float = 0.0
         self.counter: int = 0
-        self.reward: int = 0
+        self.reward: float = 0
         self.is_current: bool = False
         self.is_terminal: bool = False
