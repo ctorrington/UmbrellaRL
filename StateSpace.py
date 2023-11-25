@@ -1,8 +1,8 @@
 """
-CURRENT THINKING
+State Space Type.
 
-The environemnt is dependent on the state space.
-then the state space should be injected into the environment.
+Structure for every State in the Environment that can be interacted with by a 
+reinforcement learning Agent.
 """
 
 from State import State
@@ -14,9 +14,12 @@ T = TypeVar('T', bound = 'Action')
 
 class StateSpace(dict[int, State]):
     """
-    Collection of States.
+    Collection of every State in the Environment that can be interacted with by
+    a reinforcement learning Agent.
     
-    Environmnet State Space dependency.
+    Dictionary structure mapping each index to its State.
+    
+    Injected into Environment.
     """
 
     def __init__(self,
@@ -25,15 +28,15 @@ class StateSpace(dict[int, State]):
                  state_actions: Dict[int, List[T]], # Classes derived from Action.
                  state_class: Type[State] = State
                 ) -> None:
-        # for state in range(number_of_states):
-        #     self[state] = state_class()
+        for state in range(number_of_states):
+            self[state] = state_class()
             
         # Terminal states & their rewards.
         # TODO StateSpaceService.
         self.set_terminal_states_rewards(terminal_states_rewards)
         
         # TODO StateSpaceService.
-        self.set_actions(state_actions)
+        self.set_state_actions(state_actions)
 
     def __getattr__(self, key: int):
         if key in self:
@@ -50,7 +53,7 @@ class StateSpace(dict[int, State]):
             self[state].is_terminal = True
 
     # TODO StateSpaceService.
-    def set_actions(self,
+    def set_state_actions(self,
                     state_actions: dict[int, list[T]]) -> None:
         """Set the possible actions for each State in the State Space."""
         
