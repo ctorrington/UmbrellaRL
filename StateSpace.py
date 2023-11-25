@@ -45,9 +45,13 @@ class StateSpace(dict[int, State]):
             raise AttributeError(f"'StateSpace' object has not attribute '{key}'")
  
     # TODO StateSpaceService.
-    def set_terminal_states_rewards(self, terminal_state_rewards: dict[int, int]) -> None:
+    def set_terminal_states_rewards(self,
+                                    terminal_state_rewards: dict[int, int]
+                                   ) -> None:
         """Set the rewards & terminal properties for the terminal States."""
         
+        # TODO May have custom State, will need to go through entire dictionary
+            # provided & set all values.
         for state in terminal_state_rewards:
             self[state].reward = terminal_state_rewards[state]
             self[state].is_terminal = True
