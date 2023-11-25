@@ -17,6 +17,7 @@ class Agent:
         
         # Value function parameters.
         self.theta: float = 0.01
+        
         self.gamma: float = 0.9999
         
         # Dependencies. 
