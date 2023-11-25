@@ -37,7 +37,9 @@ class TestState(unittest.TestCase):
 
     def test_inheritance(self):
         class CustomState(State):
-            def __init__(self, custom_field: str):
+            def __init__(self,
+                         custom_field: str
+                        ):
                 super().__init__()
                 self.custom_field = custom_field
 
