@@ -15,6 +15,7 @@ class Agent:
                  policy: BasePolicy,
                 ):
         
+        # Value function parameters.
         self.theta: float = 0.01
         self.gamma: float = 0.9999
         
