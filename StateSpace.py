@@ -22,6 +22,9 @@ from Services.StateSpaceService import StateSpaceService
     # Give State Space a generic type (Dict[T, State]).
     # Then they can do what they want with their own indices, 
         # rather than having it be weirdly created.
+        
+# TODO There is a very real chance that this class just become a dictionary
+    # that is intended to be inherited from with no methods.
 class StateSpace[T](Dict[T, State]):
     """
     Collection of every State in the Environment that can be interacted with by
