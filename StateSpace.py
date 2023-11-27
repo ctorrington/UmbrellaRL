@@ -15,6 +15,13 @@ from Services.StateSpaceService import StateSpaceService
 # TODO CHATGPT SUCKS & TYPEVAR IS NOT NEEDED FOR GENERICS
 # TODO state indices should allow for any type, not just integer types.
 # TODO Ensure that all types used for indexing are hashable.
+
+# TODO POTENTIAL TOTAL REVAMP.
+    # Why not make State Space like State?
+    # Have them inherit the State Space like State.
+    # Give State Space a generic type (Dict[T, State]).
+    # Then they can do what they want with their own indices, 
+        # rather than having it be weirdly created.
 class StateSpace[T](Dict[T, State]):
     """
     Collection of every State in the Environment that can be interacted with by
