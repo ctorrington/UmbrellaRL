@@ -12,6 +12,8 @@ from Action import Action
 
 from Services.StateSpaceService import StateSpaceService
 
+# TODO CHATGPT SUCKS & TYPEVAR IS NOT NEEDED FOR GENERICS
+# TODO state indices should allow for any type, not just integer types.
 class StateSpace(Dict[int, State]):
     """
     Collection of every State in the Environment that can be interacted with by
