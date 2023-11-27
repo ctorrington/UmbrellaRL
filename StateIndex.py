@@ -8,6 +8,7 @@ Spaces, or strings for labelled State Space.
 """
 # TODO Wondering if this class is even necessary.
     # Why not just a generic in State Space.
+# TODO MARKED FOR REMOVAL
 class StateIndex[T]():
     def __init__(self, value: T):
        self.value = value
