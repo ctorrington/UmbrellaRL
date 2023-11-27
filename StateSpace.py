@@ -38,6 +38,9 @@ class StateSpace[T](Dict[T, State]):
                  state_actions: Dict[int, List[Action]], # Classes derived from Action.
                  state_class: Type[State] = State
                 ) -> None:
+        
+        # TODO no longer a need for looping over states.
+            # Just set up for terminal states rewards & state actions
         for state in range(number_of_states):
             self[state] = state_class()
             
