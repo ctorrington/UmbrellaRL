@@ -1,7 +1,5 @@
 """State Space service."""
 
-# TODO Actually do this Service class.
-
 from typing import Dict, List
 
 from Action import Action
