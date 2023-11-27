@@ -14,7 +14,8 @@ from Services.StateSpaceService import StateSpaceService
 
 # TODO CHATGPT SUCKS & TYPEVAR IS NOT NEEDED FOR GENERICS
 # TODO state indices should allow for any type, not just integer types.
-class StateSpace(Dict[int, State]):
+# TODO Ensure that all types used for indexing are hashable.
+class StateSpace[T](Dict[T, State]):
     """
     Collection of every State in the Environment that can be interacted with by
     a reinforcement learning Agent.
