@@ -6,14 +6,17 @@ This allows for State Spaces that fit different problems.
 For example, vectors for 2D & 3D State Spaces, integers for 'regular' State
 Spaces, or strings for labelled State Space.
 """
-
-# TODO implement the State Index class.
+# TODO Wondering if this class is even necessary.
+    # Why not just a generic in State Space.
 class StateIndex[T]():
-   def __init__(self, value: T):
+    def __init__(self, value: T):
        self.value = value
        
-    def __eq__(self, other: 'StateIndex') -> bool:
-        return self.value == other.value
+    def __eq__(self, other: object) -> bool:
+        if self is other:
+            return True
+        else:
+            return NotImplemented
     
     def __hash__(self) -> int:
         return hash(self.value) 
