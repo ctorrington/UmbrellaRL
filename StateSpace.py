@@ -1,8 +1,8 @@
 """
 State Space Type.
 
-Structure for every State in the Environment that can be interacted with by a 
-reinforcement learning Agent.
+Structure containing every State in the Environment that can be interacted with 
+by a reinforcement learning Agent.
 """
 
 from typing import Dict
