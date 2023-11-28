@@ -7,6 +7,7 @@ Actions that can be implemented by a reinforcement learning agent.
 from enum import Enum
 from typing import List, Type, TypeVar
 
+# TODO the generics here need to be update to 3.12.
 T = TypeVar('T', bound = Enum)
 
 class Action(Enum):
