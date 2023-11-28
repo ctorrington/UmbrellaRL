@@ -56,7 +56,7 @@ class Agent:
     
     # TODO Agent Service.
     def calculate_state_value(self,
-                              state: int
+                              state: int # TODO this needs to be the same type as the state index.
                              ) -> float:
         """
         Calcualte the value of the given state following the given policy
