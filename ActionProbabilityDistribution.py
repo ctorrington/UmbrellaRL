@@ -3,13 +3,16 @@ Class for representing the action probability distribution for reinforcement
 learning agents.
 """
 
+from abc import ABC
+
 from Action import Action
 
-class ActionProbabilityDistribution(dict[Action, float]):
+class ActionProbabilityDistribution(ABC, dict[Action, float]):
     """
-    Class for representing the action probability distribution of each state.
+    Class for representing the action probability distribution for a State.
     
-    Intended to be used within the Policy class.
+    Intended to be used within the Policy class to map each state to an Action 
+    with a probability.
     """
     
     def __init__(self,
