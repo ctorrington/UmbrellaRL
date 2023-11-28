@@ -19,7 +19,7 @@ class StateSpace[T](Dict[T, State]):
     Injected into Environment.
     """
 
-    def __getattr__(self, key: int):
+    def __getattr__(self, key: T):
         if key in self:
             return self[key]
         else:
