@@ -5,17 +5,18 @@ Actions that can be implemented by a reinforcement learning agent.
 """
 
 from enum import Enum
-from typing import List, Type, TypeVar
+from typing import List, Type
 
-# TODO the generics here need to be update to 3.12.
-T = TypeVar('T', bound = Enum)
-
-class Action(Enum):
+class Action[T: Enum](T):
     """
     Generic Action class.
     
     Inherit from this class to define actions that can be taken by the agent.
     Actions should be enum member fields of the class.
+    
+    Generic type for each action available to the Agent.
+    
+    Injected into State.
     """
     
     @classmethod
