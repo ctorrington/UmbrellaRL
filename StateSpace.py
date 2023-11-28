@@ -11,8 +11,8 @@ from State import State
 
 class StateSpace[T](Dict[T, State]):
     """
-    Collection of every State in the Environment that can be interacted with by
-    a reinforcement learning Agent.
+    Structure containing every State in the Environment that can be interacted 
+    with by a reinforcement learning Agent.
     
     Dictionary structure mapping each index to its State.
     
