@@ -13,6 +13,10 @@ class State:
     States representation for a reinforcement learning environment.
     
     This class can be inhertited from to define more State member fields.
+    
+    Object defing fields for States.
+    
+    Injected into State Space.
     """
     
     def __init__(self):
