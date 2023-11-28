@@ -7,7 +7,7 @@ Actions that can be implemented by a reinforcement learning agent.
 from enum import Enum
 from typing import List, Type
 
-class Action[T: Enum](T):
+class Action(Enum):
     """
     Generic Action class.
     
@@ -20,7 +20,7 @@ class Action[T: Enum](T):
     """
     
     @classmethod
-    def members(cls: Type[T]) -> List[T]:
+    def members(cls: Type[Enum]) -> List[Enum]:
         """Return all actions available."""
         
         return list(cls.__members__.values())
