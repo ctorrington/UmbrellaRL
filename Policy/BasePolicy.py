@@ -25,8 +25,7 @@ class BasePolicy[StateIndex](ABC, Dict[StateIndex, ActionProbabilityDistribution
         pass
 
     @abstractmethod
-    def get_action_probability_distribution(self, state: int) -> ActionProbabilityDistribution:
-        """Get the action probability distribution for the given state."""
-
-        # TODO this method can be implemented & inherited. will be the same.
-        pass
+    def get_action_probability_distribution(self, state: StateIndex) -> ActionProbabilityDistribution:
+        """Return the Action Probability Distribution for the given state."""
+        
+        return self[state]
