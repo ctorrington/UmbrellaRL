@@ -5,12 +5,12 @@ Structure containing every State in the Environment that can be interacted with
 by a reinforcement learning Agent.
 """
 
-from typing import Dict
+from typing import Dict, Type
 
 from State import State
 # I don't think that this is a problem.
 # But is also potentially a problem if the generic type isn't being used.
-from StateIndex import StateIndex
+from StateIndex import StateIndex # type: ignore
 
 class StateSpace[StateIndex](Dict[StateIndex, State]):
     """
@@ -26,5 +26,5 @@ class StateSpace[StateIndex](Dict[StateIndex, State]):
         if key in self:
             return self[key]
         else:
-            raise AttributeError(f"'StateSpace' object has not attribute '{key}'")
+            raise AttributeError(f"StateSpace object has not attribute '{key}'")
  
