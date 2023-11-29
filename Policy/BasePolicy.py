@@ -1,6 +1,10 @@
 """
-Base Policy class to be inherited by Policy classes used by a reinforcement
-learning agent.
+Base Policy type for a reinforcement learning agent.
+
+Policy type is a mapping from a State Index to the State's
+Action Probability Distribution.
+A State's Action Probability Distribution is a mapping of available Actions to 
+their probability of being taken by the Policy.
 """
 
 from abc import ABC, abstractmethod
@@ -10,9 +14,6 @@ from ActionProbabilityDistribution import ActionProbabilityDistribution
 from StateIndex import StateIndex # type: ignore
 from Action import Action
 
-# Policy type is a mapping from a State Index to its Action Probability Distribution.
-# A State's Action Probability Distribution is a mapping of available actions
-    # to their probability of being taken.
 
 class BasePolicy[StateIndex](ABC, Dict[StateIndex, ActionProbabilityDistribution]):
     @abstractmethod
