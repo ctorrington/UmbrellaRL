@@ -5,7 +5,7 @@ Structure containing every State in the Environment that can be interacted with
 by a reinforcement learning Agent.
 """
 
-from typing import Dict, Type
+from typing import Dict
 
 from State import State
 # I don't think that this is a problem.
