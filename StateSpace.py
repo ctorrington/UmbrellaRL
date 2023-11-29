@@ -8,8 +8,11 @@ by a reinforcement learning Agent.
 from typing import Dict
 
 from State import State
+# I don't think that this is a problem.
+# But is also potentially a problem if the generic type isn't being used.
+from StateIndex import StateIndex
 
-class StateSpace[T](Dict[T, State]):
+class StateSpace[StateIndex](Dict[StateIndex, State]):
     """
     Structure containing every State in the Environment that can be interacted 
     with by a reinforcement learning Agent.
@@ -19,7 +22,7 @@ class StateSpace[T](Dict[T, State]):
     Injected into Environment.
     """
 
-    def __getattr__(self, key: T):
+    def __getattr__(self, key: StateIndex):
         if key in self:
             return self[key]
         else:
