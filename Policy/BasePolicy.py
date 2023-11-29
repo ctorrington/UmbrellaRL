@@ -10,11 +10,9 @@ from ActionProbabilityDistribution import ActionProbabilityDistribution
 from StateSpace import StateSpace
 from Action import Action
 
-
-# Policy type will have an index for every State.
-# Every state will have an Action Probability Distribution.
-# Action Probability Distirbution is a dictionary mapping each Action
-    # in the State to a percentage chance of being taken by the Policy.
+# Policy type is a mapping from a State Index to its Action Probability Distribution.
+# A State's Action Probability Distribution is a mapping of available actions
+    # to their probability of being taken.
 
 class BasePolicy(ABC, dict[int, ActionProbabilityDistribution]):
     def __init__(self,
