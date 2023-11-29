@@ -30,6 +30,8 @@ class Environment[StateIndex](ABC, Dict[StateIndex, StateActions[StateIndex]]):
                        ) -> StateProbabilityDistribution[StateIndex]:
         return self[current_state][action]
     
+    # TODO Potentially redundant given the get-next-states method returning 
+        # the distribution.
     def get_state_transition_probability(self,
                                          current_state_index: StateIndex,
                                          action: Action,
