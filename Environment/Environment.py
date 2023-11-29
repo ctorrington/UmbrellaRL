@@ -5,6 +5,12 @@ Environment type is a mapping from a State Index to the State's possible Actions
 
 """
 
+# TODO Make the dictionary indexing perperties rather.
+    # I think that it will be easer to read.
+    # eg self.state_actions => StateActions. so id use:
+    # self.state_actions[current_state].state_probability_distribution(action)
+    # idk maybe thats dumb.
+
 from abc import ABC
 from typing import Dict
 
@@ -21,8 +27,8 @@ class Environment[StateIndex](ABC, Dict[StateIndex, StateActions[StateIndex]]):
     def get_next_states(self,
                         current_state: StateIndex,
                         action: Action
-                       ) -> StateActions[StateIndex]:
-        return self.environment_service.get_next_states(current_state, action)
+                       ) -> StateProbabilityDistribution[StateIndex]:
+        return self[current_state][action]
     
     def get_state_transition_probability(self,
                                          current_state_index: int,
