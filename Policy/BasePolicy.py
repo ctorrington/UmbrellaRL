@@ -4,24 +4,17 @@ learning agent.
 """
 
 from abc import ABC, abstractmethod
-from typing import Type
+from typing import Dict
 
 from ActionProbabilityDistribution import ActionProbabilityDistribution
-from StateSpace import StateSpace
+from StateIndex import StateIndex # type: ignore
 from Action import Action
 
 # Policy type is a mapping from a State Index to its Action Probability Distribution.
 # A State's Action Probability Distribution is a mapping of available actions
     # to their probability of being taken.
 
-class BasePolicy(ABC, dict[int, ActionProbabilityDistribution]):
-    def __init__(self,
-                 state_space: StateSpace,
-                 action_probability_distribution_class: Type[ActionProbabilityDistribution] = ActionProbabilityDistribution
-                ) -> None:
-        for state in state_space:
-            self[state] = action_probability_distribution_class({})
-            
+class BasePolicy[StateIndex](ABC, Dict[StateIndex, ActionProbabilityDistribution]):
     @abstractmethod
     def choose_action(self, state: int) -> Action:
         """
