@@ -31,17 +31,13 @@ class Environment[StateIndex](ABC, Dict[StateIndex, StateActions[StateIndex]]):
         return self[current_state][action]
     
     def get_state_transition_probability(self,
-                                         current_state_index: int,
+                                         current_state_index: StateIndex,
                                          action: Action,
-                                         next_state_index: int
+                                         next_state_index: StateIndex
                                         ) -> float:
         """
         Return the probability of transitioning from one state to another
         given an action.
         """
-        
-        return self.environment_service.get_state_transition_probability(
-            current_state_index,
-            action,
-            next_state_index
-        )
+ 
+        return self[current_state_index][action][next_state_index]       
