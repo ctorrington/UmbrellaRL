@@ -10,6 +10,10 @@ Environment type is a mapping from a State Index to the State's possible Actions
     # eg self.state_actions => StateActions. so id use:
     # self.state_actions[current_state].state_probability_distribution(action)
     # idk maybe thats dumb.
+    
+
+# TODO May need to specify get_attr methods for all objects created, like in
+    # State Space. <- Read Python builtins for Dictionarys & Objects.
 
 from abc import ABC
 from typing import Dict
