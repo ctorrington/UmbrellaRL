@@ -16,12 +16,10 @@ from Action import Action
 
 class BasePolicy[StateIndex](ABC, Dict[StateIndex, ActionProbabilityDistribution]):
     @abstractmethod
-    def choose_action(self, state: int) -> Action:
+    def choose_action(self, state: StateIndex) -> Action:
         """
-        Abstracted method to be implemented by Policy subclasses.
-
-        The Policy classes will use the ActionProbabilityDistribution class
-        for determining actions.
+        Policy selects an action for the given State according to the State's
+        Action Probability Distribution & the goal of the Policy.
         """
  
         pass
