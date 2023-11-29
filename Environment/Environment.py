@@ -15,12 +15,6 @@ from StateActions import StateActions
 from Action import Action
 
 class Environment[StateIndex](ABC, Dict[StateIndex, StateActions[StateIndex]]):
-    def __init__(self,
-                 state_space: StateSpace,
-                 environment_service: EnvironmentService
-                ) -> None:
-        """Environment."""
-        
         # Environment properties.
         self.number_of_states: int = len(state_space)
         
