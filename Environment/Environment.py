@@ -19,11 +19,6 @@ class Environment[StateIndex](ABC, Dict[StateIndex, StateActions[StateIndex]]):
         # Environment properties.
         self.number_of_states: int = len(self)
         
-        # Dependencies.
-        self.state_space: StateSpace = state_space
-        
-        self.environment_service: EnvironmentService = environment_service
-        
     def get_next_states(self,
                         current_state: int,
                         action: Action
