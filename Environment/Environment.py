@@ -1,10 +1,20 @@
-"""Environment."""
+"""
+Environment type for a reinforcement learning problem.
+
+Environment type is a mapping from a State Index to the State's possible Actions.
+
+"""
+
+from abc import ABC
+from typing import Dict, List
 
 from StateSpace import StateSpace
-from Services.EnvironmentService import EnvironmentService
+from StateIndex import StateIndex # type: ignore
+from StateProbabilityDistribution import StateProbabilityDistribution # type: ignore
+from StateActions import StateActions
 from Action import Action
 
-class Environment:
+class Environment[StateIndex](ABC, Dict[StateIndex, StateActions[StateIndex]]):
     def __init__(self,
                  state_space: StateSpace,
                  environment_service: EnvironmentService
