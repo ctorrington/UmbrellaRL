@@ -10,5 +10,20 @@ from abc import ABC
 from Action import Action
 
 class ActionProbabilityDistribution(ABC, dict[Action, float]):
-    pass        
+    def __getitem__(self,
+                    key: Action
+                   ) -> float:
+        return self[key]
+    
+    def __setitem__(self,
+                    key: Action,
+                    value: float
+                   ) -> None:
+        self[key] = value
         
+    def get_action_probability(self,
+                               action: Action
+                              ) -> float:
+        """Return the probability of the given action being chosen."""
+        
+        return self[action]
