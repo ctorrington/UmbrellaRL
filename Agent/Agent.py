@@ -8,10 +8,10 @@ from Environment.Environment import Environment
 from Policy.BasePolicy import BasePolicy
 from StateIndex import StateIndex
 
-class Agent:
+class Agent[StateIndex]:
     """RL Agent."""
     
-    def __init__[StateIndex](self,
+    def __init__(self,
                  environment: Environment[StateIndex],
                  state_space: StateSpace[StateIndex],
                  policy: BasePolicy[StateIndex],
@@ -54,8 +54,8 @@ class Agent:
                 
             if delta < self.theta:
                 break
-    
-    def calculate_state_value[StateIndex](self,
+
+    def calculate_state_value(self,
                               state: StateIndex
                              ) -> float:
         """
@@ -69,13 +69,13 @@ class Agent:
         
         for action in state_action_probability_distribution:
             
-            action_probability: float = state_action_probability_distribution[action]
+            action_probability: float = state_action_probability_distribution.get_action_probability(action)
             
             next_states: StateProbabilityDistribution[StateIndex] = self.environment.get_next_states(
                 state,
                 action
             )
-            
+
             for next_state in next_states:
                 
                 next_state_probability = self.environment.get_state_transition_probability(
@@ -84,18 +84,18 @@ class Agent:
                     next_state
                 )
                 
-                next_state_reward = self.state_space[next_state].reward
+                next_state_reward: float = self.state_space.get_reward(next_state)
                 
-                next_state_value: float = self.state_space[next_state].estimated_return
+                next_state_value: float = self.state_space.get_estimated_return(next_state)
                 
                 new_state_value += action_probability * next_state_probability * (next_state_reward + (self.gamma * next_state_value))
                 
         return new_state_value
     
-    def assign_new_state_estimated_return[StateIndex](self,
+    def assign_new_state_estimated_return(self,
                                state: StateIndex,
                                value: float
                               ) -> None:
-        """Assign the new estimated return (value) to the given state."""
+        """Assign the new estimated return (value) to the given State."""
         
         self.state_space[state].estimated_return = value
