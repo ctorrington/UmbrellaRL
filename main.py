@@ -7,25 +7,36 @@ from Action import Action
 
 index_type = StateIndex[int]
 
-state_space = StateSpace[index_type]()
-
-class Actions(Action):
+# Grid World Actions.
+class GridWorldActions(Action):
     UP = "up"
     DOWN = "down"
     Left = "left"
     RIGHT = "right"
+    
+actions = GridWorldActions
 
 # Grid World State Space init.
-for i in range(16):
-    state_space[i] = State()
-    
-    # State Actions.
-    for action in A
-    
-# Terminal States.
+class GridWorldStateSpace(StateSpace[index_type]):
+    def __init__(self):
+        for i in range(16):
+            # Grid World States.
+            self[i] = State()
+            
+            # Grid World Actions.
+            self[i].actions = actions.members()
+
+
+state_space = GridWorldStateSpace()
+
+# Grid World Terminal States
 state_space[0].is_terminal = True
 state_space[-1].is_terminal = True
 state_space[0].reward = 1
 state_space[-1].reward = 1
 
+
+
+
+print(actions)
 print(state_space)
