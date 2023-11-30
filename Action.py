@@ -20,7 +20,7 @@ class Action(Enum):
     """
     
     @classmethod
-    def members(cls: Type[Enum]) -> List[Enum]:
+    def members(cls: Type['Action']) -> List['Action']:
         """Return all actions available."""
         
         return list(cls.__members__.values())
