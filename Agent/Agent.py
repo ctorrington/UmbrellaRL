@@ -6,7 +6,7 @@ from StateProbabilityDistribution import StateProbabilityDistribution
 from StateSpace import StateSpace
 from Environment.Environment import Environment
 from Policy.BasePolicy import BasePolicy
-from StateIndex import StateIndex
+from StateIndex import StateIndex # type: ignore
 
 class Agent[StateIndex]:
     """RL Agent."""
