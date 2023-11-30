@@ -34,4 +34,11 @@ class StateSpace[StateIndex](Dict[StateIndex, State]):
         """Return the reward of the given State."""
         
         return self[key].reward
+    
+    def get_estimated_return(self,
+                             key: StateIndex
+                            ) -> float:
+        """Return the estimated return (value) of the given State."""
+        
+        return self[key].estimated_return
  
