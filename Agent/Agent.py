@@ -30,7 +30,6 @@ class Agent:
     def learn(self):
         self.evaluate_policy()
         
-    # TODO Agent Service.
     def evaluate_policy(self) -> None:
         """
         Evaluate the policy.
@@ -54,7 +53,6 @@ class Agent:
             if delta < self.theta:
                 break
     
-    # TODO Agent Service.
     def calculate_state_value(self,
                               state: int # TODO this needs to be the same type as the state index.
                              ) -> float:
@@ -92,7 +90,6 @@ class Agent:
                 
         return new_state_value
     
-    # TODO Agent Service.
     def assign_new_state_estimated_return(self,
                                state: int,
                                value: float
