@@ -25,5 +25,5 @@ class StateProbabilityDistribution[StateIndex](ABC, Dict[StateIndex, float]):
     def __setitem__(self,
                     key: StateIndex,
                     value: float
-                   ):
+                   ) -> None:
         self[key] = value
