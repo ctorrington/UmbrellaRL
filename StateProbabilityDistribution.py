@@ -27,3 +27,11 @@ class StateProbabilityDistribution[StateIndex](ABC, Dict[StateIndex, float]):
                     value: float
                    ) -> None:
         self[key] = value
+        
+        
+    def get_state_probability(self,
+                              state: StateIndex
+                             ) -> float:
+        """Return the probability of reaching the given State."""
+        
+        return self[state]
