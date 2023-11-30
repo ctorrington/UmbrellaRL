@@ -36,6 +36,20 @@ state_space[0].reward = 1
 state_space[-1].reward = 1
 
 
+class Environment(Environment[index_type]):
+    
+    # Environment States.
+    for state in state_space:
+        self[state] = {}
+        
+        # State Actions.
+        for action in state.actions:
+            
+        
+        
+    
+
+
 
 
 print(actions)
