@@ -14,4 +14,13 @@ from StateIndex import StateIndex # type: ignore
 from StateProbabilityDistribution import StateProbabilityDistribution
 
 class StateActions[StateIndex](ABC, Dict[Action, StateProbabilityDistribution[StateIndex]]):
-    pass
+    def __getitem__(self,
+                    key: Action
+                   ) -> StateProbabilityDistribution[StateIndex]:
+        """
+        Return the State Probability Distribution for the State's accessible 
+        following the given Action.
+        """
+        
+        return self[key]
+    
