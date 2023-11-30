@@ -29,4 +29,10 @@ class StateActions[StateIndex](ABC, Dict[Action, StateProbabilityDistribution[St
                     value: StateProbabilityDistribution[StateIndex]
                    ) -> None:
         self[key] = value
+        
+    def get_state_probability_distribution(self,
+                                           action: Action
+                                          ) -> StateProbabilityDistribution[StateIndex]:
+        """Return the Action Probability Distribution for the given Action."""
+        return self[action]
     
