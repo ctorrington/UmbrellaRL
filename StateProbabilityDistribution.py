@@ -17,6 +17,13 @@ from StateIndex import StateIndex # type: ignore
     # return a custom Attribute error for that State not existing - then
     # thats handled or equated to 0.
 class StateProbabilityDistribution[StateIndex](ABC, Dict[StateIndex, float]):
-    def __getitem__(self, key: StateIndex) -> float:
+    def __getitem__(self,
+                    key: StateIndex
+                   ) -> float:
         return self[key]
     
+    def __setitem__(self,
+                    key: StateIndex,
+                    value: float
+                   ):
+        self[key] = value
