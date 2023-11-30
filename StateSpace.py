@@ -27,4 +27,11 @@ class StateSpace[StateIndex](Dict[StateIndex, State]):
             return self[key]
         else:
             raise AttributeError(f"StateSpace object has not attribute '{key}'")
+        
+    def get_reward(self,
+                   key: StateIndex
+                  ) -> float:
+        """Return the reward of the given State."""
+        
+        return self[key].reward
  
