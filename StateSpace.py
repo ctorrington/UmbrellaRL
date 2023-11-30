@@ -28,12 +28,6 @@ class StateSpace[StateIndex](Dict[StateIndex, State]):
         else:
             raise AttributeError(f"StateSpace object has not attribute '{key}'")
         
-    def __setitem__(self,
-                    key: StateIndex,
-                    value: State
-                   ) -> None:
-        self[key] = value
-        
     def get_reward(self,
                    key: StateIndex
                   ) -> float:
