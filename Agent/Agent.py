@@ -2,6 +2,7 @@
 
 # Dependencies.
 from ActionProbabilityDistribution import ActionProbabilityDistribution
+from StateProbabilityDistribution import StateProbabilityDistribution
 from StateSpace import StateSpace
 from Environment.Environment import Environment
 from Policy.BasePolicy import BasePolicy
@@ -54,8 +55,8 @@ class Agent:
             if delta < self.theta:
                 break
     
-    def calculate_state_value(self,
-                              state: int # TODO this needs to be the same type as the state index.
+    def calculate_state_value[StateIndex](self,
+                              state: StateIndex
                              ) -> float:
         """
         Calcualte the value of the given state following the given policy
@@ -70,7 +71,7 @@ class Agent:
             
             action_probability: float = state_action_probability_distribution[action]
             
-            next_states: list[int] = self.environment.get_next_states(
+            next_states: StateProbabilityDistribution[StateIndex] = self.environment.get_next_states(
                 state,
                 action
             )
@@ -91,8 +92,8 @@ class Agent:
                 
         return new_state_value
     
-    def assign_new_state_estimated_return(self,
-                               state: int,
+    def assign_new_state_estimated_return[StateIndex](self,
+                               state: StateIndex,
                                value: float
                               ) -> None:
         """Assign the new estimated return (value) to the given state."""
