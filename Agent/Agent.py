@@ -5,14 +5,15 @@ from ActionProbabilityDistribution import ActionProbabilityDistribution
 from StateSpace import StateSpace
 from Environment.Environment import Environment
 from Policy.BasePolicy import BasePolicy
+from StateIndex import StateIndex
 
 class Agent:
     """RL Agent."""
     
-    def __init__(self,
-                 environment: Environment,
-                 state_space: StateSpace,
-                 policy: BasePolicy,
+    def __init__[StateIndex](self,
+                 environment: Environment[StateIndex],
+                 state_space: StateSpace[StateIndex],
+                 policy: BasePolicy[StateIndex],
                 ):
         
         # Value function parameters.
@@ -21,11 +22,11 @@ class Agent:
         self.gamma: float = 0.9999
         
         # Dependencies. 
-        self.environment: Environment = environment
+        self.environment: Environment[StateIndex] = environment
         
-        self.state_space: StateSpace = state_space
+        self.state_space: StateSpace[StateIndex] = state_space
         
-        self.policy: BasePolicy = policy
+        self.policy: BasePolicy[StateIndex] = policy
     
     def learn(self):
         self.evaluate_policy()
