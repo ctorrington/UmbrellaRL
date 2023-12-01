@@ -5,7 +5,7 @@ from StateSpace import StateSpace
 from State import State
 from Action import Action
 
-index_type = StateIndex[int]
+index_type = int
 
 # Grid World Actions.
 class GridWorldActions(Action):
