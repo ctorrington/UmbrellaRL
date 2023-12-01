@@ -24,12 +24,6 @@ class StateActions[StateIndex](ABC, Dict[Action, StateProbabilityDistribution[St
         
         return self[key]
     
-    def __setitem__(self,
-                    key: Action,
-                    value: StateProbabilityDistribution[StateIndex]
-                   ) -> None:
-        self[key] = value
-        
     def get_state_probability_distribution(self,
                                            action: Action
                                           ) -> StateProbabilityDistribution[StateIndex]:
