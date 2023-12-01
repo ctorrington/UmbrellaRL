@@ -16,35 +16,32 @@ class GridWorldActions(Action):
     
 actions = GridWorldActions
 
-# Grid World State Space init.
-class GridWorldStateSpace(StateSpace[index_type]):
-    def __init__(self):
-        for i in range(16):
-            # Grid World States.
-            self[i] = State()
-            
-            # Grid World Actions.
-            self[i].actions = actions.members()
+state_space = StateSpace[index_type]()
 
-
-state_space = GridWorldStateSpace()
+# State Space setup.
+for i in range(16):
+    # Grid World States.
+    state_space[i] = State()
+    
+    # Grid World Actions.
+    state_space[i].actions = actions.members()
 
 # Grid World Terminal States
 state_space[0].is_terminal = True
-state_space[-1].is_terminal = True
+state_space[15].is_terminal = True
 state_space[0].reward = 1
-state_space[-1].reward = 1
+state_space[15].reward = 1
 
+environment = Environment[index_type]()
 
-class Environment(Environment[index_type]):
-    
+# Environment setup.
+for state in state_space:
     # Environment States.
-    for state in state_space:
-        self[state] = {}
-        
-        # State Actions.
-        for action in state.actions:
-            
+    environment[state] = {}
+    
+    # State Actions.
+    for action in state_space[state].actions:
+        pass
         
         
     
