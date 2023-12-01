@@ -13,6 +13,7 @@ from Action import Action
 from StateIndex import StateIndex # type: ignore
 from StateProbabilityDistribution import StateProbabilityDistribution
 
+# TODO There is potential for this needing to be calculated dynamically, rather than programmed.
 class StateActions[StateIndex](ABC, Dict[Action, StateProbabilityDistribution[StateIndex]]):
     def __getitem__(self,
                     key: Action
