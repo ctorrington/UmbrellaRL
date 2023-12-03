@@ -41,4 +41,3 @@ class StateSpace[StateIndex](Dict[StateIndex, State]):
         """Return the estimated return (value) of the given State."""
         
         return self[key].estimated_return
- 
