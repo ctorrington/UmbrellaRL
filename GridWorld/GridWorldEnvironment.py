@@ -24,6 +24,11 @@ class GridWorldEnvironment(Environment[Tuple[int, int]]):
             
             for action in self[state]:
                 
+                # TODO This is going to need function to calculate the probability
+                    # of each next State following the Action.
+                    # The potential next States are given here, along with their
+                    # probabilities - that is what needs to be calculated &
+                    # applied to this reference below.
                 self[state][action] = 
                 
                 
