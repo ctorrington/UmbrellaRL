@@ -14,10 +14,6 @@ from StateActions import StateActions
 from Action import Action
 
 class Environment[StateIndex](ABC, Dict[StateIndex, StateActions[StateIndex]]):
-    def __init__(self):
-        # Environment properties.
-        self.number_of_states: int = len(self)
-
     def get_next_states(self,
                         current_state: StateIndex,
                         action: Action
@@ -35,3 +31,8 @@ class Environment[StateIndex](ABC, Dict[StateIndex, StateActions[StateIndex]]):
         """
  
         return self[current_state][action][next_state]
+    
+    def number_of_states(self):
+        """Return the number of State's in the State Space."""
+        
+        return len(self)
