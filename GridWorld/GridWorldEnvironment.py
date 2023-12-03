@@ -1,5 +1,20 @@
 """Grid World Environment."""
 
+from typing import Tuple
+
+from Environment.Environment import Environment
+
+from GridWorld.StateSpace import GridWorldStateSpace
+
+# TODO class to reprsent the Tuple[int, int] type.
+class GridWorldEnvironment(Environment[Tuple[int, int]]):
+    def __init__(self,
+                 state_space: GridWorldStateSpace,
+                 ) -> None:
+        
+        # Dependencies.
+        self.state_space: GridWorldStateSpace = state_space
+        
 
 # TODO
     # (This is the Environment itself (nested dict with nested dict))
