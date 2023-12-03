@@ -8,5 +8,5 @@ class GridWorldState(State):
     def __init__(self, x: Optional[int] = None, y: Optional[int] = None):
         super().__init__()
         
-        self.x: int = x
-        self.y: int = y
+        self.x: Optional[int] = x
+        self.y: Optional[int] = y
