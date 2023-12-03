@@ -5,6 +5,7 @@ from typing import Tuple
 from Environment.Environment import Environment
 
 from GridWorld.StateSpace import GridWorldStateSpace
+from GridWorld.Action import GridWorldAction
 
 # TODO class to reprsent the Tuple[int, int] type.
 class GridWorldEnvironment(Environment[Tuple[int, int]]):
@@ -14,6 +15,18 @@ class GridWorldEnvironment(Environment[Tuple[int, int]]):
         
         # Dependencies.
         self.state_space: GridWorldStateSpace = state_space
+        
+        # Environment structure.
+        for state in self.state_space:
+            
+            # Assign State Actions.
+            self[state] = {action: {} for action in GridWorldAction.members()}
+            
+            for action in self[state]:
+                
+                self[state][action] = 
+                
+                
         
 
 # TODO
