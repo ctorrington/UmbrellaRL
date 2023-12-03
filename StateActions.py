@@ -30,4 +30,3 @@ class StateActions[StateIndex](ABC, Dict[Action, StateProbabilityDistribution[St
                                           ) -> StateProbabilityDistribution[StateIndex]:
         """Return the Action Probability Distribution for the given Action."""
         return self[action]
-    
