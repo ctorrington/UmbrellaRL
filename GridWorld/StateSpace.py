@@ -19,6 +19,6 @@ class GridWorldStateSpace(StateSpace[Tuple[int, int], GridWorldAction]):
         self.number_of_rows = number_of_rows
         self.number_of_columns = number_of_columns
         
-        for row in range(number_of_columns):
+        for row in range(number_of_rows):
             for column in range(number_of_columns):
                 self[(row, column)] = GridWorldState(row, column)
