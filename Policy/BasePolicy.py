@@ -15,7 +15,7 @@ from StateIndex import StateIndex # type: ignore
 from Action import Action
 
 
-class BasePolicy[StateIndex](ABC, Dict[StateIndex, ActionProbabilityDistribution]):
+class BasePolicy[StateIndex, A: Action](ABC, Dict[StateIndex, ActionProbabilityDistribution[A]]):
     @abstractmethod
     def choose_action(self, state: StateIndex) -> Action:
         """
@@ -26,7 +26,7 @@ class BasePolicy[StateIndex](ABC, Dict[StateIndex, ActionProbabilityDistribution
         pass
 
     @abstractmethod
-    def get_action_probability_distribution(self, state: StateIndex) -> ActionProbabilityDistribution:
+    def get_action_probability_distribution(self, state: StateIndex) -> ActionProbabilityDistribution[A]:
         """Return the Action Probability Distribution for the given state."""
         
         return self[state]
