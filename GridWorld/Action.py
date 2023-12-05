@@ -3,7 +3,7 @@
 from Action import Action
 
 class GridWorldAction(Action):
-    UP = "up",
-    DOWN = "down",
-    LEFT = "left",
+    UP = "up"
+    DOWN = "down"
+    LEFT = "left"
     RIGHT = "right"
