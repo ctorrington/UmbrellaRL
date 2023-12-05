@@ -1,6 +1,7 @@
 """Grid World Environment."""
 
 from typing import Tuple, Dict
+from collections import defaultdict
 
 from Environment.Environment import Environment
 from StateActions import StateActions
@@ -26,25 +27,30 @@ class GridWorldEnvironment(Environment[Tuple[int, int]]):
         # Dependencies.
         self.state_space: GridWorldStateSpace = state_space
         
-        # Environment structure.
+        self.initialize_environment()
+        
+    def initialize_environment(self) -> None:
         for state in self.state_space:
-            
-            state_actions: StateActions[Tuple[int, int]] = {}
-            
-            state_probability_distribution: StateProbabilityDistribution[Tuple[int, int]] = {}
-            
-            # Loop through each Action in the State.
-            for action in self.state_space[state].actions:
-                
-                # One Action can lead to different States.
-                possible_next_states: Dict[Tuple[int, int], float] = self.determine_next_state_probability_distribution(state, action)
-                
-                state_probability_distribution.update(possible_next_states)
-                
-                state_actions[action] = state_probability_distribution
-                
+            state_actions: StateActions[Tuple[int, int]] = self.determine_state_actions(state)
             self[state] = state_actions
-                
+            
+    def determine_state_actions(self,
+                                state: Tuple[int, int]) -> StateActions[Tuple[int, int]]:
+        """Determine the Actions available for each State."""
+        
+        # TODO Figure out defaultdict for this.
+        state_actions: StateActions[Tuple[int, int]] = {}
+        
+        for action in self.state_space[state].actions:
+            
+            possible_next_states_distribution: Dict[Tuple[int, int], float] = self.determine_next_state_probability_distribution(state, action)
+            
+            state_actions[action].update(possible_next_states_distribution)
+            
+        return state_actions
+            
+            
+            
     def determine_next_state_probability_distribution(self,
                                                       state: Tuple[int, int],
                                                       action: GridWorldAction
