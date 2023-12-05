@@ -8,7 +8,7 @@ from typing import List
 
 from Action import Action
 
-class State:
+class State[T: Action]:
     """
     States representation for a reinforcement learning environment.
     
@@ -20,7 +20,7 @@ class State:
     """
     
     def __init__(self):
-        self.actions: List[Action] = []
+        self.actions: List[T] = []
         self.estimated_return: float = 0.0
         self.counter: int = 0
         self.reward: float = 0
