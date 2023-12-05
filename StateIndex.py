@@ -11,5 +11,5 @@ Currently allowed types:
 
 from typing import Tuple, Any
 
-class StateIndex[T: int | str | Tuple[*Any]]:
+class StateIndex[T: int | str | Tuple[Any, ...]]:
     pass
