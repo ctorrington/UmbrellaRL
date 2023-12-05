@@ -70,31 +70,32 @@ class GridWorldEnvironment(Environment[Tuple[int, int]]):
         # TODO service class.
         row, column = state
         
+        # TODO defaultdict.
         possible_next_states: Dict[Tuple[int, int], float] = {}
         
         match action:
             case GridWorldAction.UP:
                 if row > 0:
-                    possible_next_states[row - 1, column] = 1
+                    possible_next_states[row - 1, column] = 1.0
                 else:
-                    possible_next_states[row, column] = 1
+                    possible_next_states[row, column] = 1.0
                     
             case GridWorldAction.DOWN:
                 if row < self.state_space.number_of_rows - 1:
-                    possible_next_states[row + 1, column] = 1
+                    possible_next_states[row + 1, column] = 1.0
                 else:
-                    possible_next_states[row, column] = 1
+                    possible_next_states[row, column] = 1.0
                 
             case GridWorldAction.LEFT:
                 if column > 0:
-                    possible_next_states[row, column - 1] = 1
+                    possible_next_states[row, column - 1] = 1.0
                 else:
-                    possible_next_states[row, column] = 1
+                    possible_next_states[row, column] = 1.0
                 
             case GridWorldAction.RIGHT:
                 if column < self.state_space.number_of_columns - 1:
-                    possible_next_states[row, column + 1] = 1
+                    possible_next_states[row, column + 1] = 1.0
                 else:
-                    possible_next_states[row, column] = 1
+                    possible_next_states[row, column] = 1.0
                     
         return possible_next_states
