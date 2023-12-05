@@ -1,8 +1,10 @@
 """Grid World Environment."""
 
-from typing import Tuple, Dict, Any
+from typing import Tuple, Dict
 
 from Environment.Environment import Environment
+from StateActions import StateActions
+from StateProbabilityDistribution import StateProbabilityDistribution
 
 from GridWorld.StateSpace import GridWorldStateSpace
 from GridWorld.Action import GridWorldAction
@@ -24,22 +26,25 @@ class GridWorldEnvironment(Environment[Tuple[int, int]]):
         # Dependencies.
         self.state_space: GridWorldStateSpace = state_space
         
-        StateIndex_StateActions: Dict[Any, Any] = {}
-        
         # Environment structure.
         for state in self.state_space:
             
-            # self[state] = {action: {} for action in GridWorldAction.members()}
+            state_actions: StateActions[Tuple[int, int]] = {}
             
-            Action_StateProbabilityDistribution: Dict[Any, Any] = {}
+            state_probability_distribution: StateProbabilityDistribution[Tuple[int, int]] = {}
             
-            # Loop through each action in the State.
+            # Loop through each Action in the State.
             for action in self.state_space[state].actions:
                 
-                Action_StateProbabilityDistribution[action] = self.determine_next_state_probability_distribution(state, action)
+                # One Action can lead to different States.
+                possible_next_states: Dict[Tuple[int, int], float] = self.determine_next_state_probability_distribution(state, action)
                 
-            StateIndex_StateActions[state] = Action_StateProbabilityDistribution
-                    
+                state_probability_distribution.update(possible_next_states)
+                
+                state_actions[action] = state_probability_distribution
+                
+            self[state] = state_actions
+                
     def determine_next_state_probability_distribution(self,
                                                       state: Tuple[int, int],
                                                       action: GridWorldAction
@@ -55,7 +60,8 @@ class GridWorldEnvironment(Environment[Tuple[int, int]]):
         state is the State the Agent is currently in.
         """
         
-        # TODO error checking State is correct type for Grid World problem. 
+        # TODO error checking State is correct type for Grid World problem.
+        # TODO service class.
         row, column = state
         
         possible_next_states: Dict[Tuple[int, int], float] = {}
@@ -86,15 +92,3 @@ class GridWorldEnvironment(Environment[Tuple[int, int]]):
                     possible_next_states[row, column] = 1
                     
         return possible_next_states
-
-# TODO
-    # (This is the Environment itself (nested dict with nested dict))
-    # Loop through Grid Worlds State Space.
-    
-        # (This is the StateActions dict)
-        # For every State, apply its available Actions.
-        # Loop through each of those available Actions (StateActions)
-
-            # (This is the StateProbabilityDistribution dict)
-            # For every available Action (StateAction), apply the possible next States from that Action.
-            # Loop through each possible next State & apply its probability of occuring.
