@@ -2,11 +2,14 @@
 
 from typing import Tuple
 
-from GridWorld.State import GridWorldState
 
 from StateSpace import StateSpace
 
-class GridWorldStateSpace(StateSpace[Tuple[int, int]]):
+from GridWorld.State import GridWorldState
+from GridWorld.Action import GridWorldAction
+
+
+class GridWorldStateSpace(StateSpace[Tuple[int, int], GridWorldAction]):
     """Grid World State Space representation."""
     
     def __init__(self,
