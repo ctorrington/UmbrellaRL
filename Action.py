@@ -5,7 +5,7 @@ Actions that can be implemented by a reinforcement learning agent.
 """
 
 from enum import Enum
-from typing import List, Type
+from typing import List, Self
 
 class Action(Enum):
     """
@@ -20,7 +20,7 @@ class Action(Enum):
     """
     
     @classmethod
-    def members(cls: Type['Action']) -> List['Action']:
+    def members(cls) -> List[Self]:
         """Return all actions available."""
         
         return list(cls.__members__.values())
