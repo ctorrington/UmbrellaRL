@@ -1,6 +1,6 @@
 """Grid World Environment."""
 
-from typing import Tuple, Dict
+from typing import Tuple, Dict, Any
 
 from Environment.Environment import Environment
 
@@ -20,29 +20,30 @@ class GridWorldEnvironment(Environment[Tuple[int, int]]):
     def __init__(self,
                  state_space: GridWorldStateSpace,
                  ) -> None:
-        
+
         # Dependencies.
         self.state_space: GridWorldStateSpace = state_space
+        
+        StateIndex_StateActions: Dict[Any, Any] = {}
         
         # Environment structure.
         for state in self.state_space:
             
-            # Assign State Actions.
-            self[state] = {action: {} for action in GridWorldAction.members()}
+            # self[state] = {action: {} for action in GridWorldAction.members()}
             
-            for action in self[state]:
+            Action_StateProbabilityDistribution: Dict[Any, Any] = {}
+            
+            # Loop through each action in the State.
+            for action in self.state_space[state].actions:
                 
-                # TODO This is going to need function to calculate the probability
-                    # of each next State following the Action.
-                    # The potential next States are given here, along with their
-                    # probabilities - that is what needs to be calculated &
-                    # applied to this reference below.
-                self[state][action] = self.determine_next_states(state, action)
+                Action_StateProbabilityDistribution[action] = self.determine_next_state_probability_distribution(state, action)
                 
-    def determine_next_states(self,
-                              state: Tuple[int, int],
-                              action: GridWorldAction
-                             ) -> Dict[Tuple[int, int], float]:
+            StateIndex_StateActions[state] = Action_StateProbabilityDistribution
+                    
+    def determine_next_state_probability_distribution(self,
+                                                      state: Tuple[int, int],
+                                                      action: GridWorldAction
+                                                     ) -> Dict[Tuple[int, int], float]:
         """
         Return a mapping of the possible next States & their probability of
         occuring.
