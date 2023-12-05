@@ -15,12 +15,6 @@ class ActionProbabilityDistribution(ABC, dict[Action, float]):
                    ) -> float:
         return self[key]
     
-    def __setitem__(self,
-                    key: Action,
-                    value: float
-                   ) -> None:
-        self[key] = value
-        
     def get_action_probability(self,
                                action: Action
                               ) -> float:
