@@ -9,5 +9,7 @@ Currently allowed types:
     - Tuple
 """
 
-class StateIndex[T: int, str, Tuple]:
+from typing import Tuple, Any
+
+class StateIndex[T: int | str | Tuple[*Any]]:
     pass
