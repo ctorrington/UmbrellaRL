@@ -11,8 +11,9 @@ from State import State
 # I don't think that this is a problem.
 # But is also potentially a problem if the generic type isn't being used.
 from StateIndex import StateIndex # type: ignore
+from Action import Action
 
-class StateSpace[StateIndex](Dict[StateIndex, State]):
+class StateSpace[StateIndex, A: Action](Dict[StateIndex, State[A]]):
     """
     Structure containing every State in the Environment that can be interacted 
     with by a reinforcement learning Agent.
