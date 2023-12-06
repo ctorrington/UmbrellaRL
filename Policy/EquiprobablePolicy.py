@@ -31,13 +31,15 @@ class EquiprobablePolicy[StateIndex, A: Action](BasePolicy[StateIndex, A]):
             
     def choose_action(self,
                       state: StateIndex
-                     ) -> Action:
+                     ) -> A:
         """Choose an action based on the Action Probability Distribution."""
 
         actions: List[A] = list(self[state].keys())
         
         return random.choice(actions)
 
-    def get_action_probability_distribution(self, state: int) -> ActionProbabilityDistribution:
+    def get_action_probability_distribution(self,
+                                            state: StateIndex
+                                           ) -> ActionProbabilityDistribution[A]:
 
         return self[state]
