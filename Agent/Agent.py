@@ -9,7 +9,7 @@ from Policy.BasePolicy import BasePolicy
 from StateIndex import StateIndex # type: ignore
 from Action import Action
 
-class Agent[StateIndex, A: Action]:
+class Agent[StateIndex, A: Action]():
     """RL Agent."""
     
     def __init__(self,
