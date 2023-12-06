@@ -7,14 +7,15 @@ from StateSpace import StateSpace
 from Environment.Environment import Environment
 from Policy.BasePolicy import BasePolicy
 from StateIndex import StateIndex # type: ignore
+from Action import Action
 
-class Agent[StateIndex]:
+class Agent[StateIndex, A: Action]:
     """RL Agent."""
     
     def __init__(self,
                  environment: Environment[StateIndex],
-                 state_space: StateSpace[StateIndex],
-                 policy: BasePolicy[StateIndex],
+                 state_space: StateSpace[StateIndex, A],
+                 policy: BasePolicy[StateIndex, A],
                 ):
         
         # Value function parameters.
@@ -25,9 +26,9 @@ class Agent[StateIndex]:
         # Dependencies. 
         self.environment: Environment[StateIndex] = environment
         
-        self.state_space: StateSpace[StateIndex] = state_space
+        self.state_space: StateSpace[StateIndex, A] = state_space
         
-        self.policy: BasePolicy[StateIndex] = policy
+        self.policy: BasePolicy[StateIndex, A] = policy
     
     def learn(self):
         self.evaluate_policy()
