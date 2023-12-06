@@ -67,7 +67,10 @@ class Agent[StateIndex, A: Action]:
         
         for action in state_action_probability_distribution:
             
-            action_probability: float = state_action_probability_distribution.get_action_probability(action)
+            action_probability: float = state_action_probability_distribution[action]
+            
+            # TODO I dont understand why the line below does not work.
+            # action_probability: float = state_action_probability_distribution.get_action_probability(action)
             
             next_states: StateProbabilityDistribution[StateIndex] = self.environment.get_next_states(
                 state,
