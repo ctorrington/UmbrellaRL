@@ -30,9 +30,6 @@ class Agent[StateIndex, A: Action]:
         
         self.policy: BasePolicy[StateIndex, A] = policy
     
-    def learn(self):
-        self.evaluate_policy()
-        
     def evaluate_policy(self) -> None:
         """
         Evaluate the policy.
