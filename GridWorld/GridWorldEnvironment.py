@@ -54,7 +54,7 @@ class GridWorldEnvironment(Environment[Tuple[int, int]]):
     def determine_next_state_probability_distribution(self,
                                                       state: Tuple[int, int],
                                                       action: GridWorldAction
-                                                     ) -> Dict[Tuple[int, int], float]:
+                                                     ) -> StateProbabilityDistribution[Tuple[int, int]]:
         """
         Return a mapping of the possible next States & their probability of
         occuring.
@@ -71,7 +71,7 @@ class GridWorldEnvironment(Environment[Tuple[int, int]]):
         row, column = state
         
         # TODO defaultdict.
-        possible_next_states: Dict[Tuple[int, int], float] = {}
+        possible_next_states: StateProbabilityDistribution[Tuple[int, int]] = {}
         
         match action:
             case GridWorldAction.UP:
