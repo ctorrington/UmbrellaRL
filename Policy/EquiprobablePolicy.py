@@ -23,6 +23,7 @@ class EquiprobablePolicy[StateIndex, A: Action](BasePolicy[StateIndex, A]):
         
         for state in self.state_space:
             
+            # TODO division by zero risk.
             action_probability: float = 1/ len(self.state_space[state].actions)
             
             for action in state_space[state].actions:
