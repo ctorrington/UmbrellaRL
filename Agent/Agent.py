@@ -63,7 +63,7 @@ class Agent[StateIndex, A: Action]:
         
         new_state_value: float = 0
         
-        state_action_probability_distribution: ActionProbabilityDistribution = self.policy.get_action_probability_distribution(state)
+        state_action_probability_distribution: ActionProbabilityDistribution[A] = self.policy.get_action_probability_distribution(state)
         
         for action in state_action_probability_distribution:
             
