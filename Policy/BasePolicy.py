@@ -29,4 +29,4 @@ class BasePolicy[StateIndex, A: Action](ABC, Dict[StateIndex, ActionProbabilityD
     def get_action_probability_distribution(self, state: StateIndex) -> ActionProbabilityDistribution[A]:
         """Return the Action Probability Distribution for the given state."""
         
-        return self[state]
+        return ActionProbabilityDistribution(self[state])
