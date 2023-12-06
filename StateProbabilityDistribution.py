@@ -7,12 +7,11 @@ chance of the State occuring, according to the Environment.
 Used by the Environment.
 """
 
-from abc import ABC
 from typing import Dict
 
 from StateIndex import StateIndex # type: ignore
 
-class StateProbabilityDistribution[StateIndex](ABC, Dict[StateIndex, float]):
+class StateProbabilityDistribution[StateIndex](Dict[StateIndex, float]):
     def __getitem__(self,
                     key: StateIndex
                    ) -> float:
