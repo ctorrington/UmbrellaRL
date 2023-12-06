@@ -21,7 +21,7 @@ class Agent[StateIndex, A: Action]:
         # Value function parameters.
         self.theta: float = 0.01
         
-        self.gamma: float = 0.9999
+        self.gamma: float = 0.9
         
         # Dependencies. 
         self.environment: Environment[StateIndex] = environment
@@ -40,7 +40,10 @@ class Agent[StateIndex, A: Action]:
         while True:
             delta = 0
             
-            for state in self.state_space:
+            for state in self.state_space :
+                
+                if self.state_space[state].is_terminal:
+                    continue
                 
                 old_state_value: float = self.state_space[state].estimated_return
                 
