@@ -9,14 +9,14 @@ from abc import ABC
 
 from Action import Action
 
-class ActionProbabilityDistribution[T: Action](ABC, dict[T, float]):
+class ActionProbabilityDistribution[A: Action](ABC, dict[A, float]):
     def __getitem__(self,
-                    key: T
+                    key: A
                    ) -> float:
         return self[key]
     
     def get_action_probability(self,
-                               action: T
+                               action: A
                               ) -> float:
         """Return the probability of the given action being chosen."""
         
