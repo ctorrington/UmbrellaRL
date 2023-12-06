@@ -31,21 +31,24 @@ class GridWorldEnvironment(Environment[Tuple[int, int]]):
         
     def initialize_environment(self) -> None:
         for state in self.state_space:
-            state_actions: StateActions[Tuple[int, int]] = self.determine_state_actions(state)
+            state_actions: StateActions[Tuple[int, int], GridWorldAction] = self.determine_state_actions(state)
             self[state] = state_actions
             
     def determine_state_actions(self,
-                                state: Tuple[int, int]) -> StateActions[Tuple[int, int]]:
+                                state: Tuple[int, int]) -> StateActions[Tuple[int, int], GridWorldAction]:
         """Determine the Actions available for each State."""
         
         # TODO Figure out defaultdict for this.
-        state_actions: StateActions[Tuple[int, int]] = {}
+        state_actions: StateActions[Tuple[int, int], GridWorldAction] = {}
         
         for action in self.state_space[state].actions:
             
             possible_next_states_distribution: Dict[Tuple[int, int], float] = self.determine_next_state_probability_distribution(state, action)
             
-            state_actions[action].update(possible_next_states_distribution)
+            state_actions[action] = possible_next_states_distribution
+            
+            # TODO understand why update method returns KeyErorr.
+            # state_actions[action].update(possible_next_states_distribution)
             
         return state_actions
             
