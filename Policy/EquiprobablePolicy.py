@@ -23,6 +23,10 @@ class EquiprobablePolicy[StateIndex, A: Action](BasePolicy[StateIndex, A]):
         
         for state in self.state_space:
             
+            # TODO Below needed for assigning action probability in next loop.
+                # Figure out how to assign a type here.
+            self[state] = {}
+            
             # TODO division by zero risk.
             action_probability: float = 1/ len(self.state_space[state].actions)
             
