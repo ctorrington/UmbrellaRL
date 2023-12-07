@@ -1,4 +1,6 @@
-# Gradient-MC-1000-State-Random-Walk
+# UmbrellaRL
+
+## This package is nowhere near complete.
 
 ## Structure
 
