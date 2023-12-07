@@ -1,6 +1,6 @@
 """Grid World actions."""
 
-from Action import Action
+from src.Action import Action
 
 class GridWorldAction(Action):
     UP = "up"

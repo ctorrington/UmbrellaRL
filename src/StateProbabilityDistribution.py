@@ -9,7 +9,7 @@ Used by the Environment.
 
 from typing import Dict
 
-from StateIndex import StateIndex # type: ignore
+from src.StateIndex import StateIndex # type: ignore
 
 class StateProbabilityDistribution[StateIndex](Dict[StateIndex, float]):
     def __getitem__(self,

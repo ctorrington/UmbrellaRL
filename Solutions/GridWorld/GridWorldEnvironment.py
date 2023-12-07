@@ -3,12 +3,12 @@
 from typing import Tuple, Dict
 from collections import defaultdict
 
-from Environment.Environment import Environment
-from StateActions import StateActions
-from StateProbabilityDistribution import StateProbabilityDistribution
+from src.Environment.Environment import Environment
+from src.StateActions import StateActions
+from src.StateProbabilityDistribution import StateProbabilityDistribution
 
-from GridWorld.StateSpace import GridWorldStateSpace
-from GridWorld.Action import GridWorldAction
+from Solutions.GridWorld.StateSpace import GridWorldStateSpace
+from Solutions.GridWorld.Action import GridWorldAction
 
 
 # Grid World State Space representation.

@@ -7,11 +7,11 @@ by a reinforcement learning Agent.
 
 from typing import Dict
 
-from State import State
+from src.State import State
 # I don't think that this is a problem.
 # But is also potentially a problem if the generic type isn't being used.
-from StateIndex import StateIndex # type: ignore
-from Action import Action
+from src.StateIndex import StateIndex # type: ignore
+from src.Action import Action
 
 class StateSpace[StateIndex, A: Action](Dict[StateIndex, State[A]]):
     """

@@ -8,10 +8,10 @@ Environment type is a mapping from a State Index to the State's possible Actions
 from abc import ABC
 from typing import Dict
 
-from StateIndex import StateIndex # type: ignore
-from StateProbabilityDistribution import StateProbabilityDistribution # type: ignore
-from StateActions import StateActions
-from Action import Action
+from src.StateIndex import StateIndex # type: ignore
+from src.StateProbabilityDistribution import StateProbabilityDistribution # type: ignore
+from src.StateActions import StateActions
+from src.Action import Action
 
 class Environment[StateIndex](ABC, Dict[StateIndex, StateActions[StateIndex]]):
     def get_next_states(self,

@@ -9,9 +9,9 @@ Used by the Environment.
 from abc import ABC
 from typing import Dict
 
-from Action import Action
-from StateIndex import StateIndex # type: ignore
-from StateProbabilityDistribution import StateProbabilityDistribution
+from src.Action import Action
+from src.StateIndex import StateIndex # type: ignore
+from src.StateProbabilityDistribution import StateProbabilityDistribution
 
 # TODO There is potential for this needing to be calculated dynamically, rather than programmed.
 class StateActions[StateIndex, A: Action](ABC, Dict[A, StateProbabilityDistribution[StateIndex]]):

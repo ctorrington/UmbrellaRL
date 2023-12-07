@@ -6,7 +6,7 @@ State representation for a reinforcement learning environment.
 
 from typing import List
 
-from Action import Action
+from src.Action import Action
 
 class State[T: Action]:
     """

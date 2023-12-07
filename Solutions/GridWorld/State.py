@@ -2,8 +2,8 @@
 
 from typing import Optional
 
-from State import State
-from GridWorld.Action import GridWorldAction
+from src.State import State
+from Solutions.GridWorld.Action import GridWorldAction
 
 class GridWorldState(State[GridWorldAction]):
     def __init__(self, x: Optional[int] = None, y: Optional[int] = None):

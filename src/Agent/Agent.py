@@ -1,13 +1,13 @@
 """RL Agent."""
 
 # Dependencies.
-from ActionProbabilityDistribution import ActionProbabilityDistribution
-from StateProbabilityDistribution import StateProbabilityDistribution
-from StateSpace import StateSpace
-from Environment.Environment import Environment
-from Policy.BasePolicy import BasePolicy
-from StateIndex import StateIndex # type: ignore
-from Action import Action
+from src.ActionProbabilityDistribution import ActionProbabilityDistribution
+from src.StateProbabilityDistribution import StateProbabilityDistribution
+from src.StateSpace import StateSpace
+from src.Environment.Environment import Environment
+from src.Policy.BasePolicy import BasePolicy
+from src.StateIndex import StateIndex # type: ignore
+from src.Action import Action
 
 class Agent[StateIndex, A: Action]:
     """RL Agent."""

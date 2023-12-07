@@ -1,13 +1,13 @@
 from typing import Tuple
 
-from Agent.Agent import Agent
+from src.Agent.Agent import Agent
 
-from GridWorld.StateSpace import GridWorldStateSpace
-from GridWorld.Action import GridWorldAction
+from Solutions.GridWorld.StateSpace import GridWorldStateSpace
+from Solutions.GridWorld.Action import GridWorldAction
 
-from GridWorld.GridWorldEnvironment import GridWorldEnvironment
+from Solutions.GridWorld.GridWorldEnvironment import GridWorldEnvironment
 
-from GridWorld.Policy import GridWorldEquiprobablePolicy
+from Solutions.GridWorld.Policy import GridWorldEquiprobablePolicy
 
 def main():
     

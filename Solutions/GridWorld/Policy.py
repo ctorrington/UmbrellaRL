@@ -2,11 +2,11 @@
 Grid World Policy.
 """
 
-from StateIndex import StateIndex # type: ignore
-from Action import Action
-from StateSpace import StateSpace
+from src.StateIndex import StateIndex # type: ignore
+from src.Action import Action
+from src.StateSpace import StateSpace
 
-from Policy.EquiprobablePolicy import EquiprobablePolicy
+from src.Policy.EquiprobablePolicy import EquiprobablePolicy
 
 class GridWorldEquiprobablePolicy[StateIndex, A: Action](EquiprobablePolicy[StateIndex, A]):
     """Equiprobable Policy for Grid World."""

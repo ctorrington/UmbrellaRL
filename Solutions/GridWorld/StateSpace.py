@@ -2,10 +2,10 @@
 
 from typing import Tuple, List
 
-from StateSpace import StateSpace
+from src.StateSpace import StateSpace
 
-from GridWorld.State import GridWorldState
-from GridWorld.Action import GridWorldAction
+from Solutions.GridWorld.State import GridWorldState
+from Solutions.GridWorld.Action import GridWorldAction
 
 class GridWorldStateSpace(StateSpace[Tuple[int, int], GridWorldAction]):
     """Grid World State Space representation."""

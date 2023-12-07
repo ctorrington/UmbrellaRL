@@ -10,9 +10,9 @@ their probability of being taken by the Policy.
 from abc import ABC, abstractmethod
 from typing import Dict
 
-from ActionProbabilityDistribution import ActionProbabilityDistribution
-from StateIndex import StateIndex # type: ignore
-from Action import Action
+from src.ActionProbabilityDistribution import ActionProbabilityDistribution
+from src.StateIndex import StateIndex # type: ignore
+from src.Action import Action
 
 
 class BasePolicy[StateIndex, A: Action](ABC, Dict[StateIndex, ActionProbabilityDistribution[A]]):
