@@ -9,6 +9,8 @@ from src.Policy.BasePolicy import BasePolicy
 from src.StateIndex import StateIndex # type: ignore
 from src.Action import Action
 
+# TODO StateSpace should not be injected into Agent. Env should have a getSS method.
+
 class Agent[StateIndex, A: Action]:
     """RL Agent."""
     
