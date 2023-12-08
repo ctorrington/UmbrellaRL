@@ -46,4 +46,4 @@ COPY . .
 EXPOSE 8000
 
 # Run the application.
-CMD python -m Solutions.GridWorld.main.py
+CMD python -m Solutions.GridWorld.main
