@@ -9,6 +9,9 @@ This allows for faster solution methods to reinforcement learning problems.
 
 ## Implementations
 
+- Project Specific
+  - [ ] Graphing functions
+
 - [ ] Tabular Solution Methods
   - [ ] Dynamic programming
     - [x] Policy Evaluation
