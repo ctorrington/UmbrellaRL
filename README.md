@@ -23,3 +23,9 @@ This allows for faster solution methods to reinforcement learning problems.
 
 - [ ] Approximate Solution Methods
 
+## Usage
+
+UmbrellaRL comes with abstract generic Agent, Environment & Policy classes. These abstract generic classes are intended to be inherited from to define the solution to your problem.
+The structure of these classes are defined below. UmbrellaRL also comes with various types to make implementation easier. These types are also defined below.
+A 'Solutions' directory is included in the package. The modules within the 'Solutions' directory are commonly found reinforcement learning problems that implement UmbrellaRL's classes & types.
+The modules within the 'Solutions' directory could also function as tutorials.
