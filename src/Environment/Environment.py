@@ -14,7 +14,7 @@ from src.StateProbabilityDistribution import StateProbabilityDistribution # type
 from src.StateActions import StateActions
 from src.Action import Action
 
-class Environment[StateIndex, A: Action](ABC, Dict[StateIndex, StateActions[StateIndex]]):
+class Environment[StateIndex, A: Action](ABC, Dict[StateIndex, StateActions[StateIndex, A]]):
     def __init__(self,
                  state_space: StateSpace[StateIndex, A]
                 ) -> None:
@@ -24,13 +24,13 @@ class Environment[StateIndex, A: Action](ABC, Dict[StateIndex, StateActions[Stat
         
     def get_next_states(self,
                         current_state: StateIndex,
-                        action: Action
+                        action: A
                        ) -> StateProbabilityDistribution[StateIndex]:
         return self[current_state][action]
 
     def get_state_transition_probability(self,
                                          current_state: StateIndex,
-                                         action: Action,
+                                         action: A,
                                          next_state: StateIndex
                                         ) -> float:
         """
