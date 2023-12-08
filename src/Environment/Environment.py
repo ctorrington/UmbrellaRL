@@ -9,11 +9,19 @@ from abc import ABC
 from typing import Dict
 
 from src.StateIndex import StateIndex # type: ignore
+from src.StateSpace import StateSpace
 from src.StateProbabilityDistribution import StateProbabilityDistribution # type: ignore
 from src.StateActions import StateActions
 from src.Action import Action
 
-class Environment[StateIndex](ABC, Dict[StateIndex, StateActions[StateIndex]]):
+class Environment[StateIndex, A: Action](ABC, Dict[StateIndex, StateActions[StateIndex]]):
+    def __init__(self,
+                 state_space: StateSpace[StateIndex, A]
+                ) -> None:
+        
+        # Dependencies.
+        self.state_space: StateSpace[StateIndex, A] = state_space
+        
     def get_next_states(self,
                         current_state: StateIndex,
                         action: Action
@@ -36,3 +44,8 @@ class Environment[StateIndex](ABC, Dict[StateIndex, StateActions[StateIndex]]):
         """Return the number of State's in the State Space."""
         
         return len(self)
+    
+    def get_state_space(self) -> StateSpace[StateIndex, A]:
+        """Return the State Space."""
+        
+        return self.state_space
