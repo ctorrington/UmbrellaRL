@@ -56,6 +56,13 @@ class Agent[StateIndex, A: Action]:
                 
             if delta < self.theta:
                 break
+            
+    def improve_policy(self) -> None:
+        """
+        Improve the Policy.
+        
+        Determine optimal actions for each State in the State Space.
+        """
 
     def calculate_state_value(self,
                               state: StateIndex
