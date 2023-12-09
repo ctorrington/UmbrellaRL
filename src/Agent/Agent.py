@@ -15,7 +15,7 @@ class Agent[StateIndex, A: Action]:
     """RL Agent."""
     
     def __init__(self,
-                 environment: Environment[StateIndex],
+                 environment: Environment[StateIndex, A],
                  state_space: StateSpace[StateIndex, A],
                  policy: BasePolicy[StateIndex, A],
                 ):
@@ -26,7 +26,7 @@ class Agent[StateIndex, A: Action]:
         self.gamma: float = 0.9
         
         # Dependencies. 
-        self.environment: Environment[StateIndex] = environment
+        self.environment: Environment[StateIndex, A] = environment
         
         self.state_space: StateSpace[StateIndex, A] = state_space
         
