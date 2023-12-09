@@ -1,5 +1,7 @@
 """RL Agent."""
 
+from typing import Dict
+
 # Dependencies.
 from src.ActionProbabilityDistribution import ActionProbabilityDistribution
 from src.StateProbabilityDistribution import StateProbabilityDistribution
@@ -63,6 +65,21 @@ class Agent[StateIndex, A: Action]:
         
         Determine optimal actions for each State in the State Space.
         """
+        
+        state_space: StateSpace[StateIndex, A] = self.environment.get_state_space()
+        
+        policy_stable: bool = True
+        
+        for state in state_space:
+            
+            old_policy_action: A = self.policy.choose_action(state)
+            
+            # TODO policy set new Action Probability Distribution method.
+            
+            if len(state_space[state].actions) > 0:
+                greedy_action = self.calculate_greedy_action(state)
+        
+        
 
     def calculate_state_value(self,
                               state: StateIndex
@@ -115,3 +132,62 @@ class Agent[StateIndex, A: Action]:
         state_space: StateSpace[StateIndex, A] = self.environment.get_state_space()
         
         state_space[state].estimated_return = value
+        
+    def calculate_greedy_action(self,
+                                state: StateIndex
+                               ) -> A:
+        """
+        Calculate the Action resulting in the highest estimated return from 
+        the given State.
+        """
+        
+        state_space: StateSpace[StateIndex, A] = self.environment.get_state_space()
+        
+        action_value_distribution: Dict[A, float] = {}
+        
+        for action in state_space[state].actions:
+            
+            next_states: StateProbabilityDistribution[StateIndex] = self.environment.get_next_states(
+                state,
+                action
+            )
+            
+            action_value: float = 0
+            
+            for next_state in next_states:
+                
+                next_state_probability: float = self.environment.get_state_transition_probability(
+                    state,
+                    action,
+                    next_state
+                )
+                
+                next_state_reward: float = state_space.get_reward(next_state)
+                
+                next_state_estimated_return: float = state_space.get_estimated_return(next_state)
+                
+                next_state_value: float = next_state_probability * (next_state_reward + (self.gamma * next_state_estimated_return))
+                
+                action_value += next_state_value
+                
+            action_value_distribution[action] = action_value
+            
+        return determine_best_action(action_value_distribution)
+    
+    def determine_best_action(self,
+                              action_value_distribution: Dict[A, float]
+                             ) -> A:
+        """Return the Action that results in the greatest estimated return."""
+        
+        best_value: float = 0
+        
+        for action in action_value_distribution:
+            
+            if action_value_distribution[action] > best_value:
+                
+                best_value = action_value_distribution[action]
+                
+                best_action: A = action
+                
+        return best_action
+            
