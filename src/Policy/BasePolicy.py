@@ -30,3 +30,17 @@ class BasePolicy[StateIndex, A: Action](ABC, Dict[StateIndex, ActionProbabilityD
         """Return the Action Probability Distribution for the given state."""
         
         return ActionProbabilityDistribution(self[state])
+    
+    def set_new_state_policy(self,
+                             state: StateIndex,
+                             new_action: A
+                            ) -> None:
+        """Set a new Policy for given State."""
+        
+        state_action_probability_distribution: ActionProbabilityDistribution[A] = self.get_action_probability_distribution(state)
+        
+        for action in state_action_probability_distribution:
+            if action == new_action:
+                self[state][action] = 1
+            else:
+                self[state][action] = 0
