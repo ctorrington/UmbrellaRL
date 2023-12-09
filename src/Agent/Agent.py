@@ -16,7 +16,6 @@ class Agent[StateIndex, A: Action]:
     
     def __init__(self,
                  environment: Environment[StateIndex, A],
-                 state_space: StateSpace[StateIndex, A],
                  policy: BasePolicy[StateIndex, A],
                 ):
         
@@ -28,8 +27,6 @@ class Agent[StateIndex, A: Action]:
         # Dependencies. 
         self.environment: Environment[StateIndex, A] = environment
         
-        self.state_space: StateSpace[StateIndex, A] = state_space
-        
         self.policy: BasePolicy[StateIndex, A] = policy
     
     def evaluate_policy(self) -> None:
@@ -39,15 +36,17 @@ class Agent[StateIndex, A: Action]:
         Determine the state-value function for the policy.
         """
         
+        state_space: StateSpace[StateIndex, A] = self.environment.get_state_space()
+        
         while True:
             delta = 0
             
-            for state in self.state_space :
+            for state in state_space:
                 
-                if self.state_space[state].is_terminal:
+                if state_space[state].is_terminal:
                     continue
                 
-                old_state_value: float = self.state_space[state].estimated_return
+                old_state_value: float = state_space[state].estimated_return
                 
                 updated_state_value: float = self.calculate_state_value(state)
                 
@@ -65,6 +64,8 @@ class Agent[StateIndex, A: Action]:
         Calcualte the value of the given state following the given policy
         in the given environment.
         """
+        
+        state_space: StateSpace[StateIndex, A] = self.environment.get_state_space()
         
         new_state_value: float = 0
         
@@ -90,9 +91,9 @@ class Agent[StateIndex, A: Action]:
                     next_state
                 )
                 
-                next_state_reward: float = self.state_space.get_reward(next_state)
+                next_state_reward: float = state_space.get_reward(next_state)
                 
-                next_state_value: float = self.state_space.get_estimated_return(next_state)
+                next_state_value: float = state_space.get_estimated_return(next_state)
                 
                 new_state_value += action_probability * next_state_probability * (next_state_reward + (self.gamma * next_state_value))
                 
@@ -104,4 +105,6 @@ class Agent[StateIndex, A: Action]:
                               ) -> None:
         """Assign the new estimated return (value) to the given State."""
         
-        self.state_space[state].estimated_return = value
+        state_space: StateSpace[StateIndex, A] = self.environment.get_state_space()
+        
+        state_space[state].estimated_return = value

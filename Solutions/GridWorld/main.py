@@ -27,7 +27,6 @@ def main():
     
     agent: Agent[Tuple[int, int], GridWorldAction] = Agent(
         environment,
-        state_space,
         policy
     )
     

@@ -19,12 +19,13 @@ from Solutions.GridWorld.Action import GridWorldAction
 # 12 13 14 15
 
 # TODO class to reprsent the Tuple[int, int] type.
-class GridWorldEnvironment(Environment[Tuple[int, int]]):
+class GridWorldEnvironment(Environment[Tuple[int, int], GridWorldAction]):
     def __init__(self,
                  state_space: GridWorldStateSpace,
                  ) -> None:
 
         # Dependencies.
+        # TODO fix these overriding errors.
         self.state_space: GridWorldStateSpace = state_space
         
         self.initialize_environment()
