@@ -187,6 +187,8 @@ class Agent[StateIndex, A: Action]:
                              ) -> A:
         """Return the Action that results in the greatest estimated return."""
         
+        # TODO possible for actions to have equal values - return both actions then, change return type to list of best Actions.
+        
         best_value: float = 0
         
         for action in action_value_distribution:
