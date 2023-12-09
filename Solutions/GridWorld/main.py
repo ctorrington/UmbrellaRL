@@ -34,6 +34,12 @@ def main():
     
     for state in state_space:
         print(f"{state} value: {state_space[state].estimated_return}")
+    
+    # TODO not functional
+    agent.improve_policy()
+    
+    for state in state_space:
+        print(f"{state} value: {state_space[state].estimated_return}")
 
 if __name__ == "__main__":
     main()

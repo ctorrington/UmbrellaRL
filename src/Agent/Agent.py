@@ -81,6 +81,11 @@ class Agent[StateIndex, A: Action]:
                 if len(state_space[state].actions) > 0:
                     new_greedy_action = self.calculate_greedy_action(state)
                     
+                self.policy.set_new_state_policy(
+                    state,
+                    new_greedy_action
+                )
+                    
             if old_policy_action != new_greedy_action:
                 policy_stable = False
 
@@ -175,7 +180,7 @@ class Agent[StateIndex, A: Action]:
                 
             action_value_distribution[action] = action_value
             
-        return determine_best_action(action_value_distribution)
+        return self.determine_best_action(action_value_distribution)
     
     def determine_best_action(self,
                               action_value_distribution: Dict[A, float]
