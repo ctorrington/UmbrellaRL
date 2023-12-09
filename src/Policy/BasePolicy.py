@@ -17,7 +17,7 @@ from src.Action import Action
 
 class BasePolicy[StateIndex, A: Action](ABC, Dict[StateIndex, ActionProbabilityDistribution[A]]):
     @abstractmethod
-    def choose_action(self, state: StateIndex) -> Action:
+    def choose_action(self, state: StateIndex) -> A:
         """
         Policy selects an action for the given State according to the State's
         Action Probability Distribution & the goal of the Policy.
