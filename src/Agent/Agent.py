@@ -70,16 +70,19 @@ class Agent[StateIndex, A: Action]:
         
         policy_stable: bool = True
         
-        for state in state_space:
-            
-            old_policy_action: A = self.policy.choose_action(state)
-            
-            # TODO policy set new Action Probability Distribution method.
-            
-            if len(state_space[state].actions) > 0:
-                greedy_action = self.calculate_greedy_action(state)
+        while policy_stable:
         
-        
+            for state in state_space:
+                
+                old_policy_action: A = self.policy.choose_action(state)
+                
+                # TODO policy set new Action Probability Distribution method.
+                
+                if len(state_space[state].actions) > 0:
+                    new_greedy_action = self.calculate_greedy_action(state)
+                    
+            if old_policy_action != new_greedy_action:
+                policy_stable = False
 
     def calculate_state_value(self,
                               state: StateIndex
