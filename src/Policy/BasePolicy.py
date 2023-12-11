@@ -30,7 +30,8 @@ class BasePolicy[StateIndex, A: Action](ABC, Dict[StateIndex, ActionProbabilityD
         """Return the Action Probability Distribution for the given state."""
         
         return ActionProbabilityDistribution(self[state])
-    
+   
+    # TODO should not be a list (this is equiprobable)
     def set_new_state_policy(self,
                              state: StateIndex,
                              new_actions: List[A]
