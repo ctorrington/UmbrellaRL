@@ -134,6 +134,7 @@ class Agent[StateIndex, A: Action]:
                 
                 next_state_value: float = state_space.get_estimated_return(next_state)
                 
+                # TODO Bellman function for below equation.
                 new_state_value += action_probability * next_state_probability * (next_state_reward + (self.gamma * next_state_value))
                 
         return new_state_value
