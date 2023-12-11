@@ -8,7 +8,7 @@ their probability of being taken by the Policy.
 """
 
 from abc import ABC, abstractmethod
-from typing import Dict
+from typing import Dict, List
 
 from src.ActionProbabilityDistribution import ActionProbabilityDistribution
 from src.StateIndex import StateIndex # type: ignore
@@ -33,14 +33,16 @@ class BasePolicy[StateIndex, A: Action](ABC, Dict[StateIndex, ActionProbabilityD
     
     def set_new_state_policy(self,
                              state: StateIndex,
-                             new_action: A
+                             new_actions: List[A]
                             ) -> None:
         """Set a new Policy for given State."""
         
         state_action_probability_distribution: ActionProbabilityDistribution[A] = self.get_action_probability_distribution(state)
         
+        new_action_probability: float = 1 / len(new_actions)
+        
         for action in state_action_probability_distribution:
-            if action == new_action:
-                self[state][action] = 1
+            if action in new_actions:
+                self[state][action] = new_action_probability
             else:
                 self[state][action] = 0

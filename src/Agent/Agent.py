@@ -1,6 +1,6 @@
 """RL Agent."""
 
-from typing import Dict
+from typing import Dict, List
 
 # Dependencies.
 from src.ActionProbabilityDistribution import ActionProbabilityDistribution
@@ -12,6 +12,7 @@ from src.StateIndex import StateIndex # type: ignore
 from src.Action import Action
 
 # TODO StateSpace should not be injected into Agent. Env should have a getSS method.
+# TODO Desperately need a service class.
 
 class Agent[StateIndex, A: Action]:
     """RL Agent."""
@@ -70,24 +71,30 @@ class Agent[StateIndex, A: Action]:
         
         policy_stable: bool = True
         
-        while policy_stable:
+        while True:
         
             for state in state_space:
                 
-                old_policy_action: A = self.policy.choose_action(state)
+                # TODO create has_actions method
+                if len(state_space[state].actions) == 0:
+                    continue
                 
-                # TODO policy set new Action Probability Distribution method.
+                old_state_policy: ActionProbabilityDistribution[A] = self.policy.get_action_probability_distribution(state)
                 
-                if len(state_space[state].actions) > 0:
-                    new_greedy_action = self.calculate_greedy_action(state)
+                new_greedy_actions: List[A] = self.calculate_greedy_actions(state)
                     
                 self.policy.set_new_state_policy(
                     state,
-                    new_greedy_action
+                    new_greedy_actions
                 )
+                
+                new_state_policy: ActionProbabilityDistribution[A] = self.policy.get_action_probability_distribution(state)
                     
-            if old_policy_action != new_greedy_action:
-                policy_stable = False
+                if old_state_policy != new_state_policy:
+                    policy_stable = False
+                    
+            if policy_stable:
+                break
 
     def calculate_state_value(self,
                               state: StateIndex
@@ -141,9 +148,9 @@ class Agent[StateIndex, A: Action]:
         
         state_space[state].estimated_return = value
         
-    def calculate_greedy_action(self,
+    def calculate_greedy_actions(self,
                                 state: StateIndex
-                               ) -> A:
+                               ) -> List[A]:
         """
         Calculate the Action resulting in the highest estimated return from 
         the given State.
@@ -180,16 +187,16 @@ class Agent[StateIndex, A: Action]:
                 
             action_value_distribution[action] = action_value
             
-        return self.determine_best_action(action_value_distribution)
+        return self.determine_best_actions(action_value_distribution)
     
-    def determine_best_action(self,
+    def determine_best_actions(self,
                               action_value_distribution: Dict[A, float]
-                             ) -> A:
+                             ) -> List[A]:
         """Return the Action that results in the greatest estimated return."""
         
-        # TODO possible for actions to have equal values - return both actions then, change return type to list of best Actions.
-        
         best_value: float = 0
+        
+        best_actions: List[A] = []
         
         for action in action_value_distribution:
             
@@ -197,7 +204,7 @@ class Agent[StateIndex, A: Action]:
                 
                 best_value = action_value_distribution[action]
                 
-                best_action: A = action
+                best_actions.append(action)
                 
-        return best_action
+        return best_actions
             
