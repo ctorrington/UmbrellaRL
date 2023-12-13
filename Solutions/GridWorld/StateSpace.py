@@ -1,6 +1,6 @@
 """State Space for the Grid World."""
 
-from typing import Tuple, List
+from typing import Any, Tuple, List
 
 from src.StateSpace import StateSpace
 
@@ -33,6 +33,11 @@ class GridWorldStateSpace(StateSpace[Tuple[int, int], GridWorldAction]):
                 self[(row, column)] = grid_world_state
                 
         for state in terminal_states:
+            
             self[state].is_terminal = True
+            
             self[state].reward = 1.0
-                
+            
+    def get_dimensions(self) -> Tuple[Any, ...]:
+        
+        return (self.number_of_rows, self.number_of_columns)
