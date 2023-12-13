@@ -5,7 +5,8 @@ Structure containing every State in the Environment that can be interacted with
 by a reinforcement learning Agent.
 """
 
-from typing import Dict
+from typing import Dict, Tuple, Any
+from abc import ABC, abstractmethod
 
 from src.State import State
 # I don't think that this is a problem.
@@ -13,7 +14,7 @@ from src.State import State
 from src.StateIndex import StateIndex # type: ignore
 from src.Action import Action
 
-class StateSpace[StateIndex, A: Action](Dict[StateIndex, State[A]]):
+class StateSpace[StateIndex, A: Action](ABC, Dict[StateIndex, State[A]]):
     """
     Structure containing every State in the Environment that can be interacted 
     with by a reinforcement learning Agent.
@@ -42,3 +43,10 @@ class StateSpace[StateIndex, A: Action](Dict[StateIndex, State[A]]):
         """Return the estimated return (value) of the given State."""
         
         return self[key].estimated_return
+    
+    # TODO Any type here, & any reference to StateIndex, needs to change to be bound to a type (similar to Action).
+    @abstractmethod
+    def get_dimensions(self) -> Tuple[Any, ...]:
+        """Return the dimensions of the State Space."""
+        
+        pass
