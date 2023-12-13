@@ -7,6 +7,8 @@ from Solutions.GridWorld.Action import GridWorldAction
 from Solutions.GridWorld.GridWorldEnvironment import GridWorldEnvironment
 from Solutions.GridWorld.Policy import GridWorldEquiprobablePolicy
 
+from Graphing.graphing import Graphing
+
 def main():
     
     number_of_rows: int = 4
@@ -39,6 +41,10 @@ def main():
     
     for state in state_space:
         print(f"{state} value: {state_space[state].estimated_return}. Policy: {policy.get_action_probability_distribution(state)}")
+        
+    graph = Graphing(agent)
+    
+    graph.plot_state_value_function()
 
 if __name__ == "__main__":
     main()
