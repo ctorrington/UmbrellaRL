@@ -31,6 +31,8 @@ class GridWorldEnvironment(Environment[Tuple[int, int], GridWorldAction]):
         self.initialize_environment()
         
     def initialize_environment(self) -> None:
+        # TODO Terminal States probably should not have actions.
+        
         for state in self.state_space:
             state_actions: StateActions[Tuple[int, int], GridWorldAction] = self.determine_state_actions(state)
             self[state] = state_actions
