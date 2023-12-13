@@ -1,7 +1,7 @@
 """Graphing class for UmbrellaRL package."""
 
 import matplotlib.pyplot as plt
-from typing import List
+from typing import List, Tuple
 
 from src.StateIndex import StateIndex
 from src.Action import Action
@@ -25,16 +25,26 @@ class Graphing[StateIndex, A: Action]():
         
         state_space: StateSpace[StateIndex, A] = self.agent.environment.get_state_space()
         
+        z_axis_data: List[float] = self.get_z_axis_data(state_space)
+        
+        fig, ax = plt.subplots()
+        
+        ax.imshow(z_axis_data)
+        
+        plt.show()
+        
     def get_z_axis_data(self,
-                        # TODO data for z-axis supports more types.
                         state_space: StateSpace[StateIndex, A],
                        ) -> List[float]:
         # TODO data for z-axis supports more types.
         # TODO variable attribute retrieved from data.
+        # TODO I am not sure how to make this applicable to any type or range of State Spaces.
         """
         Return the z-axis from the given data collection to be displayed by 
         a graph.
         """
+        
+        (x_range, y_range) = self.agent.environment.get_state_space().get_dimensions()
         
         z_axis_data: List[float] = []
         
