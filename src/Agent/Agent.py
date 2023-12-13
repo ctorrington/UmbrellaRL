@@ -13,6 +13,7 @@ from src.Action import Action
 
 # TODO StateSpace should not be injected into Agent. Env should have a getSS method.
 # TODO Desperately need a service class.
+# TODO Look into publishing to twine on release.
 
 class Agent[StateIndex, A: Action]:
     """RL Agent."""
