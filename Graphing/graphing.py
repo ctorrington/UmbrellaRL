@@ -32,23 +32,10 @@ class Graphing[StateIndex, A: Action]():
         ax.imshow(z_axis_data)
         
         plt.show()
+
+    def deterine_graph_dimensionality(self,
+                                      key: StateIndex
+                                     ) -> int:
+        """Return the dimension required to plot the graph."""
         
-    def get_z_axis_data(self,
-                        state_space: StateSpace[StateIndex, A],
-                       ) -> List[float]:
-        # TODO data for z-axis supports more types.
-        # TODO variable attribute retrieved from data.
-        # TODO I am not sure how to make this applicable to any type or range of State Spaces.
-        """
-        Return the z-axis from the given data collection to be displayed by 
-        a graph.
-        """
-        
-        (x_range, y_range) = self.agent.environment.get_state_space().get_dimensions()
-        
-        z_axis_data: List[float] = []
-        
-        for state in state_space:
-            z_axis_data.append(state_space[state].estimated_return)
-            
-        return z_axis_data
+        return 2
