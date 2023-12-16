@@ -7,6 +7,7 @@ Currently supported graph dimensions:
 """
 
 import matplotlib.pyplot as plt
+from matplotlib.axes import Axes
 import numpy as np
 
 from src.StateIndex import StateIndex
@@ -17,7 +18,7 @@ from src.StateSpace import StateSpace
 class Graphing[SI: StateIndex, A: Action]():
     """Graphing class for UmbrellaRL package."""
     
-   # TODO overarching method that prints some dashboard with lots of lots.
+   # TODO Service class.
    
     def __init__(self,
                  agent: Agent[SI, A]
@@ -60,9 +61,10 @@ class Graphing[SI: StateIndex, A: Action]():
             img = ax.imshow(
                 values,
                 cmap = 'viridis',
-                interpolation = 'nearest',
-                origin = 'lower'
+                interpolation = 'nearest'
             )
+            
+            self.plot_available_actions(ax)
             
             plt.colorbar(img)
             
@@ -80,3 +82,37 @@ class Graphing[SI: StateIndex, A: Action]():
         else:
             
             raise ValueError("Unsupported StateIndex type.")
+        
+    def plot_available_actions(self,
+                               ax: Axes
+                              ) -> None:
+        """Plot Actions available to each State."""
+        
+        state_space: StateSpace[SI, A] = self.agent.environment.get_state_space()
+        
+        for state in state_space:
+            
+            available_actions = state_space[state].actions
+            
+            for action in available_actions:
+                
+                next_states = self.agent.environment.get_next_states(
+                    state,
+                    action,
+                )
+                
+                for next_state in next_states:
+                    
+                    if next_state == state:
+                        continue
+                    
+                    current_state_index: SI = state
+                    
+                    next_state_index: SI = next_state
+                    
+                    ax.annotate(
+                        "",
+                        xytext = current_state_index,
+                        xy = next_state_index,
+                        arrowprops = dict(arrowstyle = "->")
+                    )

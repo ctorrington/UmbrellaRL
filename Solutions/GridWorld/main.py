@@ -35,13 +35,6 @@ def main():
     for state in state_space:
         print(f"{state} value: {state_space[state].estimated_return}. Policy: {policy.get_action_probability_distribution(state)}")
     
-    agent.improve_policy()
-    
-    agent.evaluate_policy()
-    
-    for state in state_space:
-        print(f"{state} value: {state_space[state].estimated_return}. Policy: {policy.get_action_probability_distribution(state)}")
-        
     graph = Graphing(agent)
     
     graph.plot_state_value_function()
