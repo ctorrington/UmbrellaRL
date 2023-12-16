@@ -1,14 +1,20 @@
-"""Graphing class for UmbrellaRL package."""
+"""
+Graphing class for UmbrellaRL package.
+
+Currently supported graph dimensions:
+    - 2D
+
+"""
 
 import matplotlib.pyplot as plt
-from typing import List, Tuple
+from typing import List
 
 from src.StateIndex import StateIndex
 from src.Action import Action
 from src.Agent.Agent import Agent
 from src.StateSpace import StateSpace
 
-class Graphing[StateIndex, A: Action]():
+class Graphing[A: Action]():
     """Graphing class for UmbrellaRL package."""
     
    # TODO overarching method that prints some dashboard with lots of lots.
@@ -38,4 +44,10 @@ class Graphing[StateIndex, A: Action]():
                                      ) -> int:
         """Return the dimension required to plot the graph."""
         
-        return 2
+        if isinstance(key, tuple):
+            
+            return len(key)
+        
+        else:
+            
+            raise ValueError("Unsupported StateIndex type.")
