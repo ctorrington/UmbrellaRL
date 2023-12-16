@@ -6,8 +6,13 @@ Currently supported graph dimensions:
 
 """
 
-import matplotlib.pyplot as plt
 from typing import List
+
+import matplotlib.pyplot as plt
+import numpy as np
+import numpy.typing as npt
+from matplotlib.axes import Axes
+from matplotlib.image import AxesImage
 
 from src.StateIndex import StateIndex
 from src.Action import Action
@@ -18,7 +23,7 @@ class Graphing[A: Action]():
     """Graphing class for UmbrellaRL package."""
     
    # TODO overarching method that prints some dashboard with lots of lots.
-    
+   
     def __init__(self,
                  agent: Agent[StateIndex, A]
                 ) -> None:
@@ -31,14 +36,41 @@ class Graphing[A: Action]():
         
         state_space: StateSpace[StateIndex, A] = self.agent.environment.get_state_space()
         
-        z_axis_data: List[float] = self.get_z_axis_data(state_space)
+        # TODO add check for empty State Space.
+        dimensionality: int = self.deterine_graph_dimensionality(next(iter(state_space.keys())))
         
-        fig, ax = plt.subplots()
-        
-        ax.imshow(z_axis_data)
-        
-        plt.show()
-
+        if dimensionality == 2:
+            
+            x, y = zip(*state_space.keys())
+            
+            values = np.zeros((max(x) + 1, max(y) + 1))
+            
+            for key, v in state_space.items():
+                
+                if isinstance(key, tuple) and len(key) == 2:
+                    
+                    i, j = key
+                    
+                    values[i, j] = v
+                    
+                else:
+                    
+                    # TODO proper handle here.
+                    print(f"Ignoring invalid key: {key}.")
+                    
+            ax: Axes = plt.gca()
+            
+            img: AxesImage = ax.imshow(
+                values,
+                cmap = 'virdis',
+                interpolation = 'nearest',
+                origin = 'lower'
+            )
+            
+            plt.colorbar(img)
+            
+            plt.show()
+            
     def deterine_graph_dimensionality(self,
                                       key: StateIndex
                                      ) -> int:
