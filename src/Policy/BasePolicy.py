@@ -14,6 +14,7 @@ from src.ActionProbabilityDistribution import ActionProbabilityDistribution
 from src.StateIndex import StateIndex
 from src.Action import Action
 
+# TODO Relook at the Policies, they need to be tidied up.
 
 class BasePolicy[SI: StateIndex, A: Action](ABC, Dict[SI, ActionProbabilityDistribution[A]]):
     @abstractmethod
@@ -34,6 +35,26 @@ class BasePolicy[SI: StateIndex, A: Action](ABC, Dict[SI, ActionProbabilityDistr
         """Return the Action Probability Distribution for the given state."""
         
         return ActionProbabilityDistribution(self[state])
+    
+    def get_greedy_actions(self,
+                           state: SI
+                          ) -> List[A]:
+        """Return the Actions with the highest probability of being chosen."""
+        
+        greedy_actions: List[A] = []
+        
+        greedy_value = max(self.get_action_probability_distribution(state).values())
+        
+        action_prob_dist = self[state]
+        
+        for action in action_prob_dist:
+            
+            # TODO idk why this is needed.
+            if ActionProbabilityDistribution(action_prob_dist).get_action_probability(action) >= greedy_value:
+                
+                greedy_actions.append(action)
+        
+        return greedy_actions
    
     # TODO should not be a list (this is equiprobable)
     def set_new_state_policy(self,

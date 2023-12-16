@@ -54,8 +54,6 @@ class Graphing[SI: StateIndex, A: Action]():
                     # TODO proper handle here.
                     print(f"Ignoring invalid key: {key}.")
                     
-            # ax: Axes = plt.gca()
-            
             fig, ax = plt.subplots()
             
             img = ax.imshow(
@@ -64,7 +62,8 @@ class Graphing[SI: StateIndex, A: Action]():
                 interpolation = 'nearest'
             )
             
-            self.plot_available_actions(ax)
+            # self.plot_available_actions(ax)
+            self.plot_policy_greedy_actions(ax)
             
             plt.colorbar(img)
             

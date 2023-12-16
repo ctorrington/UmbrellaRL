@@ -20,4 +20,4 @@ class ActionProbabilityDistribution[A: Action](dict[A, float]):
         
         # TODO potential recursive call. no biggie.
         
-        return self[action]
+        return super().get(action, 0)
