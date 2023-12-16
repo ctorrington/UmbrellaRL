@@ -83,6 +83,40 @@ class Graphing[SI: StateIndex, A: Action]():
             
             raise ValueError("Unsupported StateIndex type.")
         
+    def plot_policy_greedy_actions(self,
+                            ax: Axes
+                           ) -> None:
+        """Plot Actions chosen by the Policy for each State."""
+        
+        state_space: StateSpace[SI, A] = self.agent.environment.get_state_space()
+        
+        for state in state_space:
+            
+            policy_greedy_actions = self.agent.policy.get_greedy_actions(state)
+            
+            for action in policy_greedy_actions:
+                
+                next_states = self.agent.environment.get_next_states(
+                    state,
+                    action
+                )
+                
+                for next_state in next_states:
+                    
+                    if next_state == state:
+                        continue
+                    
+                    current_state_index: SI = state
+                    
+                    next_state_index: SI = next_state
+                    
+                    ax.annotate(
+                        "",
+                        xytext = current_state_index,
+                        xy = next_state_index,
+                        arrowprops = dict(arrowstyle = "->")
+                    )
+            
     def plot_available_actions(self,
                                ax: Axes
                               ) -> None:
