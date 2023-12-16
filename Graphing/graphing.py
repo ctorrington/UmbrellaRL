@@ -8,8 +8,6 @@ Currently supported graph dimensions:
 
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.axes import Axes
-from matplotlib.image import AxesImage
 
 from src.StateIndex import StateIndex
 from src.Action import Action
@@ -42,24 +40,26 @@ class Graphing[SI: StateIndex, A: Action]():
             
             values = np.zeros((max(x) + 1, max(y) + 1))
             
-            for key, v in state_space.items():
+            for state_index, state in state_space.items():
                 
-                if isinstance(key, tuple) and len(key) == 2:
+                if isinstance(state_index, tuple) and len(state_index) == 2:
                     
-                    i, j = key
+                    i, j = state_index
                     
-                    values[i, j] = v
+                    values[i, j] = state.estimated_return
                     
                 else:
                     
                     # TODO proper handle here.
                     print(f"Ignoring invalid key: {key}.")
                     
-            ax: Axes = plt.gca()
+            # ax: Axes = plt.gca()
             
-            img: AxesImage = ax.imshow(
+            fig, ax = plt.subplots()
+            
+            img = ax.imshow(
                 values,
-                cmap = 'virdis',
+                cmap = 'viridis',
                 interpolation = 'nearest',
                 origin = 'lower'
             )
