@@ -11,10 +11,10 @@ from abc import ABC, abstractmethod
 from src.State import State
 # I don't think that this is a problem.
 # But is also potentially a problem if the generic type isn't being used.
-from src.StateIndex import StateIndex # type: ignore
+from src.StateIndex import StateIndex
 from src.Action import Action
 
-class StateSpace[StateIndex, A: Action](ABC, Dict[StateIndex, State[A]]):
+class StateSpace[SI: StateIndex, A: Action](ABC, Dict[SI, State[A]]):
     """
     Structure containing every State in the Environment that can be interacted 
     with by a reinforcement learning Agent.
@@ -24,21 +24,21 @@ class StateSpace[StateIndex, A: Action](ABC, Dict[StateIndex, State[A]]):
     Injected into Environment.
     """
 
-    def __getattr__(self, key: StateIndex):
+    def __getattr__(self, key: SI):
         if key in self:
             return self[key]
         else:
             raise AttributeError(f"StateSpace object has not attribute '{key}'")
         
     def get_reward(self,
-                   key: StateIndex
+                   key: SI
                   ) -> float:
         """Return the reward of the given State."""
         
         return self[key].reward
     
     def get_estimated_return(self,
-                             key: StateIndex
+                             key: SI
                             ) -> float:
         """Return the estimated return (value) of the given State."""
         

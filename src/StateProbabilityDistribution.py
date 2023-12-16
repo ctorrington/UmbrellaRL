@@ -9,16 +9,16 @@ Used by the Environment.
 
 from typing import Dict
 
-from src.StateIndex import StateIndex # type: ignore
+from src.StateIndex import StateIndex
 
-class StateProbabilityDistribution[StateIndex](Dict[StateIndex, float]):
+class StateProbabilityDistribution[SI: StateIndex](Dict[SI, float]):
     def __getitem__(self,
-                    key: StateIndex
+                    key: SI
                    ) -> float:
         return self[key]
     
     def get_state_probability(self,
-                              state: StateIndex
+                              state: SI
                              ) -> float:
         """Return the probability of reaching the given State."""
         

@@ -11,13 +11,15 @@ from abc import ABC, abstractmethod
 from typing import Dict, List
 
 from src.ActionProbabilityDistribution import ActionProbabilityDistribution
-from src.StateIndex import StateIndex # type: ignore
+from src.StateIndex import StateIndex
 from src.Action import Action
 
 
-class BasePolicy[StateIndex, A: Action](ABC, Dict[StateIndex, ActionProbabilityDistribution[A]]):
+class BasePolicy[SI: StateIndex, A: Action](ABC, Dict[SI, ActionProbabilityDistribution[A]]):
     @abstractmethod
-    def choose_action(self, state: StateIndex) -> A:
+    def choose_action(self,
+                      state: SI
+                     ) -> A:
         """
         Policy selects an action for the given State according to the State's
         Action Probability Distribution & the goal of the Policy.
@@ -26,14 +28,16 @@ class BasePolicy[StateIndex, A: Action](ABC, Dict[StateIndex, ActionProbabilityD
         pass
 
     @abstractmethod
-    def get_action_probability_distribution(self, state: StateIndex) -> ActionProbabilityDistribution[A]:
+    def get_action_probability_distribution(self,
+                                            state: SI
+                                           ) -> ActionProbabilityDistribution[A]:
         """Return the Action Probability Distribution for the given state."""
         
         return ActionProbabilityDistribution(self[state])
    
     # TODO should not be a list (this is equiprobable)
     def set_new_state_policy(self,
-                             state: StateIndex,
+                             state: SI,
                              new_actions: List[A]
                             ) -> None:
         """Set a new Policy for given State."""

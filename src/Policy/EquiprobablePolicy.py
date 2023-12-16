@@ -11,20 +11,20 @@ from typing import List
 from src.ActionProbabilityDistribution import ActionProbabilityDistribution
 from src.Policy.BasePolicy import BasePolicy
 from src.StateSpace import StateSpace
-from src.StateIndex import StateIndex # type: ignore
+from src.StateIndex import StateIndex
 from src.Action import Action
 
-class EquiprobablePolicy[StateIndex, A: Action](BasePolicy[StateIndex, A]):
+class EquiprobablePolicy[SI: StateIndex, A: Action](BasePolicy[SI, A]):
     def __init__(self,
-                 state_space: StateSpace[StateIndex, A]
+                 state_space: StateSpace[SI, A]
                 ) -> None:
         
-        self.state_space: StateSpace[StateIndex, A] = state_space
+        self.state_space: StateSpace[SI, A] = state_space
         
         for state in self.state_space:
             
             # TODO Below needed for assigning action probability in next loop.
-                # Figure out how to assign a type here.
+                # Figure out how to assign a type here. figure out default dic
             self[state] = {}
             
             # TODO division by zero risk.
@@ -35,7 +35,7 @@ class EquiprobablePolicy[StateIndex, A: Action](BasePolicy[StateIndex, A]):
                 self[state][action] = action_probability
             
     def choose_action(self,
-                      state: StateIndex
+                      state: SI
                      ) -> A:
         """Choose an action based on the Action Probability Distribution."""
 
@@ -44,7 +44,7 @@ class EquiprobablePolicy[StateIndex, A: Action](BasePolicy[StateIndex, A]):
         return random.choice(actions)
 
     def get_action_probability_distribution(self,
-                                            state: StateIndex
+                                            state: SI
                                            ) -> ActionProbabilityDistribution[A]:
 
         return self[state]

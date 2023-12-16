@@ -6,11 +6,8 @@ Currently supported graph dimensions:
 
 """
 
-from typing import List
-
 import matplotlib.pyplot as plt
 import numpy as np
-import numpy.typing as npt
 from matplotlib.axes import Axes
 from matplotlib.image import AxesImage
 
@@ -19,13 +16,13 @@ from src.Action import Action
 from src.Agent.Agent import Agent
 from src.StateSpace import StateSpace
 
-class Graphing[A: Action]():
+class Graphing[SI: StateIndex, A: Action]():
     """Graphing class for UmbrellaRL package."""
     
    # TODO overarching method that prints some dashboard with lots of lots.
    
     def __init__(self,
-                 agent: Agent[StateIndex, A]
+                 agent: Agent[SI, A]
                 ) -> None:
         
         # Dependencies.
@@ -34,7 +31,7 @@ class Graphing[A: Action]():
     def plot_state_value_function(self):
         """Plot the State Value Function of the State Space."""
         
-        state_space: StateSpace[StateIndex, A] = self.agent.environment.get_state_space()
+        state_space: StateSpace[SI, A] = self.agent.environment.get_state_space()
         
         # TODO add check for empty State Space.
         dimensionality: int = self.deterine_graph_dimensionality(next(iter(state_space.keys())))
@@ -72,7 +69,7 @@ class Graphing[A: Action]():
             plt.show()
             
     def deterine_graph_dimensionality(self,
-                                      key: StateIndex
+                                      key: SI
                                      ) -> int:
         """Return the dimension required to plot the graph."""
         

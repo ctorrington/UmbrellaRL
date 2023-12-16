@@ -8,19 +8,19 @@ from src.StateProbabilityDistribution import StateProbabilityDistribution
 from src.StateSpace import StateSpace
 from src.Environment.Environment import Environment
 from src.Policy.BasePolicy import BasePolicy
-from src.StateIndex import StateIndex # type: ignore
+from src.StateIndex import StateIndex
 from src.Action import Action
 
 # TODO StateSpace should not be injected into Agent. Env should have a getSS method.
 # TODO Desperately need a service class.
 # TODO Look into publishing to twine on release.
 
-class Agent[StateIndex, A: Action]:
+class Agent[SI: StateIndex, A: Action]:
     """RL Agent."""
     
     def __init__(self,
-                 environment: Environment[StateIndex, A],
-                 policy: BasePolicy[StateIndex, A],
+                 environment: Environment[SI, A],
+                 policy: BasePolicy[SI, A],
                 ):
         
         # Value function parameters.
@@ -29,9 +29,9 @@ class Agent[StateIndex, A: Action]:
         self.gamma: float = 0.9
         
         # Dependencies. 
-        self.environment: Environment[StateIndex, A] = environment
+        self.environment: Environment[SI, A] = environment
         
-        self.policy: BasePolicy[StateIndex, A] = policy
+        self.policy: BasePolicy[SI, A] = policy
     
     def evaluate_policy(self) -> None:
         """
@@ -40,7 +40,7 @@ class Agent[StateIndex, A: Action]:
         Determine the state-value function for the policy.
         """
         
-        state_space: StateSpace[StateIndex, A] = self.environment.get_state_space()
+        state_space: StateSpace[SI, A] = self.environment.get_state_space()
         
         while True:
             delta = 0
@@ -68,7 +68,7 @@ class Agent[StateIndex, A: Action]:
         Determine optimal actions for each State in the State Space.
         """
         
-        state_space: StateSpace[StateIndex, A] = self.environment.get_state_space()
+        state_space: StateSpace[SI, A] = self.environment.get_state_space()
         
         policy_stable: bool = True
         
@@ -98,14 +98,14 @@ class Agent[StateIndex, A: Action]:
                 break
 
     def calculate_state_value(self,
-                              state: StateIndex
+                              state: SI
                              ) -> float:
         """
         Calcualte the value of the given state following the given policy
         in the given environment.
         """
         
-        state_space: StateSpace[StateIndex, A] = self.environment.get_state_space()
+        state_space: StateSpace[SI, A] = self.environment.get_state_space()
         
         new_state_value: float = 0
         
@@ -118,7 +118,7 @@ class Agent[StateIndex, A: Action]:
             # TODO I dont understand why the line below does not work.
             # action_probability: float = state_action_probability_distribution.get_action_probability(action)
             
-            next_states: StateProbabilityDistribution[StateIndex] = self.environment.get_next_states(
+            next_states: StateProbabilityDistribution[SI] = self.environment.get_next_states(
                 state,
                 action
             )
@@ -141,30 +141,30 @@ class Agent[StateIndex, A: Action]:
         return new_state_value
     
     def assign_new_state_estimated_return(self,
-                               state: StateIndex,
+                               state: SI,
                                value: float
                               ) -> None:
         """Assign the new estimated return (value) to the given State."""
         
-        state_space: StateSpace[StateIndex, A] = self.environment.get_state_space()
+        state_space: StateSpace[SI, A] = self.environment.get_state_space()
         
         state_space[state].estimated_return = value
         
     def calculate_greedy_actions(self,
-                                state: StateIndex
+                                state: SI
                                ) -> List[A]:
         """
         Calculate the Action resulting in the highest estimated return from 
         the given State.
         """
         
-        state_space: StateSpace[StateIndex, A] = self.environment.get_state_space()
+        state_space: StateSpace[SI, A] = self.environment.get_state_space()
         
         action_value_distribution: Dict[A, float] = {}
         
         for action in state_space[state].actions:
             
-            next_states: StateProbabilityDistribution[StateIndex] = self.environment.get_next_states(
+            next_states: StateProbabilityDistribution[SI] = self.environment.get_next_states(
                 state,
                 action
             )
