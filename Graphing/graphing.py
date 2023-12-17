@@ -10,10 +10,13 @@ import matplotlib.pyplot as plt
 from matplotlib.axes import Axes
 import numpy as np
 
+from typing import List
+
 from src.StateIndex import StateIndex
 from src.Action import Action
 from src.Agent.Agent import Agent
 from src.StateSpace import StateSpace
+from src.StateProbabilityDistribution import StateProbabilityDistribution
 
 class Graphing[SI: StateIndex, A: Action]():
     """Graphing class for UmbrellaRL package."""
@@ -94,38 +97,11 @@ class Graphing[SI: StateIndex, A: Action]():
             
             policy_greedy_actions = self.agent.policy.get_greedy_actions(state)
             
-            for action in policy_greedy_actions:
-                
-                next_states = self.agent.environment.get_next_states(
-                    state,
-                    action
-                )
-                
-                for next_state in next_states:
-                    
-                    if next_state == state:
-                        continue
-                    
-                    current_state_index: SI = state
-                    
-                    next_state_index: SI = next_state
-                    
-                    current_center_x, current_center_y = current_state_index
-                    
-                    next_center_x, next_center_y = next_state_index
-                    
-                    direction_vector = (next_center_x - current_center_x, next_center_y - current_center_y)
-                    
-                    scaled_direction = (direction_vector[0] * 0.5, direction_vector[1] * 0.5)
-                    
-                    xy = (next_center_x - scaled_direction[0], next_center_y - scaled_direction[1])
-                    
-                    ax.annotate(
-                        "",
-                        xytext = current_state_index,
-                        xy = xy,
-                        arrowprops = dict(arrowstyle = "->")
-                    )
+            self.plot_actions(
+                state,
+                policy_greedy_actions,
+                ax
+            )
             
     def plot_available_actions(self,
                                ax: Axes
@@ -138,35 +114,51 @@ class Graphing[SI: StateIndex, A: Action]():
             
             available_actions = state_space[state].actions
             
-            for action in available_actions:
+            self.plot_actions(
+                state,
+                available_actions,
+                ax
+            )
+            
+    def plot_actions(self,
+                     state: SI,
+                     actions: List[A],
+                     ax: Axes
+                    ) -> None:
+        """Plot the provided Actions as annotations on the given axes."""
+        
+        for action in actions:
+            
+            next_states: StateProbabilityDistribution[SI] = self.agent.environment.get_next_states(
+                state,
+                action
+            )
+            
+            for next_state in next_states:
                 
-                next_states = self.agent.environment.get_next_states(
-                    state,
-                    action,
+                if next_state == state:
+                    continue
+                
+                current_state_index: SI = state
+                
+                next_state_index: SI = next_state
+                
+                current_center_x, current_center_y = current_state_index
+                
+                next_center_x, next_center_y = next_state_index
+                
+                direction_vector = (next_center_x - current_center_x, 
+                                    next_center_y - current_center_y)
+                
+                scaled_direction = (direction_vector[0] * 0.5,
+                                    direction_vector[1] * 0.5)
+                
+                xy = (next_center_x - scaled_direction[0],
+                      next_center_y - scaled_direction[1])
+                
+                ax.annotate(
+                    "",
+                    xytext = current_state_index,
+                    xy = xy,
+                    arrowprops = dict(arrowstyle = "->")
                 )
-                
-                for next_state in next_states:
-                    
-                    if next_state == state:
-                        continue
-                    
-                    current_state_index: SI = state
-                    
-                    next_state_index: SI = next_state
-                    
-                    current_center_x, current_center_y = current_state_index
-                    
-                    next_center_x, next_center_y = next_state_index
-                    
-                    direction_vector = (next_center_x - current_center_x, next_center_y - current_center_y)
-                    
-                    scaled_direction = (direction_vector[0] * 0.5, direction_vector[1] * 0.5)
-                    
-                    xy = (next_center_x - scaled_direction[0], next_center_y - scaled_direction[1])
-                    
-                    ax.annotate(
-                        "",
-                        xytext = current_state_index,
-                        xy = xy,
-                        arrowprops = dict(arrowstyle = "->")
-                    )
