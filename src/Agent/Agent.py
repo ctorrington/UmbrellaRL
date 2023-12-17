@@ -1,10 +1,9 @@
 """RL Agent."""
 
-from typing import Dict, List
+from typing import List
 
 # Dependencies.
 from src.ActionProbabilityDistribution import ActionProbabilityDistribution
-from src.StateProbabilityDistribution import StateProbabilityDistribution
 from src.StateSpace import StateSpace
 from src.Environment.Environment import Environment
 from src.Policy.BasePolicy import BasePolicy
@@ -12,7 +11,6 @@ from src.StateIndex import StateIndex
 from src.Action import Action
 from src.Agent.AgentService import AgentService
 
-# TODO Desperately need a service class.
 # TODO Look into publishing to twine on release.
 # TODO Need option to improve Policy without changing the current State Space. (in place)
     # Need copy of old State Value function, improve according to those values - set State Value Function to those updated values all at once (optional, include with current implementation)
@@ -55,7 +53,13 @@ class Agent[SI: StateIndex, A: Action]:
                 
                 old_state_value: float = state_space[state].estimated_return
                 
-                updated_state_value: float = self.calculate_state_value(state)
+                updated_state_value: float = AgentService.calculate_bellman_equation(
+                    state,
+                    state_space,
+                    self.policy,
+                    self.environment,
+                    self.gamma
+                )
                 
                 self.assign_new_state_estimated_return(state, updated_state_value)
                 
@@ -105,54 +109,6 @@ class Agent[SI: StateIndex, A: Action]:
             if policy_stable:
                 break
 
-    def calculate_state_value(self,
-                              state: SI
-                             ) -> float:
-        """
-        Calcualte the value of the given state following the given policy
-        in the given environment.
-        """
-        
-        state_space: StateSpace[SI, A] = self.environment.get_state_space()
-        
-        new_state_value: float = 0
-        
-        state_action_probability_distribution: ActionProbabilityDistribution[A] = self.policy.get_action_probability_distribution(state)
-        
-        for action in state_action_probability_distribution:
-            
-            action_probability: float = state_action_probability_distribution[action]
-            
-            # TODO I dont understand why the line below does not work.
-            # action_probability: float = state_action_probability_distribution.get_action_probability(action)
-            
-            next_states: StateProbabilityDistribution[SI] = self.environment.get_next_states(
-                state,
-                action
-            )
-
-            for next_state in next_states:
-                
-                next_state_probability = self.environment.get_state_transition_probability(
-                    state,
-                    action,
-                    next_state
-                )
-                
-                next_state_reward: float = state_space.get_reward(next_state)
-                
-                next_state_value: float = state_space.get_estimated_return(next_state)
-                
-                new_state_value += AgentService.calculate_bellman_optimality_value(
-                    action_probability,
-                    next_state_probability,
-                    next_state_reward,
-                    self.gamma,
-                    next_state_value
-                )
-                
-        return new_state_value
-    
     def assign_new_state_estimated_return(self,
                                state: SI,
                                value: float
