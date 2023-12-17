@@ -14,6 +14,8 @@ from src.Action import Action
 # TODO StateSpace should not be injected into Agent. Env should have a getSS method.
 # TODO Desperately need a service class.
 # TODO Look into publishing to twine on release.
+# TODO Need option to improve Policy without changing the current State Space. (in place)
+    # Need copy of old State Value function, improve according to those values - set State Value Function to those updated values all at once (optional, include with current implementation)
 
 class Agent[SI: StateIndex, A: Action]:
     """RL Agent."""
