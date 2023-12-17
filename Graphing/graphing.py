@@ -18,6 +18,7 @@ from src.StateSpace import StateSpace
 class Graphing[SI: StateIndex, A: Action]():
     """Graphing class for UmbrellaRL package."""
     
+   # TODO Desperately need some code abstracting, not dry at all.
    # TODO Service class.
    
     def __init__(self,
@@ -109,10 +110,20 @@ class Graphing[SI: StateIndex, A: Action]():
                     
                     next_state_index: SI = next_state
                     
+                    current_center_x, current_center_y = current_state_index
+                    
+                    next_center_x, next_center_y = next_state_index
+                    
+                    direction_vector = (next_center_x - current_center_x, next_center_y - current_center_y)
+                    
+                    scaled_direction = (direction_vector[0] * 0.5, direction_vector[1] * 0.5)
+                    
+                    xy = (next_center_x - scaled_direction[0], next_center_y - scaled_direction[1])
+                    
                     ax.annotate(
                         "",
                         xytext = current_state_index,
-                        xy = next_state_index,
+                        xy = xy,
                         arrowprops = dict(arrowstyle = "->")
                     )
             
@@ -143,9 +154,19 @@ class Graphing[SI: StateIndex, A: Action]():
                     
                     next_state_index: SI = next_state
                     
+                    current_center_x, current_center_y = current_state_index
+                    
+                    next_center_x, next_center_y = next_state_index
+                    
+                    direction_vector = (next_center_x - current_center_x, next_center_y - current_center_y)
+                    
+                    scaled_direction = (direction_vector[0] * 0.5, direction_vector[1] * 0.5)
+                    
+                    xy = (next_center_x - scaled_direction[0], next_center_y - scaled_direction[1])
+                    
                     ax.annotate(
                         "",
                         xytext = current_state_index,
-                        xy = next_state_index,
+                        xy = xy,
                         arrowprops = dict(arrowstyle = "->")
                     )
