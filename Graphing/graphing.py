@@ -8,9 +8,12 @@ Currently supported graph dimensions:
 
 import matplotlib.pyplot as plt
 from matplotlib.axes import Axes
-import numpy as np
 
-from typing import List
+import numpy as np
+import numpy.typing as npt
+from numpy import float64
+
+from typing import List, cast, Tuple
 
 from src.StateIndex import StateIndex
 from src.Action import Action
@@ -21,7 +24,6 @@ from src.StateProbabilityDistribution import StateProbabilityDistribution
 class Graphing[SI: StateIndex, A: Action]():
     """Graphing class for UmbrellaRL package."""
     
-   # TODO Desperately need some code abstracting, not dry at all.
    # TODO Service class.
    
     def __init__(self,
@@ -31,13 +33,64 @@ class Graphing[SI: StateIndex, A: Action]():
         # Dependencies.
         self.agent = agent
         
-    def plot_state_value_function(self):
+    def plot_state_value_function(self,
+                                  plot_action_annotations: bool = True,
+                                  plot_greedy_actions: bool = True
+                                 ) -> None:
         """Plot the State Value Function of the State Space."""
         
         state_space: StateSpace[SI, A] = self.agent.environment.get_state_space()
         
         # TODO add check for empty State Space.
-        dimensionality: int = self.deterine_graph_dimensionality(next(iter(state_space.keys())))
+        dimensionality: int = self.determine_graph_dimensionality(
+            next(iter(state_space.keys()))
+            )
+        
+        state_value_function: npt.NDArray[float64] = self.get_state_value_function(
+            dimensionality
+        )
+        
+        self.plot_graph(
+            state_value_function,
+            plot_action_annotations,
+            plot_greedy_actions
+        )
+        
+    def plot_graph(self,
+                   graph: npt.NDArray[float64],
+                   plot_action_annotations: bool = True,
+                   plot_greedy_actions: bool = True
+                  ) -> None:
+        """Plot the given graph, along with the given options."""
+        
+        fig, ax = plt.subplots()    # type: ignore
+        
+        img = ax.imshow(
+            graph,
+            cmap = 'viridis',
+            interpolation = 'nearest'
+        )
+        
+        if plot_action_annotations:
+            
+            if plot_greedy_actions:
+                
+                self.plot_policy_greedy_actions(ax)
+            
+            else:
+                
+                self.plot_available_actions(ax)
+                
+        plt.colorbar(img)   # type: ignore
+        
+        plt.show()  # type: ignore
+            
+    def get_state_value_function(self,
+                                 dimensionality: int
+                                ) -> npt.NDArray[float64]:
+        """Plot the State Value Function of the State Space."""
+        
+        state_space: StateSpace[SI, A] = self.agent.environment.get_state_space()
         
         if dimensionality == 2:
             
@@ -47,40 +100,33 @@ class Graphing[SI: StateIndex, A: Action]():
             
             for state_index, state in state_space.items():
                 
-                if isinstance(state_index, tuple) and len(state_index) == 2:
+                if isinstance(state_index, tuple):
                     
-                    i, j = state_index
+                    # Quieting the type checker.
+                    i, j = cast(Tuple[int, ...], state_index)
                     
                     values[i, j] = state.estimated_return
                     
                 else:
                     
-                    # TODO proper handle here.
-                    print(f"Ignoring invalid key: {key}.")
+                    # TODO add a proper handle case.
+                    print(f"Ignoring invalid key: {state_index}")
                     
-            fig, ax = plt.subplots()
+            return values
+        
+        else:
             
-            img = ax.imshow(
-                values,
-                cmap = 'viridis',
-                interpolation = 'nearest'
-            )
+            raise(ValueError(f"Untested dimensionality: {dimensionality}"))
             
-            # self.plot_available_actions(ax)
-            self.plot_policy_greedy_actions(ax)
-            
-            plt.colorbar(img)
-            
-            plt.show()
-            
-    def deterine_graph_dimensionality(self,
+    def determine_graph_dimensionality(self,
                                       key: SI
                                      ) -> int:
         """Return the dimension required to plot the graph."""
         
         if isinstance(key, tuple):
             
-            return len(key)
+            # Quieting the type checker.
+            return len(cast(Tuple[int, ...], key))
         
         else:
             
@@ -97,7 +143,7 @@ class Graphing[SI: StateIndex, A: Action]():
             
             policy_greedy_actions = self.agent.policy.get_greedy_actions(state)
             
-            self.plot_actions(
+            self.plot_action_annotations(
                 state,
                 policy_greedy_actions,
                 ax
@@ -114,13 +160,13 @@ class Graphing[SI: StateIndex, A: Action]():
             
             available_actions = state_space[state].actions
             
-            self.plot_actions(
+            self.plot_action_annotations(
                 state,
                 available_actions,
                 ax
             )
             
-    def plot_actions(self,
+    def plot_action_annotations(self,
                      state: SI,
                      actions: List[A],
                      ax: Axes
