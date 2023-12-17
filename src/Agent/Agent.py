@@ -10,8 +10,8 @@ from src.Environment.Environment import Environment
 from src.Policy.BasePolicy import BasePolicy
 from src.StateIndex import StateIndex
 from src.Action import Action
+from src.Agent.AgentService import AgentService
 
-# TODO StateSpace should not be injected into Agent. Env should have a getSS method.
 # TODO Desperately need a service class.
 # TODO Look into publishing to twine on release.
 # TODO Need option to improve Policy without changing the current State Space. (in place)
@@ -45,6 +45,7 @@ class Agent[SI: StateIndex, A: Action]:
         state_space: StateSpace[SI, A] = self.environment.get_state_space()
         
         while True:
+            
             delta = 0
             
             for state in state_space:
@@ -84,8 +85,13 @@ class Agent[SI: StateIndex, A: Action]:
                 
                 old_state_policy: ActionProbabilityDistribution[A] = self.policy.get_action_probability_distribution(state)
                 
-                new_greedy_actions: List[A] = self.calculate_greedy_actions(state)
-                    
+                new_greedy_actions: List[A] = AgentService.determine_greedy_actions(
+                    state,
+                    state_space,
+                    self.environment,
+                    self.gamma
+                )
+                
                 self.policy.set_new_state_policy(
                     state,
                     new_greedy_actions
@@ -137,8 +143,13 @@ class Agent[SI: StateIndex, A: Action]:
                 
                 next_state_value: float = state_space.get_estimated_return(next_state)
                 
-                # TODO Bellman function for below equation.
-                new_state_value += action_probability * next_state_probability * (next_state_reward + (self.gamma * next_state_value))
+                new_state_value += AgentService.calculate_bellman_optimality_value(
+                    action_probability,
+                    next_state_probability,
+                    next_state_reward,
+                    self.gamma,
+                    next_state_value
+                )
                 
         return new_state_value
     
@@ -151,64 +162,3 @@ class Agent[SI: StateIndex, A: Action]:
         state_space: StateSpace[SI, A] = self.environment.get_state_space()
         
         state_space[state].estimated_return = value
-        
-    def calculate_greedy_actions(self,
-                                state: SI
-                               ) -> List[A]:
-        """
-        Calculate the Action resulting in the highest estimated return from 
-        the given State.
-        """
-        
-        state_space: StateSpace[SI, A] = self.environment.get_state_space()
-        
-        action_value_distribution: Dict[A, float] = {}
-        
-        for action in state_space[state].actions:
-            
-            next_states: StateProbabilityDistribution[SI] = self.environment.get_next_states(
-                state,
-                action
-            )
-            
-            action_value: float = 0
-            
-            for next_state in next_states:
-                
-                next_state_probability: float = self.environment.get_state_transition_probability(
-                    state,
-                    action,
-                    next_state
-                )
-                
-                next_state_reward: float = state_space.get_reward(next_state)
-                
-                next_state_estimated_return: float = state_space.get_estimated_return(next_state)
-                
-                next_state_value: float = next_state_probability * (next_state_reward + (self.gamma * next_state_estimated_return))
-                
-                action_value += next_state_value
-                
-            action_value_distribution[action] = action_value
-            
-        return self.determine_best_actions(action_value_distribution)
-    
-    def determine_best_actions(self,
-                              action_value_distribution: Dict[A, float]
-                             ) -> List[A]:
-        """Return the Action that results in the greatest estimated return."""
-        
-        best_value: float = 0
-        
-        best_actions: List[A] = []
-        
-        for action in action_value_distribution:
-            
-            if action_value_distribution[action] > best_value:
-                
-                best_value = action_value_distribution[action]
-                
-                best_actions.append(action)
-                
-        return best_actions
-            
