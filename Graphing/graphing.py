@@ -58,8 +58,8 @@ class Graphing[SI: StateIndex, A: Action]():
         
     def plot_graph(self,
                    graph: npt.NDArray[float64],
-                   plot_action_annotations: bool = True,
-                   plot_greedy_actions: bool = True
+                   plot_action_annotations: bool,
+                   plot_greedy_actions: bool
                   ) -> None:
         """Plot the given graph, along with the given options."""
         
@@ -85,6 +85,7 @@ class Graphing[SI: StateIndex, A: Action]():
         
         plt.show()  # type: ignore
             
+    # TODO could be done in the StateSpace.
     def get_state_value_function(self,
                                  dimensionality: int
                                 ) -> npt.NDArray[float64]:
@@ -189,9 +190,9 @@ class Graphing[SI: StateIndex, A: Action]():
                 
                 next_state_index: SI = next_state
                 
-                current_center_x, current_center_y = current_state_index
+                current_center_y, current_center_x = current_state_index
                 
-                next_center_x, next_center_y = next_state_index
+                next_center_y, next_center_x = next_state_index
                 
                 direction_vector = (next_center_x - current_center_x, 
                                     next_center_y - current_center_y)
@@ -199,12 +200,15 @@ class Graphing[SI: StateIndex, A: Action]():
                 scaled_direction = (direction_vector[0] * 0.5,
                                     direction_vector[1] * 0.5)
                 
-                xy = (next_center_x - scaled_direction[0],
-                      next_center_y - scaled_direction[1])
+                xytext = (current_center_x, current_center_y)
+                
+                xy = (next_center_x + scaled_direction[0],
+                      next_center_y + scaled_direction[1])
                 
                 ax.annotate(
                     "",
-                    xytext = current_state_index,
+                    xytext = xytext,
                     xy = xy,
-                    arrowprops = dict(arrowstyle = "->")
+                    arrowprops = dict(arrowstyle = "->"),
+                    annotation_clip=False
                 )
