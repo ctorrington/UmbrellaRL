@@ -209,6 +209,5 @@ class Graphing[SI: StateIndex, A: Action]():
                     "",
                     xytext = xytext,
                     xy = xy,
-                    arrowprops = dict(arrowstyle = "->"),
-                    annotation_clip=False
+                    arrowprops = dict(arrowstyle = "->")
                 )
