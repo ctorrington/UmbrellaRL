@@ -5,17 +5,42 @@ from src.Action import Action
 from src.StateSpace import StateSpace
 from src.Environment.Environment import Environment
 from src.StateProbabilityDistribution import StateProbabilityDistribution
+from src.ActionProbabilityDistribution import ActionProbabilityDistribution
+from src.Policy.BasePolicy import BasePolicy
 
 class BellmanEquation[SI: StateIndex, A: Action]():
     """Bellman Equation service class."""
     
     @classmethod
     def calculate_state_value(cls,
-                              state: SI
+                              state: SI,
+                              state_space: StateSpace[SI, A],
+                              policy: BasePolicy[SI, A],
+                              environment: Environment[SI,A],
+                              gamma: float
                              ) -> float:
         """Calculate the state value """
         
         state_value: float = 0
+        
+        state_action_probability_distribution: ActionProbabilityDistribution[A] = policy.get_action_probability_distribution(state)
+        
+        for action in state_space[state].actions:
+            
+            # TODO get method for below
+            action_probability: float = state_action_probability_distribution[action]
+            
+            update_value: float = cls.calculate_update_value(
+                state,
+                action,
+                state_space,
+                environment,
+                gamma
+            )
+            
+            state_value += action_probability * update_value
+            
+        return update_value
         
     @classmethod
     def calculate_update_value(cls,
