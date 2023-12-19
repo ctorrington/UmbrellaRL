@@ -100,4 +100,3 @@ class BellmanEquation[SI: StateIndex, A: Action]():
             )
         
         return state_action_value
-        

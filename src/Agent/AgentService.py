@@ -92,13 +92,13 @@ class AgentService[SI: StateIndex, A: Action]():
                               ) -> List[A]:
         """Return the Actions that result in the greatest esimated return."""
         
-        best_value: float = 0
+        best_value: float = max(action_value_distribution.values())
         
         best_actions: List[A] = []
         
         for action in action_value_distribution:
             
-            if action_value_distribution[action] > best_value:
+            if action_value_distribution[action] >= best_value:
                 
                 best_value = action_value_distribution[action]
                 
