@@ -40,7 +40,7 @@ class BellmanEquation[SI: StateIndex, A: Action]():
             
             state_value += action_probability * update_value
             
-        return update_value
+        return state_value
         
     @classmethod
     def calculate_update_value(cls,
