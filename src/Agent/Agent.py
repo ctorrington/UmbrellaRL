@@ -53,7 +53,7 @@ class Agent[SI: StateIndex, A: Action]:
                 
                 old_state_value: float = state_space[state].estimated_return
                 
-                updated_state_value: float = AgentService.calculate_bellman_equation(
+                updated_state_value: float = AgentService.calculate_state_value(
                     state,
                     state_space,
                     self.policy,

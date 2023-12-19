@@ -5,10 +5,9 @@ from typing import List, Dict
 from src.StateIndex import StateIndex
 from src.Action import Action
 from src.StateSpace import StateSpace
-from src.StateProbabilityDistribution import StateProbabilityDistribution
 from src.Environment.Environment import Environment
 from src.Policy.BasePolicy import BasePolicy
-from src.ActionProbabilityDistribution import ActionProbabilityDistribution
+from src.Service.BellmanEquation import BellmanEquation
 
 # TODO Service class could probably do with a Bellman Service class of its own.
 
@@ -16,22 +15,23 @@ class AgentService[SI: StateIndex, A: Action]():
     """Class to handle calculations for the Agent."""
     
     @classmethod
-    def calculate_bellman_equation(cls,
-                                   state: SI,
-                                   state_space: StateSpace[SI, A],
-                                   policy: BasePolicy[SI, A],
-                                   environment: Environment[SI, A],
-                                   gamma: float
-                                  ) -> float:
+    def calculate_state_value(cls,
+                              state: SI,
+                              state_space: StateSpace[SI, A],
+                              policy: BasePolicy[SI, A],
+                              environment: Environment[SI, A],
+                              gamma: float
+                             ) -> float:
         
-        bellman_equation_value = cls.calculate_bellman_equation_value(
+        state_value: float = BellmanEquation.calculate_state_value(
             state,
             state_space,
             policy,
             environment,
-            gamma)
+            gamma
+        )
         
-        return bellman_equation_value
+        return state_value
     
     @classmethod
     def determine_greedy_actions(cls,
@@ -74,7 +74,7 @@ class AgentService[SI: StateIndex, A: Action]():
         
         for action in state_space[state].actions:
             
-            action_value: float = cls.calculate_bellman_update(
+            action_value: float = BellmanEquation.calculate_update_value(
                 state,
                 action,
                 state_space,
@@ -105,66 +105,3 @@ class AgentService[SI: StateIndex, A: Action]():
                 best_actions.append(action)
                 
         return best_actions
-    
-    @classmethod
-    def calculate_bellman_equation_value(cls,
-                                         state: SI,
-                                         state_space: StateSpace[SI, A],
-                                         policy: BasePolicy[SI, A],
-                                         environment: Environment[SI, A],
-                                         gamma: float
-                                         ) -> float:
-        
-        state_action_probability_distribution: ActionProbabilityDistribution[A] = policy.get_action_probability_distribution(state)
-        
-        bellman_equation_value: float = 0
-        
-        for action in state_space[state].actions:
-            
-            # TODO get method for below.
-            action_probability: float = state_action_probability_distribution[action]
-            
-            bellman_update_value: float = cls.calculate_bellman_update(
-                state,
-                action,
-                state_space,
-                environment,
-                gamma
-                )
-            
-            bellman_equation_value += action_probability * bellman_update_value
-            
-        return bellman_equation_value
-    
-    @classmethod
-    def calculate_bellman_update(cls,
-                                 state: SI,
-                                 action: A,
-                                 state_space: StateSpace[SI, A],
-                                 environment: Environment[SI, A],
-                                 gamma: float
-                                ) -> float:
-        """Calculate the bellman update."""
-        
-        action_value: float = 0
-        
-        next_states: StateProbabilityDistribution[SI] = environment.get_next_states(
-            state,
-            action
-        )
-        
-        for next_state in next_states:
-            
-            next_state_probability: float = environment.get_state_transition_probability(
-                state,
-                action,
-                next_state
-            )
-            
-            next_state_reward: float = state_space.get_reward(next_state)
-            
-            next_state_value: float = state_space.get_estimated_return(next_state)
-            
-            action_value += next_state_probability * (next_state_reward + (gamma * next_state_value))
-            
-        return action_value
