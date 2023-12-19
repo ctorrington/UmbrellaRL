@@ -202,12 +202,13 @@ class Graphing[SI: StateIndex, A: Action]():
                 
                 xytext = (current_center_x, current_center_y)
                 
-                xy = (next_center_x + scaled_direction[0],
-                      next_center_y + scaled_direction[1])
+                xy = (next_center_x - scaled_direction[0],
+                      next_center_y - scaled_direction[1])
                 
                 ax.annotate(
                     "",
                     xytext = xytext,
                     xy = xy,
-                    arrowprops = dict(arrowstyle = "->")
+                    arrowprops = dict(arrowstyle = "->"),
+                    annotation_clip=False
                 )
