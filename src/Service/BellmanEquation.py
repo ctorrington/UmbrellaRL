@@ -55,7 +55,8 @@ class BellmanEquation[SI: StateIndex, A: Action]():
         update_value: float = 0
         
         next_states: StateProbabilityDistribution[SI] = environment.get_next_states(
-            state, action
+            state,
+            action
         )
         
         for next_state in next_states:
@@ -73,4 +74,30 @@ class BellmanEquation[SI: StateIndex, A: Action]():
             update_value += next_state_probability * (next_state_reward + (gamma * next_state_value))
             
         return update_value
+    
+    @classmethod
+    def calculate_state_action_value(cls,
+                                     state: SI,
+                                     action: A,
+                                     state_space: StateSpace[SI,A],
+                                     environment: Environment[SI, A],
+                                     gamma: float
+                                     ) -> float:
+        """
+        Calculate the state action-value.
+        
+        From my understanding, the update value to the state value function is 
+        equivalent to the state-action value. When greedy policy simply chooses 
+        the maximising state-action (update) value.
+        """
+        
+        state_action_value: float = cls.calculate_update_value(
+            state,
+            action,
+            state_space,
+            environment,
+            gamma
+            )
+        
+        return state_action_value
         
