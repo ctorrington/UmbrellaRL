@@ -1,7 +1,10 @@
 """RL Agent."""
 
-from typing import List
+from typing import List, Dict
 from copy import deepcopy
+
+import numpy.typing as npt
+from numpy import float64
 
 # Dependencies.
 from src.ActionProbabilityDistribution import ActionProbabilityDistribution
@@ -23,6 +26,9 @@ class Agent[SI: StateIndex, A: Action]:
                  environment: Environment[SI, A],
                  policy: BasePolicy[SI, A],
                 ):
+        
+        self.history: Dict[int, Dict[str, npt.NDArray[float64] | List[A]]] = {}
+        self.history[0] = {}
         
         # Value function parameters.
         self.theta: float = 0.01
@@ -67,6 +73,11 @@ class Agent[SI: StateIndex, A: Action]:
                 delta = max(delta, (abs(old_state_value - updated_state_value)))
                 
             if delta < self.theta:
+                
+                evaluated_state_value_function: npt.NDArray[float64] = deepcopy(state_space.get_state_value_function())
+                
+                self.history[len(self.history) - 1]["state value function"] = evaluated_state_value_function
+                
                 break
             
     def improve_policy(self) -> None:
@@ -103,6 +114,8 @@ class Agent[SI: StateIndex, A: Action]:
                 )
                 
                 new_state_policy: ActionProbabilityDistribution[A] = self.policy.get_action_probability_distribution(state)
+                
+                self.history[len(self.history) - 1]["actions"] = new_greedy_actions
                 
                 if old_state_policy != new_state_policy:
                     
