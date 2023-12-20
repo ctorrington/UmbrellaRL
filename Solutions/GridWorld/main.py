@@ -31,13 +31,14 @@ def main():
     )
     
     agent.evaluate_policy()
+    agent.improve_policy()
     
     for state in state_space:
         print(f"{state} value: {state_space[state].estimated_return}. Policy: {policy.get_action_probability_distribution(state)}")
     
     graph = Graphing(agent)
     
-    graph.plot_state_value_function()
+    graph.plot_state_value_function(True, True)
 
 if __name__ == "__main__":
     main()

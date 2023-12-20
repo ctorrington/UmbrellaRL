@@ -1,6 +1,7 @@
 """RL Agent."""
 
 from typing import List
+from copy import deepcopy
 
 # Dependencies.
 from src.ActionProbabilityDistribution import ActionProbabilityDistribution
@@ -77,9 +78,9 @@ class Agent[SI: StateIndex, A: Action]:
         
         state_space: StateSpace[SI, A] = self.environment.get_state_space()
         
-        policy_stable: bool = True
-        
         while True:
+            
+            policy_stable: bool = True
         
             for state in state_space:
                 
@@ -87,7 +88,7 @@ class Agent[SI: StateIndex, A: Action]:
                 if len(state_space[state].actions) == 0:
                     continue
                 
-                old_state_policy: ActionProbabilityDistribution[A] = self.policy.get_action_probability_distribution(state)
+                old_state_policy: ActionProbabilityDistribution[A] = deepcopy(self.policy.get_action_probability_distribution(state))
                 
                 new_greedy_actions: List[A] = AgentService.determine_greedy_actions(
                     state,
@@ -102,12 +103,18 @@ class Agent[SI: StateIndex, A: Action]:
                 )
                 
                 new_state_policy: ActionProbabilityDistribution[A] = self.policy.get_action_probability_distribution(state)
-                    
+                
                 if old_state_policy != new_state_policy:
+                    
                     policy_stable = False
                     
             if policy_stable:
+                
                 break
+            
+            else:
+                
+                self.evaluate_policy()
 
     def assign_new_state_estimated_return(self,
                                state: SI,
