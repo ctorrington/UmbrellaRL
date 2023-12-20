@@ -41,14 +41,7 @@ class Graphing[SI: StateIndex, A: Action]():
         
         state_space: StateSpace[SI, A] = self.agent.environment.get_state_space()
         
-        # TODO add check for empty State Space.
-        dimensionality: int = self.determine_graph_dimensionality(
-            next(iter(state_space.keys()))
-            )
-        
-        state_value_function: npt.NDArray[float64] = self.get_state_value_function(
-            dimensionality
-        )
+        state_value_function: npt.NDArray[float64] = state_space.get_state_value_function()
         
         self.plot_graph(
             state_value_function,
@@ -85,54 +78,6 @@ class Graphing[SI: StateIndex, A: Action]():
         
         plt.show()  # type: ignore
             
-    # TODO could be done in the StateSpace.
-    def get_state_value_function(self,
-                                 dimensionality: int
-                                ) -> npt.NDArray[float64]:
-        """Plot the State Value Function of the State Space."""
-        
-        state_space: StateSpace[SI, A] = self.agent.environment.get_state_space()
-        
-        if dimensionality == 2:
-            
-            x, y = zip(*state_space.keys())
-            
-            values = np.zeros((max(x) + 1, max(y) + 1))
-            
-            for state_index, state in state_space.items():
-                
-                if isinstance(state_index, tuple):
-                    
-                    # Quieting the type checker.
-                    i, j = cast(Tuple[int, ...], state_index)
-                    
-                    values[i, j] = state.estimated_return
-                    
-                else:
-                    
-                    # TODO add a proper handle case.
-                    print(f"Ignoring invalid key: {state_index}")
-                    
-            return values
-        
-        else:
-            
-            raise(ValueError(f"Untested dimensionality: {dimensionality}"))
-            
-    def determine_graph_dimensionality(self,
-                                      key: SI
-                                     ) -> int:
-        """Return the dimension required to plot the graph."""
-        
-        if isinstance(key, tuple):
-            
-            # Quieting the type checker.
-            return len(cast(Tuple[int, ...], key))
-        
-        else:
-            
-            raise ValueError("Unsupported StateIndex type.")
-        
     def plot_policy_greedy_actions(self,
                             ax: Axes
                            ) -> None:
