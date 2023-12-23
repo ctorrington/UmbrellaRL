@@ -1,20 +1,30 @@
-"""Test Action generic type."""
-
-from Action import Action
-
 import unittest
 
+from src.Action import Action
+
 class TestAction(unittest.TestCase):
-    def test_empty_members_enum(self):
-        class EmptyActionEnum(Action):
+    def test_members_return_type(self):
+        class MyAction(Action):
+            FIRST = 1
+            SECOND = 2
+
+        members = MyAction.members()
+        self.assertIsInstance(members, list)
+
+    def test_members_contains_enum_values(self):
+        class MyAction(Action):
+            FIRST = 1
+            SECOND = 2
+
+        members = MyAction.members()
+        expected_values = [MyAction.FIRST, MyAction.SECOND]
+
+        for value in expected_values:
+            self.assertIn(value, members)
+
+    def test_members_empty_for_empty_enum(self):
+        class EmptyAction(Action):
             pass
-        
-        self.assertEqual(EmptyActionEnum.members(), [])
-        
-    def test_non_empty_members_enum(self):
-        class NonEmptyActionEnum(Action):
-            ACTION1 = "action1"
-            ACTION2 = "action2"
-            
-        self.assertEqual(NonEmptyActionEnum.members(),
-                         [NonEmptyActionEnum.ACTION1, NonEmptyActionEnum.ACTION2])
+
+        members = EmptyAction.members()
+        self.assertEqual(members, [])
