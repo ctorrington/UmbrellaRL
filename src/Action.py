@@ -9,14 +9,10 @@ from typing import List, Self
 
 class Action(Enum):
     """
-    Generic Action class.
-    
     Inherit from this class to define actions that can be taken by the agent.
     Actions should be enum member fields of the class.
     
     Generic type for each action available to the Agent.
-    
-    Injected into State.
     """
     
     @classmethod
