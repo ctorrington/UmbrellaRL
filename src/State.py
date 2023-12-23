@@ -15,9 +15,9 @@ class State[T: Action]:
     This class can be inhertited from to define more State member fields.
     
     Object defing fields for States.
-    
-    Injected into State Space.
     """
+    
+    # TODO Needs setters & getters for every member.
     
     def __init__(self):
         self.actions: List[T] = []
