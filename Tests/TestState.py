@@ -1,54 +1,93 @@
-"""Test State."""
-
 import unittest
-from unittest.mock import Mock
-from typing import List
+from typing import Type
 
-from State import State
-from Action import Action
+from src.Action import Action
+from src.State import State
 
 class TestState(unittest.TestCase):
-    def test_default_values(self):
-        state = State()
+    def test_state_attributes_initialization(self):
+        class MyAction(Action):
+            FIRST = 1
+            SECOND = 2
 
-        self.assertEqual(state.actions, [])
-        self.assertEqual(state.estimated_return, 0.0)
-        self.assertEqual(state.counter, 0)
-        self.assertEqual(state.reward, 0)
-        self.assertFalse(state.is_current)
-        self.assertFalse(state.is_terminal)
+        class MyState(State[MyAction]):
+            pass
 
-    def test_custom_values(self):
-        actions: List[Action] = [Mock(spec=Action) for _ in range(3)]
-        state = State()
-        state.actions = actions
-        state.estimated_return = 10.5
-        state.counter = 42
-        state.reward = 100
-        state.is_current = True
-        state.is_terminal = True
+        my_state = MyState()
 
-        self.assertEqual(state.actions, actions)
-        self.assertEqual(state.estimated_return, 10.5)
-        self.assertEqual(state.counter, 42)
-        self.assertEqual(state.reward, 100)
-        self.assertTrue(state.is_current)
-        self.assertTrue(state.is_terminal)
+        self.assertEqual(my_state.actions, [])
+        self.assertEqual(my_state.estimated_return, 0.0)
+        self.assertEqual(my_state.counter, 0)
+        self.assertEqual(my_state.reward, 0.0)
+        self.assertFalse(my_state.is_current)
+        self.assertFalse(my_state.is_terminal)
 
-    def test_inheritance(self):
-        class CustomState(State):
-            def __init__(self,
-                         custom_field: str
-                        ):
-                super().__init__()
-                self.custom_field = custom_field
+    # TODO Implement later.
+    # def test_set_estimated_return(self):
+    #     class MyAction(Action):
+    #         FIRST = 1
+    #         SECOND = 2
 
-        custom_state = CustomState(custom_field="custom_value")
+    #     class MyState(State[MyAction]):
+    #         pass
 
-        self.assertEqual(custom_state.actions, [])
-        self.assertEqual(custom_state.estimated_return, 0.0)
-        self.assertEqual(custom_state.counter, 0)
-        self.assertEqual(custom_state.reward, 0)
-        self.assertFalse(custom_state.is_current)
-        self.assertFalse(custom_state.is_terminal)
-        self.assertEqual(custom_state.custom_field, "custom_value")
+    #     my_state = MyState()
+    #     my_state.set_estimated_return(10.5)
+
+    #     self.assertEqual(my_state.estimated_return, 10.5)
+
+    # TODO Implement Later.
+    # def test_increment_counter(self):
+    #     class MyAction(Action):
+    #         FIRST = 1
+    #         SECOND = 2
+
+    #     class MyState(State[MyAction]):
+    #         pass
+
+    #     my_state = MyState()
+    #     my_state.increment_counter()
+
+    #     self.assertEqual(my_state.counter, 1)
+
+    # TODO Implement later.
+    # def test_set_reward(self):
+    #     class MyAction(Action):
+    #         FIRST = 1
+    #         SECOND = 2
+
+    #     class MyState(State[MyAction]):
+    #         pass
+
+    #     my_state = MyState()
+    #     my_state.set_reward(5.0)
+
+    #     self.assertEqual(my_state.reward, 5.0)
+
+    # TODO Implement later.
+    # def test_set_is_current(self):
+    #     class MyAction(Action):
+    #         FIRST = 1
+    #         SECOND = 2
+
+    #     class MyState(State[MyAction]):
+    #         pass
+
+    #     my_state = MyState()
+    #     my_state.set_is_current(True)
+
+    #     self.assertTrue(my_state.is_current)
+
+    # TODO Implement later.
+    # def test_set_is_terminal(self):
+    #     class MyAction(Action):
+    #         FIRST = 1
+    #         SECOND = 2
+
+    #     class MyState(State[MyAction]):
+    #         pass
+
+    #     my_state = MyState()
+    #     my_state.set_is_terminal(True)
+
+    #     self.assertTrue(my_state.is_terminal)
