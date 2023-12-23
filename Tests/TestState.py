@@ -1,5 +1,4 @@
 import unittest
-from typing import Type
 
 from src.Action import Action
 from src.State import State
