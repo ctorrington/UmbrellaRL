@@ -58,8 +58,6 @@ class GridWorldEnvironment(Environment[GridWorldStateIndex, GridWorldAction]):
             
         return state_actions
             
-            
-            
     def determine_next_state_probability_distribution(
         self,
         state: GridWorldStateIndex,
