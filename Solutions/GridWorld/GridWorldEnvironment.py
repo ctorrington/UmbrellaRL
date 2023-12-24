@@ -64,7 +64,7 @@ class GridWorldEnvironment(Environment[GridWorldStateIndex, GridWorldAction]):
         self,
         state: GridWorldStateIndex,
         action: GridWorldAction
-        ) -> StateProbabilityDistribution[Tuple[int, int]]:
+        ) -> StateProbabilityDistribution[GridWorldStateIndex]:
         """
         Return a mapping of the possible next States & their probability of
         occuring.
