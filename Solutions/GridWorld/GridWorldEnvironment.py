@@ -1,6 +1,6 @@
 """Grid World Environment."""
 
-from typing import Tuple, Dict
+from typing import Dict
 
 from src.Environment.Environment import Environment
 from src.StateActions import StateActions
@@ -30,7 +30,6 @@ class GridWorldEnvironment(Environment[GridWorldStateIndex, GridWorldAction]):
         self.initialize_environment()
         
     def initialize_environment(self) -> None:
-        # TODO Terminal States probably should not have actions.
         
         for state in self.state_space:
 
