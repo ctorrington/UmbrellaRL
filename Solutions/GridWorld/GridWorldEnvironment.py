@@ -9,6 +9,7 @@ from src.StateProbabilityDistribution import StateProbabilityDistribution
 
 from Solutions.GridWorld.StateSpace import GridWorldStateSpace
 from Solutions.GridWorld.Action import GridWorldAction
+from Solutions.GridWorld.StateIndex import GridWorldStateIndex
 
 
 # Grid World State Space representation.
@@ -19,7 +20,7 @@ from Solutions.GridWorld.Action import GridWorldAction
 # 12 13 14 15
 
 # TODO class to reprsent the Tuple[int, int] type.
-class GridWorldEnvironment(Environment[Tuple[int, int], GridWorldAction]):
+class GridWorldEnvironment(Environment[GridWorldStateIndex, GridWorldAction]):
     def __init__(self,
                  state_space: GridWorldStateSpace,
                  ) -> None:
@@ -34,19 +35,19 @@ class GridWorldEnvironment(Environment[Tuple[int, int], GridWorldAction]):
         # TODO Terminal States probably should not have actions.
         
         for state in self.state_space:
-            state_actions: StateActions[Tuple[int, int], GridWorldAction] = self.determine_state_actions(state)
+            state_actions: StateActions[GridWorldStateIndex, GridWorldAction] = self.determine_state_actions(state)
             self[state] = state_actions
             
     def determine_state_actions(self,
-                                state: Tuple[int, int]) -> StateActions[Tuple[int, int], GridWorldAction]:
+                                state: GridWorldStateIndex) -> StateActions[Tuple[int, int], GridWorldAction]:
         """Determine the Actions available for each State."""
         
         # TODO Figure out defaultdict for this.
-        state_actions: StateActions[Tuple[int, int], GridWorldAction] = {}
+        state_actions: StateActions[GridWorldStateIndex, GridWorldAction] = {}
         
         for action in self.state_space[state].actions:
             
-            possible_next_states_distribution: Dict[Tuple[int, int], float] = self.determine_next_state_probability_distribution(state, action)
+            possible_next_states_distribution: Dict[GridWorldStateIndex, float] = self.determine_next_state_probability_distribution(state, action)
             
             state_actions[action] = possible_next_states_distribution
             
@@ -58,7 +59,7 @@ class GridWorldEnvironment(Environment[Tuple[int, int], GridWorldAction]):
             
             
     def determine_next_state_probability_distribution(self,
-                                                      state: Tuple[int, int],
+                                                      state: GridWorldStateIndex,
                                                       action: GridWorldAction
                                                      ) -> StateProbabilityDistribution[Tuple[int, int]]:
         """
@@ -77,7 +78,7 @@ class GridWorldEnvironment(Environment[Tuple[int, int], GridWorldAction]):
         row, column = state
         
         # TODO defaultdict.
-        possible_next_states: StateProbabilityDistribution[Tuple[int, int]] = {}
+        possible_next_states: StateProbabilityDistribution[GridWorldStateIndex] = {}
         
         match action:
             case GridWorldAction.UP:
