@@ -1,7 +1,6 @@
 """Grid World Environment."""
 
 from typing import Tuple, Dict
-from collections import defaultdict
 
 from src.Environment.Environment import Environment
 from src.StateActions import StateActions
@@ -19,13 +18,12 @@ from Solutions.GridWorld.StateIndex import GridWorldStateIndex
 # 08 09 10 11
 # 12 13 14 15
 
-# TODO class to reprsent the Tuple[int, int] type.
 class GridWorldEnvironment(Environment[GridWorldStateIndex, GridWorldAction]):
-    def __init__(self,
-                 state_space: GridWorldStateSpace,
-                 ) -> None:
+    def __init__(
+        self,
+        state_space: GridWorldStateSpace
+        ) -> None:
 
-        # Dependencies.
         # TODO fix these overriding errors.
         self.state_space: GridWorldStateSpace = state_space
         
@@ -35,11 +33,15 @@ class GridWorldEnvironment(Environment[GridWorldStateIndex, GridWorldAction]):
         # TODO Terminal States probably should not have actions.
         
         for state in self.state_space:
+
             state_actions: StateActions[GridWorldStateIndex, GridWorldAction] = self.determine_state_actions(state)
+
             self[state] = state_actions
             
-    def determine_state_actions(self,
-                                state: GridWorldStateIndex) -> StateActions[Tuple[int, int], GridWorldAction]:
+    def determine_state_actions(
+        self, 
+        state: GridWorldStateIndex
+        ) -> StateActions[GridWorldStateIndex, GridWorldAction]:
         """Determine the Actions available for each State."""
         
         # TODO Figure out defaultdict for this.
@@ -58,10 +60,11 @@ class GridWorldEnvironment(Environment[GridWorldStateIndex, GridWorldAction]):
             
             
             
-    def determine_next_state_probability_distribution(self,
-                                                      state: GridWorldStateIndex,
-                                                      action: GridWorldAction
-                                                     ) -> StateProbabilityDistribution[Tuple[int, int]]:
+    def determine_next_state_probability_distribution(
+        self,
+        state: GridWorldStateIndex,
+        action: GridWorldAction
+        ) -> StateProbabilityDistribution[Tuple[int, int]]:
         """
         Return a mapping of the possible next States & their probability of
         occuring.
