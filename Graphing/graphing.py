@@ -9,11 +9,10 @@ Currently supported graph dimensions:
 import matplotlib.pyplot as plt
 from matplotlib.axes import Axes
 
-import numpy as np
 import numpy.typing as npt
 from numpy import float64
 
-from typing import List, cast, Tuple
+from typing import List, Dict
 
 from src.StateIndex import StateIndex
 from src.Action import Action
@@ -43,20 +42,27 @@ class Graphing[SI: StateIndex, A: Action]():
         
         state_value_function: npt.NDArray[float64] = state_space.get_state_value_function()
         
+        fig, ax = plt.subplots(1, 1)
+        
         self.plot_graph(
             state_value_function,
+            ax,
             plot_action_annotations,
-            plot_greedy_actions
+            plot_greedy_actions,
         )
+        
+        plt.show()
         
     def plot_graph(self,
                    graph: npt.NDArray[float64],
-                   plot_action_annotations: bool,
-                   plot_greedy_actions: bool
+                   ax: Axes,
+                   plot_action_annotations: bool | None = None,
+                   plot_greedy_actions: bool | None = None,
+                   actions: List[A] | None = None
                   ) -> None:
         """Plot the given graph, along with the given options."""
         
-        fig, ax = plt.subplots()    # type: ignore
+        # fig, ax = plt.subplots()    # type: ignore
         
         img = ax.imshow(
             graph,
@@ -76,8 +82,6 @@ class Graphing[SI: StateIndex, A: Action]():
                 
         plt.colorbar(img)   # type: ignore
         
-        plt.show()  # type: ignore
-            
     def plot_policy_greedy_actions(self,
                             ax: Axes
                            ) -> None:
@@ -157,3 +161,30 @@ class Graphing[SI: StateIndex, A: Action]():
                     arrowprops = dict(arrowstyle = "->"),
                     annotation_clip=False
                 )
+                
+    def plot_history(self,
+        history: Dict[int, Dict[str, npt.NDArray[float64] | List[A]]]
+    ) -> None:
+        """Plot graphs for each stage of evaluation-improvement process."""
+        
+        fig, axs = plt.subplots(1, len(history))
+        
+        if len(history) == 1:
+            
+            self.plot_graph(
+                history[0]["state value function"],
+                axs,
+                True,
+                True
+            )
+            
+        for timestep in history:
+            
+            self.plot_graph(
+                history[timestep]["state value function"],
+                axs
+            )
+        
+        plt.show()
+            
+            
