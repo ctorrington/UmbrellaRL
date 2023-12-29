@@ -28,6 +28,7 @@ class Agent[SI: StateIndex, A: Action]:
                 ):
         
         self.history: Dict[int, Dict[str, npt.NDArray[float64] | List[A]]] = {}
+        
         self.history[0] = {}
         
         # Value function parameters.
@@ -115,7 +116,9 @@ class Agent[SI: StateIndex, A: Action]:
                 
                 new_state_policy: ActionProbabilityDistribution[A] = self.policy.get_action_probability_distribution(state)
                 
-                self.history[len(self.history) - 1]["actions"] = new_greedy_actions
+                history_new_greedy_actions = deepcopy(new_greedy_actions)
+                
+                self.history[len(self.history) - 1]["actions"] = history_new_greedy_actions
                 
                 if old_state_policy != new_state_policy:
                     
