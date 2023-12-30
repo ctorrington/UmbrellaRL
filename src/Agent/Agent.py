@@ -71,6 +71,8 @@ class Agent[SI: StateIndex, A: Action]:
             if delta < self.theta:
                 
                 self.history.track_state_space(state_space)
+                
+                self.history.increment_history_count()
 
                 break
             
@@ -123,8 +125,6 @@ class Agent[SI: StateIndex, A: Action]:
                 
                 self.evaluate_policy()
                 
-                self.history.increment_history_count()
-
     def assign_new_state_estimated_return(self,
                                state: SI,
                                value: float
