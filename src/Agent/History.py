@@ -5,11 +5,8 @@ Currently trackable metrics:
     - Actions
 """
 
-from typing import Dict, List
+from typing import Dict
 from copy import deepcopy
-from numpy import float64
-
-import numpy.typing as npt
 
 from src.Action import Action
 from src.StateSpace import StateSpace
