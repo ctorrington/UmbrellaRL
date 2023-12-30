@@ -12,8 +12,13 @@ from numpy import float64
 import numpy.typing as npt
 
 from src.Action import Action
+from src.StateSpace import StateSpace
+from src.StateIndex import StateIndex
 
-class History[A: Action](Dict[int, Dict[str, List[A] | npt.NDArray[float64]]]):
+# TODO Class currently tracks the entire State Space.
+    # Should make it more modular.
+
+class History[SI: StateIndex, A: Action](Dict[int, StateSpace[SI, A]]):
     """
     Agent History class for recording the history of the Environment & 
     State Value Function during Action interactions.
@@ -23,23 +28,13 @@ class History[A: Action](Dict[int, Dict[str, List[A] | npt.NDArray[float64]]]):
         
         self.history_count = 0
         
-        self[0] = {}
-        
-    def track_actions(
+    def track_state_space(
         self,
-        actions: List[A]
+        state_space: StateSpace[SI, A]
     ) -> None:
-        """Record the given Actions."""
+        """Record the given State Space."""
         
-        self[self.history_count]["actions"] = deepcopy(actions)
-        
-    def track_state_value_function(
-        self,
-        state_value_function: npt.NDArray[float64]
-    ) -> None:
-        """Record the given State Value Function."""
-        
-        self[self.history_count]["state value function"] = deepcopy(state_value_function)
+        self[self.history_count] = deepcopy(state_space)
         
     def increment_history_count(self) -> None:
         """Increment the history count."""
