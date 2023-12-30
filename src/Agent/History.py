@@ -21,7 +21,7 @@ class History[A: Action](Dict[int, Dict[str, List[A] | npt.NDArray[float64]]]):
     
     def __init__(self) -> None:
         
-        self.count = 0
+        self.history_count = 0
         
         self[0] = {}
         
@@ -31,7 +31,7 @@ class History[A: Action](Dict[int, Dict[str, List[A] | npt.NDArray[float64]]]):
     ) -> None:
         """Record the given Actions."""
         
-        self[self.count]["actions"] = deepcopy(actions)
+        self[self.history_count]["actions"] = deepcopy(actions)
         
     def track_state_value_function(
         self,
@@ -39,4 +39,9 @@ class History[A: Action](Dict[int, Dict[str, List[A] | npt.NDArray[float64]]]):
     ) -> None:
         """Record the given State Value Function."""
         
-        self[self.count]["state value function"] = deepcopy(state_value_function)
+        self[self.history_count]["state value function"] = deepcopy(state_value_function)
+        
+    def increment_history_count(self) -> None:
+        """Increment the history count."""
+        
+        self.history_count += 1
