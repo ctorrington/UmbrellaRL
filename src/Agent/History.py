@@ -20,3 +20,11 @@ class History[A: Action](Dict[int, Dict[str, List[A]]]):
         self.count = 0
         
         self[0] = {}
+        
+    def track_actions(
+        self,
+        actions: List[A]
+    ) -> None:
+        """Record the given actions."""
+        
+        self[self.count]["actions"] = actions
