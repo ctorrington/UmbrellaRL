@@ -22,7 +22,7 @@ from src.StateProbabilityDistribution import StateProbabilityDistribution
 
 class Graphing[SI: StateIndex, A: Action]():
     """Graphing class for UmbrellaRL package."""
-    
+   # TODO Remove need for multiple ax variables. just assign it to the class.
    # TODO Service class.
    
     def __init__(self,
@@ -58,7 +58,7 @@ class Graphing[SI: StateIndex, A: Action]():
                    ax: Axes,
                    plot_action_annotations: bool | None = None,
                    plot_greedy_actions: bool | None = None,
-                   actions: List[A] | None = None
+                   state_space: StateSpace[SI, A] | None = None
                   ) -> None:
         """Plot the given graph, along with the given options."""
         
@@ -74,20 +74,27 @@ class Graphing[SI: StateIndex, A: Action]():
             
             if plot_greedy_actions:
                 
-                self.plot_policy_greedy_actions(ax)
+                self.plot_policy_greedy_actions(
+                    ax,
+                    state_space
+                )
             
             else:
                 
                 self.plot_available_actions(ax)
-                
-        plt.colorbar(img)   # type: ignore
+     
+        # TODO make all plots share a color bar.   
+        # plt.colorbar(img)   # type: ignore
         
     def plot_policy_greedy_actions(self,
-                            ax: Axes
+                            ax: Axes,
+                            state_space: None | StateSpace[SI, A] = None
                            ) -> None:
         """Plot Actions chosen by the Policy for each State."""
         
-        state_space: StateSpace[SI, A] = self.agent.environment.get_state_space()
+        if state_space is None:
+        
+            state_space = self.agent.environment.get_state_space()
         
         for state in state_space:
             
@@ -98,7 +105,7 @@ class Graphing[SI: StateIndex, A: Action]():
                 policy_greedy_actions,
                 ax
             )
-            
+
     def plot_available_actions(self,
                                ax: Axes
                               ) -> None:
@@ -174,18 +181,46 @@ class Graphing[SI: StateIndex, A: Action]():
             
             self.plot_graph(
                 history[0].get_state_value_function(),
-                axs[0],
+                axs,
                 True,
                 True
             )
             
+        else:
+            
+            for timestep in history:
+                
+                self.plot_graph(
+                    history[timestep].get_state_value_function(),
+                    axs[timestep],
+                    True,
+                    True,
+                    history[timestep]
+                )
+        
+        plt.show()
+        
+    def animate_history(
+        self,
+        history: Dict[int, StateSpace[SI, A]]
+    ) -> None:
+        """Animate the stages of the evaluation-improvement process."""
+ 
+        fig, ax = plt.subplots()
+        
         for timestep in history:
+            
+            ax.clear()
             
             self.plot_graph(
                 history[timestep].get_state_value_function(),
-                axs[timestep],
+                ax,
                 True,
                 True
             )
+            
+            ax.set_title(f"frame: {timestep}")
+            
+            plt.pause(3)
         
-        plt.show()
+        

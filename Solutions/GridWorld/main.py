@@ -37,7 +37,8 @@ def main():
     graph = Graphing(agent)
     
     # graph.plot_state_value_function(True, True)
-    graph.plot_history(agent.history)
+    # graph.plot_history(agent.history)
+    graph.animate_history(agent.history)
 
 if __name__ == "__main__":
     
