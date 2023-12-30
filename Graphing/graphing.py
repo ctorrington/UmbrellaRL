@@ -162,8 +162,9 @@ class Graphing[SI: StateIndex, A: Action]():
                     annotation_clip=False
                 )
                 
-    def plot_history(self,
-        history: Dict[int, Dict[str, npt.NDArray[float64] | List[A]]]
+    def plot_history(
+        self,
+        history: Dict[int, StateSpace[SI, A]]
     ) -> None:
         """Plot graphs for each stage of evaluation-improvement process."""
         
@@ -172,8 +173,8 @@ class Graphing[SI: StateIndex, A: Action]():
         if len(history) == 1:
             
             self.plot_graph(
-                history[0]["state value function"],
-                axs,
+                history[0].get_state_value_function(),
+                axs[0],
                 True,
                 True
             )
@@ -181,10 +182,10 @@ class Graphing[SI: StateIndex, A: Action]():
         for timestep in history:
             
             self.plot_graph(
-                history[timestep]["state value function"],
-                axs
+                history[timestep].get_state_value_function(),
+                axs[timestep],
+                True,
+                True
             )
         
         plt.show()
-            
-            
