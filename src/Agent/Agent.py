@@ -1,12 +1,8 @@
 """RL Agent."""
 
-from typing import List, Dict
+from typing import List
 from copy import deepcopy
 
-import numpy.typing as npt
-from numpy import float64
-
-# Dependencies.
 from src.ActionProbabilityDistribution import ActionProbabilityDistribution
 from src.StateSpace import StateSpace
 from src.Environment.Environment import Environment
@@ -14,6 +10,7 @@ from src.Policy.BasePolicy import BasePolicy
 from src.StateIndex import StateIndex
 from src.Action import Action
 from src.Agent.AgentService import AgentService
+from src.Agent.History import History
 
 # TODO Look into publishing to twine on release.
 # TODO Need option to improve Policy without changing the current State Space. (in place)
@@ -27,9 +24,7 @@ class Agent[SI: StateIndex, A: Action]:
                  policy: BasePolicy[SI, A],
                 ):
         
-        self.history: Dict[int, Dict[str, npt.NDArray[float64] | List[A]]] = {}
-        
-        self.history[0] = {}
+        self.history = History[SI, A]()
         
         # Value function parameters.
         self.theta: float = 0.01
@@ -75,10 +70,8 @@ class Agent[SI: StateIndex, A: Action]:
                 
             if delta < self.theta:
                 
-                evaluated_state_value_function: npt.NDArray[float64] = deepcopy(state_space.get_state_value_function())
-                
-                self.history[len(self.history) - 1]["state value function"] = evaluated_state_value_function
-                
+                self.history.track_state_space(state_space)
+
                 break
             
     def improve_policy(self) -> None:
@@ -116,9 +109,7 @@ class Agent[SI: StateIndex, A: Action]:
                 
                 new_state_policy: ActionProbabilityDistribution[A] = self.policy.get_action_probability_distribution(state)
                 
-                history_new_greedy_actions = deepcopy(new_greedy_actions)
                 
-                self.history[len(self.history) - 1]["actions"] = history_new_greedy_actions
                 
                 if old_state_policy != new_state_policy:
                     
@@ -131,6 +122,8 @@ class Agent[SI: StateIndex, A: Action]:
             else:
                 
                 self.evaluate_policy()
+                
+                self.history.increment_history_count()
 
     def assign_new_state_estimated_return(self,
                                state: SI,
