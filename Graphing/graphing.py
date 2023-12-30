@@ -9,11 +9,10 @@ Currently supported graph dimensions:
 import matplotlib.pyplot as plt
 from matplotlib.axes import Axes
 
-import numpy as np
 import numpy.typing as npt
 from numpy import float64
 
-from typing import List, cast, Tuple
+from typing import List, Dict
 
 from src.StateIndex import StateIndex
 from src.Action import Action
@@ -41,29 +40,29 @@ class Graphing[SI: StateIndex, A: Action]():
         
         state_space: StateSpace[SI, A] = self.agent.environment.get_state_space()
         
-        # TODO add check for empty State Space.
-        dimensionality: int = self.determine_graph_dimensionality(
-            next(iter(state_space.keys()))
-            )
+        state_value_function: npt.NDArray[float64] = state_space.get_state_value_function()
         
-        state_value_function: npt.NDArray[float64] = self.get_state_value_function(
-            dimensionality
-        )
+        fig, ax = plt.subplots(1, 1)
         
         self.plot_graph(
             state_value_function,
+            ax,
             plot_action_annotations,
-            plot_greedy_actions
+            plot_greedy_actions,
         )
+        
+        plt.show()
         
     def plot_graph(self,
                    graph: npt.NDArray[float64],
-                   plot_action_annotations: bool,
-                   plot_greedy_actions: bool
+                   ax: Axes,
+                   plot_action_annotations: bool | None = None,
+                   plot_greedy_actions: bool | None = None,
+                   actions: List[A] | None = None
                   ) -> None:
         """Plot the given graph, along with the given options."""
         
-        fig, ax = plt.subplots()    # type: ignore
+        # fig, ax = plt.subplots()    # type: ignore
         
         img = ax.imshow(
             graph,
@@ -82,56 +81,6 @@ class Graphing[SI: StateIndex, A: Action]():
                 self.plot_available_actions(ax)
                 
         plt.colorbar(img)   # type: ignore
-        
-        plt.show()  # type: ignore
-            
-    # TODO could be done in the StateSpace.
-    def get_state_value_function(self,
-                                 dimensionality: int
-                                ) -> npt.NDArray[float64]:
-        """Plot the State Value Function of the State Space."""
-        
-        state_space: StateSpace[SI, A] = self.agent.environment.get_state_space()
-        
-        if dimensionality == 2:
-            
-            x, y = zip(*state_space.keys())
-            
-            values = np.zeros((max(x) + 1, max(y) + 1))
-            
-            for state_index, state in state_space.items():
-                
-                if isinstance(state_index, tuple):
-                    
-                    # Quieting the type checker.
-                    i, j = cast(Tuple[int, ...], state_index)
-                    
-                    values[i, j] = state.estimated_return
-                    
-                else:
-                    
-                    # TODO add a proper handle case.
-                    print(f"Ignoring invalid key: {state_index}")
-                    
-            return values
-        
-        else:
-            
-            raise(ValueError(f"Untested dimensionality: {dimensionality}"))
-            
-    def determine_graph_dimensionality(self,
-                                      key: SI
-                                     ) -> int:
-        """Return the dimension required to plot the graph."""
-        
-        if isinstance(key, tuple):
-            
-            # Quieting the type checker.
-            return len(cast(Tuple[int, ...], key))
-        
-        else:
-            
-            raise ValueError("Unsupported StateIndex type.")
         
     def plot_policy_greedy_actions(self,
                             ax: Axes
@@ -212,3 +161,31 @@ class Graphing[SI: StateIndex, A: Action]():
                     arrowprops = dict(arrowstyle = "->"),
                     annotation_clip=False
                 )
+                
+    def plot_history(
+        self,
+        history: Dict[int, StateSpace[SI, A]]
+    ) -> None:
+        """Plot graphs for each stage of evaluation-improvement process."""
+        
+        fig, axs = plt.subplots(1, len(history))
+        
+        if len(history) == 1:
+            
+            self.plot_graph(
+                history[0].get_state_value_function(),
+                axs[0],
+                True,
+                True
+            )
+            
+        for timestep in history:
+            
+            self.plot_graph(
+                history[timestep].get_state_value_function(),
+                axs[timestep],
+                True,
+                True
+            )
+        
+        plt.show()

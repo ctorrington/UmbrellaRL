@@ -3,7 +3,6 @@
 from typing import List
 from copy import deepcopy
 
-# Dependencies.
 from src.ActionProbabilityDistribution import ActionProbabilityDistribution
 from src.StateSpace import StateSpace
 from src.Environment.Environment import Environment
@@ -11,6 +10,7 @@ from src.Policy.BasePolicy import BasePolicy
 from src.StateIndex import StateIndex
 from src.Action import Action
 from src.Agent.AgentService import AgentService
+from src.Agent.History import History
 
 # TODO Look into publishing to twine on release.
 # TODO Need option to improve Policy without changing the current State Space. (in place)
@@ -23,6 +23,8 @@ class Agent[SI: StateIndex, A: Action]:
                  environment: Environment[SI, A],
                  policy: BasePolicy[SI, A],
                 ):
+        
+        self.history = History[SI, A]()
         
         # Value function parameters.
         self.theta: float = 0.01
@@ -67,6 +69,11 @@ class Agent[SI: StateIndex, A: Action]:
                 delta = max(delta, (abs(old_state_value - updated_state_value)))
                 
             if delta < self.theta:
+                
+                self.history.track_state_space(state_space)
+                
+                self.history.increment_history_count()
+
                 break
             
     def improve_policy(self) -> None:
@@ -104,6 +111,8 @@ class Agent[SI: StateIndex, A: Action]:
                 
                 new_state_policy: ActionProbabilityDistribution[A] = self.policy.get_action_probability_distribution(state)
                 
+                
+                
                 if old_state_policy != new_state_policy:
                     
                     policy_stable = False
@@ -115,7 +124,7 @@ class Agent[SI: StateIndex, A: Action]:
             else:
                 
                 self.evaluate_policy()
-
+                
     def assign_new_state_estimated_return(self,
                                state: SI,
                                value: float
