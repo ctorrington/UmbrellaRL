@@ -19,6 +19,8 @@ from src.Agent.History import History
 class Agent[SI: StateIndex, A: Action]:
     """RL Agent."""
     
+    # TODO add method for optinally tracking the history.
+    
     def __init__(self,
                  environment: Environment[SI, A],
                  policy: BasePolicy[SI, A],
