@@ -12,6 +12,7 @@ from src.Action import Action
 from src.StateSpace import StateSpace
 from src.StateIndex import StateIndex
 
+# TODO Allow for tracking the policy actions as well.
 # TODO Class currently tracks the entire State Space.
     # Should make it more modular.
 
