@@ -72,3 +72,30 @@ class Graphing[SI: StateIndex, A: Action](Graphing):
                 cmap = "viridis",
                 interpolation = "nearest"
             )
+            
+    def plot_rewards(
+        self
+    ) -> None:
+        
+        # TODO add plotting rewards feature.
+        
+        pass
+    
+    def plot_actions(
+        self,
+        actions: str
+    ) -> None:
+        
+        match actions:
+            
+            case "greedy":
+                
+                self.plot_greedy_actions()
+                
+            case "all":
+                
+                self.plot_all_actions()
+                
+            case _:
+                
+                raise AttributeError(f"Attribute of type {actions} is not supported.")
