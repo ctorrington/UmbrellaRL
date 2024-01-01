@@ -19,7 +19,7 @@ from src.StateSpace import StateSpace
 from src.StateProbabilityDistribution import StateProbabilityDistribution
 from src.Agent.History import History
 
-class Graphing[SI: StateIndex, A: Action](Graphing):
+class GraphingTEST[SI: StateIndex, A: Action](Graphing):
 
     def __init__(
         self,
@@ -57,7 +57,7 @@ class Graphing[SI: StateIndex, A: Action](Graphing):
         self
     ) -> None:
         
-        if self.history == -1:
+        if self.history_iteration == -1:
             
             img = plt.imshow(
                 self.agent.environment.get_state_space().get_state_value_function(),
@@ -87,7 +87,7 @@ class Graphing[SI: StateIndex, A: Action](Graphing):
     ) -> None:
         
         # TODO below logic needs to be a method.
-        if self.history == -1:
+        if self.history_iteration == -1:
             
             state_space = self.agent.environment.get_state_space()
             
@@ -145,3 +145,15 @@ class Graphing[SI: StateIndex, A: Action](Graphing):
                         arrowprops = dict(arrowstyle = "->"),
                         annotation_clip = False
                     )
+                    
+    def plot_history(self) -> None:
+        pass
+    
+    def animate_history(self) -> None:
+        pass
+                    
+    def show_graph(
+        self
+    ) -> None:
+        
+        plt.show()
