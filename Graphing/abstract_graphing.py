@@ -3,13 +3,8 @@ Abstract base class for UmbrellaRL's graphing module.
 """
 
 from abc import ABC, abstractmethod
-from typing import Dict
 
-from src.StateSpace import StateSpace
-from src.StateIndex import StateIndex
-from src.Action import Action
-
-class Graphing[SI: StateIndex, A: Action](ABC):
+class Graphing(ABC):
     # TODO History should be its own type.
     
     @abstractmethod
