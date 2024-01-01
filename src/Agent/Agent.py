@@ -44,20 +44,21 @@ class Agent[SI: StateIndex, A: Action]:
         
         Determine the state-value function for the policy.
         """
-        
+
         state_space: StateSpace[SI, A] = self.environment.get_state_space()
-        
+
         while True:
-            
+
             delta = 0
-            
+
             for state in state_space:
-                
+
                 if state_space[state].is_terminal:
+
                     continue
-                
+
                 old_state_value: float = state_space[state].estimated_return
-                
+
                 updated_state_value: float = AgentService.calculate_state_value(
                     state,
                     state_space,
@@ -65,19 +66,19 @@ class Agent[SI: StateIndex, A: Action]:
                     self.environment,
                     self.gamma
                 )
-                
+
                 self.assign_new_state_estimated_return(state, updated_state_value)
-                
+
                 delta = max(delta, (abs(old_state_value - updated_state_value)))
-                
+
             if delta < self.theta:
-                
+
                 self.history.track_state_space(state_space)
                 
                 self.history.increment_history_count()
 
                 break
-            
+
     def improve_policy(self) -> None:
         """
         Improve the Policy.
@@ -112,8 +113,6 @@ class Agent[SI: StateIndex, A: Action]:
                 )
                 
                 new_state_policy: ActionProbabilityDistribution[A] = self.policy.get_action_probability_distribution(state)
-                
-                
                 
                 if old_state_policy != new_state_policy:
                     
