@@ -81,21 +81,67 @@ class Graphing[SI: StateIndex, A: Action](Graphing):
         
         pass
     
-    def plot_actions(
+    def plot_action_annotations(
         self,
-        actions: str
+        action_type: str
     ) -> None:
         
-        match actions:
+        # TODO below logic needs to be a method.
+        if self.history == -1:
             
-            case "greedy":
+            state_space = self.agent.environment.get_state_space()
+            
+        else:
+            
+            state_space = self.agent.history[self.history_iteration]
+        
+        for state in state_space:
+        
+            match action_type:
                 
-                self.plot_greedy_actions()
+                case "greedy":
+                    
+                    actions = self.agent.policy.get_greedy_actions(state)
                 
-            case "all":
+                case "all":
+                    
+                    actions = state_space[state].actions
+                    
+                case _:
+                    
+                    raise AttributeError(f"Attribute of type {action_type} is not supported.")
                 
-                self.plot_all_actions()
+            for action in actions:
                 
-            case _:
+                next_states = self.agent.environment.get_next_states(
+                    state,
+                    action
+                )
                 
-                raise AttributeError(f"Attribute of type {actions} is not supported.")
+                for next_state in next_states:
+                    
+                    if next_state == state:
+                        continue
+                    
+                    current_center_y, current_center_x = state
+                    
+                    next_center_y, next_center_x = next_state
+                    
+                    direction_vector = (next_center_x - current_center_x,
+                                        next_center_y - current_center_y)
+                    
+                    scaled_direction = (direction_vector[0] * 0.5,
+                                      direction_vector[1] * 0.5)
+                    
+                    xytext = (current_center_x, current_center_y)
+                    
+                    xy = (next_center_x - scaled_direction[0],
+                          next_center_y - scaled_direction[1])
+                    
+                    self.axes.annotate(
+                        "",
+                        xytext = xytext,
+                        xy = xy,
+                        arrowprops = dict(arrowstyle = "->"),
+                        annotation_clip = False
+                    )
