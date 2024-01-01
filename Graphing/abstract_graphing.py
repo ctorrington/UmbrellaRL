@@ -5,7 +5,6 @@ Abstract base class for UmbrellaRL's graphing module.
 from abc import ABC, abstractmethod
 
 class Graphing(ABC):
-    # TODO History should be its own type.
     
     @abstractmethod
     def plot_graph(
