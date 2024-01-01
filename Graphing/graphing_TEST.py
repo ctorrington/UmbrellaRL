@@ -30,23 +30,45 @@ class Graphing[SI: StateIndex, A: Action](Graphing):
 
         self.history: History[SI, A] = self.agent.history
 
-        self.history_iteration: int = 0
-        
+        self.history_iteration: int = -1
+
+        self.fig, self.axes = plt.subplots()
+
     def plot_graph(
         self,
         graph: str
     ) -> None:
-        
+
         match graph:
-            
+
             case "state value function":
-                
+
                 self.plot_state_value_function()
-                
+
             case "rewards":
-                
+
                 self.plot_rewards()
-                
+
             case _:
-                
+
                 raise AttributeError(f"Attribute of type {graph} is not supported.")
+
+    def plot_state_value_function(
+        self
+    ) -> None:
+        
+        if self.history == -1:
+            
+            img = plt.imshow(
+                self.agent.environment.get_state_space().get_state_value_function(),
+                cmap = "viridis",
+                interpolation = "nearest"
+            )
+            
+        else:
+            
+            img = plt.show(
+                self.history[self.history_iteration].get_state_value_function(),
+                cmap = "viridis",
+                interpolation = "nearest"
+            )
