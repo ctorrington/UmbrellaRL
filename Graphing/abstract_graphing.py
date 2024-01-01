@@ -31,28 +31,13 @@ class Graphing(ABC):
         pass
     
     @abstractmethod
-    def plot_actions(
+    def plot_action_annotations(
         self,
         actions: str
     ) -> None:
-        """Specify which actions to plot."""
         
-    pass
+        pass
 
-    @abstractmethod
-    def plot_greedy_actions(
-        self
-    ) -> None:
-        
-        pass
-    
-    @abstractmethod
-    def plot_all_actions(
-        self
-    ) -> None:
-        
-        pass
-    
     @abstractmethod
     def animate_history(
         self
