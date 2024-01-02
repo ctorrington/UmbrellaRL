@@ -8,19 +8,15 @@ from typing import List
 
 from src.Action import Action
 
-class State[T: Action]:
+class State[A: Action]:
     """
     States representation for a reinforcement learning environment.
-    
-    This class can be inhertited from to define more State member fields.
-    
-    Object defing fields for States.
+
+    Inherit from this class to define additional State member fields.
     """
-    
-    # TODO Needs setters & getters for every member.
-    
+
     def __init__(self):
-        self.actions: List[T] = []
+        self.actions: List[A] = []
         self.estimated_return: float = 0.0
         self.counter: int = 0
         self.reward: float = 0
