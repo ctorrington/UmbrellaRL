@@ -1,4 +1,4 @@
-# UmbrellaRL
+# UmbrellaRL ☂️
 
 ## Generic solution for reinforcement learning problems ☂️
 
