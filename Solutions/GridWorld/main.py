@@ -7,45 +7,43 @@ from Solutions.GridWorld.Policy import GridWorldEquiprobablePolicy
 from Solutions.GridWorld.StateIndex import GridWorldStateIndex
 
 from Graphing.graphing import Graphing
-from Graphing.graphing_TEST import GraphingTEST
 
 def main():
-    
+
     number_of_rows: int = 4
+
     number_of_columns: int = 4
-    
+
     state_space: GridWorldStateSpace = GridWorldStateSpace(
         number_of_rows,
         number_of_columns
     )
-    
+
     environment: GridWorldEnvironment = GridWorldEnvironment(state_space)
-    
+
     policy: GridWorldEquiprobablePolicy[GridWorldStateIndex, GridWorldAction] = GridWorldEquiprobablePolicy(state_space)
-    
+
     agent: Agent[GridWorldStateIndex, GridWorldAction] = Agent(
         environment,
         policy
     )
-    
+
     agent.evaluate_policy()
-    
-    # agent.improve_policy()
-    
+
+    agent.improve_policy()
+
     for state in state_space:
+
         print(f"{state} value: {state_space[state].estimated_return}. Policy: {policy.get_action_probability_distribution(state)}")
-    
-    # graph = Graphing(agent)
-    
-    graph_test = GraphingTEST(agent)
-    graph_test.plot_graph("state value function")
-    graph_test.plot_action_annotations("greedy")
+
+    graph_test = Graphing(agent)
+
+    graph_test.plot_history("state value function")
+
+    graph_test.plot_all_action_annotations("all")
+
     graph_test.show_graph()
-    
-    # graph.plot_state_value_function(True, True)
-    # graph.plot_history(agent.history)
-    # graph.animate_history(agent.history)
 
 if __name__ == "__main__":
-    
+
     main()
