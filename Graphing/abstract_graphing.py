@@ -33,7 +33,7 @@ class Graphing(ABC):
     @abstractmethod
     def plot_action_annotations(
         self,
-        actions: str
+        action_type: str
     ) -> None:
         
         pass
@@ -47,7 +47,8 @@ class Graphing(ABC):
     
     @abstractmethod
     def plot_history(
-        self
+        self,
+        graph: str
     ) -> None:
         
         pass
