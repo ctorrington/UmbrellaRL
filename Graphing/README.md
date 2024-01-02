@@ -15,7 +15,7 @@
 This method takes a string as a parameter, specifying which graph to plot.
 This method will only plot the most current version of the specified graph.
 
-### plot state value function
+#### plot state value function
 
 This method plots the latest version of the agent's state value function.
 This method is equivalent to passing 'state value function' to the plot graph method.
