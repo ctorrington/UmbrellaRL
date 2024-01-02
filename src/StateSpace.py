@@ -13,8 +13,6 @@ import numpy.typing as npt
 from numpy import float64
 
 from src.State import State
-# I don't think that this is a problem.
-# But is also potentially a problem if the generic type isn't being used.
 from src.StateIndex import StateIndex
 from src.Action import Action
 
@@ -24,31 +22,27 @@ class StateSpace[SI: StateIndex, A: Action](ABC, Dict[SI, State[A]]):
     with by a reinforcement learning Agent.
     
     Dictionary structure mapping each index to its State.
-    
-    Injected into Environment.
     """
 
-    def __getattr__(self, key: SI):
-        if key in self:
-            return self[key]
-        else:
-            raise AttributeError(f"StateSpace object has not attribute '{key}'")
-        
-    def get_reward(self,
-                   key: SI
-                  ) -> float:
+    def get_reward(
+        self,
+        key: SI
+        ) -> float:
         """Return the reward of the given State."""
         
         return self[key].reward
     
-    def get_estimated_return(self,
-                             key: SI
-                            ) -> float:
+    def get_estimated_return(
+        self,
+        key: SI
+        ) -> float:
         """Return the estimated return (value) of the given State."""
         
         return self[key].estimated_return
     
-    def get_dimensionality(self) -> int:
+    def get_dimensionality(
+        self
+        ) -> int:
         """Return the dimensionality of the State Space."""
         
         first_index_key = next(iter(self.keys()))
@@ -62,7 +56,9 @@ class StateSpace[SI: StateIndex, A: Action](ABC, Dict[SI, State[A]]):
             
             raise TypeError("Type for State Index not currently supported.")
     
-    def get_state_value_function(self) -> npt.NDArray[float64]:
+    def get_state_value_function(
+        self
+        ) -> npt.NDArray[float64]:
         
         dimensionality: int = self.get_dimensionality()
         
@@ -80,22 +76,20 @@ class StateSpace[SI: StateIndex, A: Action](ABC, Dict[SI, State[A]]):
                     i, j = cast(Tuple[int, ...], state_index)
                     
                     values[i, j] = state.estimated_return
-                    
+
                 else:
-                    
+
                     raise TypeError("Type for State Index not currently supported.")
-                    
+
             return values
-                    
+
         else:
-                
+
             raise ValueError("Dimensionality currently unsupported.")
-                    
-        
-    
+
     # TODO Any type here, & any reference to StateIndex, needs to change to be bound to a type (similar to Action).
     @abstractmethod
     def get_dimensions(self) -> Tuple[Any, ...]:
         """Return the dimensions of the State Space."""
-        
+
         pass
