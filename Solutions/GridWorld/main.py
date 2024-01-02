@@ -36,13 +36,13 @@ def main():
 
         print(f"{state} value: {state_space[state].estimated_return}. Policy: {policy.get_action_probability_distribution(state)}")
 
-    graph_test = Graphing(agent)
+    graph = Graphing(agent)
 
-    graph_test.plot_history("state value function")
+    graph.plot_graph("state value function")
 
-    graph_test.plot_all_action_annotations("all")
+    graph.plot_action_annotations("greedy")
 
-    graph_test.show_graph()
+    graph.show_graph()
 
 if __name__ == "__main__":
 
