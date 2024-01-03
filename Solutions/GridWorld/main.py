@@ -39,6 +39,8 @@ def main():
     graph = Graphing(agent)
 
     graph.plot_graph("state value function")
+    
+    # graph.plot_history("state value function")
 
     graph.plot_action_annotations("greedy")
 
