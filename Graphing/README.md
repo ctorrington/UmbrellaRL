@@ -25,6 +25,8 @@ This method is equivalent to passing 'state value function' to the plot graph me
 This method takes an action type as a string as a parameter, specifying which actions to plot.
 This method plots arrow annotations onto the graph that has been plotted onto by the plot graph method.
 
+Currently this method will only plot annotations for the latest iteration of the state space, not for the entire history (this will be added in a later release).
+
 #### plot history
 
 This method plots the history tracked by the agent as it interacts with the environment.
