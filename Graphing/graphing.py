@@ -75,25 +75,6 @@ class Graphing[SI: StateIndex, A: Action](Graphing):
         
         pass
     
-    def plot_all_action_annotations(
-        self,
-        action_type: str
-    ) -> None:
-        
-        if len(self.history) == 1:
-            
-            return
-        
-        self.history_iteration = -1
-        
-        for timestep in range(len(self.history)):
-            
-            self.history_iteration += 1
-            
-            self.plot_action_annotations(
-                action_type
-            )
-    
     def plot_action_annotations(
         self,
         action_type: str
@@ -198,6 +179,8 @@ class Graphing[SI: StateIndex, A: Action](Graphing):
             self.plot_graph(graph)
 
     def animate_history(self) -> None:
+        
+        # TODO future release.
         pass
                     
     def show_graph(
