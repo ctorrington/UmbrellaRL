@@ -58,9 +58,6 @@ class Graphing[SI: StateIndex, A: Action](Graphing):
             
         else:
             
-            print(self.history_iteration)
-            print(self.history[self.history_iteration].get_state_value_function())
-            
             self.axes[self.history_iteration].imshow(
                 self.history[self.history_iteration].get_state_value_function(),
                 cmap = "viridis",
@@ -177,7 +174,9 @@ class Graphing[SI: StateIndex, A: Action](Graphing):
             self.history_iteration += 1
             
             self.plot_graph(graph)
-
+            
+            self.axes[timestep].set_title(f"iteration {timestep}")
+            
     def animate_history(self) -> None:
         
         # TODO future release.
@@ -188,3 +187,4 @@ class Graphing[SI: StateIndex, A: Action](Graphing):
     ) -> None:
         
         plt.show()
+        
