@@ -4,11 +4,11 @@ build-backend = "hatchling.build"
 
 [project]
 name = "UmbrellaRL"
-version = "0.0.0"
+version = "0.1.0"
 authors = [
   { name="Christopher Torrington", email="ctorrington1@gmail.com" },
 ]
-description = "Package to handle Reinforcement Learning functions. This package is nowhere near complete."
+description = "Package to handle Reinforcement Learning functions."
 readme = "README.md"
 requires-python = ">=3.12"
 classifiers = [
