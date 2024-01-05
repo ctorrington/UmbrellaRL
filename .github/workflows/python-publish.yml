@@ -1,7 +1,0 @@
-# name: Publish to PyPi
-
-# on:
-#     push:
-#         branches: ['testing']
-
-# jobs:
