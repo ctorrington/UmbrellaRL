@@ -12,7 +12,6 @@ from src.Action import Action
 from src.Agent.AgentService import AgentService
 from src.Agent.History import History
 
-# TODO Look into publishing to twine on release.
 # TODO Need option to improve Policy without changing the current State Space. (in place)
     # Need copy of old State Value function, improve according to those values - set State Value Function to those updated values all at once (optional, include with current implementation)
 
@@ -21,19 +20,18 @@ class Agent[SI: StateIndex, A: Action]:
     
     # TODO add method for optinally tracking the history.
     
-    def __init__(self,
-                 environment: Environment[SI, A],
-                 policy: BasePolicy[SI, A],
-                ):
+    def __init__(
+        self,
+        environment: Environment[SI, A],
+        policy: BasePolicy[SI, A],
+        ) -> None:
         
         self.history = History[SI, A]()
         
-        # Value function parameters.
         self.theta: float = 0.01
         
         self.gamma: float = 0.9
         
-        # Dependencies. 
         self.environment: Environment[SI, A] = environment
         
         self.policy: BasePolicy[SI, A] = policy
@@ -126,10 +124,11 @@ class Agent[SI: StateIndex, A: Action]:
                 
                 self.evaluate_policy()
                 
-    def assign_new_state_estimated_return(self,
-                               state: SI,
-                               value: float
-                              ) -> None:
+    def assign_new_state_estimated_return(
+        self,
+        state: SI,
+        value: float
+        ) -> None:
         """Assign the new estimated return (value) to the given State."""
         
         state_space: StateSpace[SI, A] = self.environment.get_state_space()
