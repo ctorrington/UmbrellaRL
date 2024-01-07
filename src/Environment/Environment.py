@@ -24,11 +24,11 @@ class Environment[SI: StateIndex, A: Action](ABC, Dict[SI, StateActions[SI, A]])
 
     def get_next_states(
         self,
-        current_state: SI,
+        current_state_index: SI,
         action: A
         ) -> StateProbabilityDistribution[SI]:
-        
-        return self[current_state][action]
+
+        return self.get_state_actions(current_state_index).get_state_probability_distribution(action)
 
     def get_state_actions(
         self,
