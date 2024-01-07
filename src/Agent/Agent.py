@@ -51,12 +51,14 @@ class Agent[SI: StateIndex, A: Action]:
             delta = 0
 
             for state_index in state_space:
+                
+                state: State[A] = state_space.get_state(state_index)
 
-                if state_space[state_index].is_terminal:
+                if state.is_terminal:
 
                     continue
 
-                old_state_value: float = state_space[state_index].estimated_return
+                old_state_value: float = state.estimated_return
 
                 updated_state_value: float = AgentService.calculate_state_value(
                     state_index,
@@ -65,8 +67,6 @@ class Agent[SI: StateIndex, A: Action]:
                     self.environment,
                     self.gamma
                 )
-
-                state: State[A] = state_space.get_state(state_index)
 
                 state.estimated_return = updated_state_value
 
@@ -94,9 +94,11 @@ class Agent[SI: StateIndex, A: Action]:
             policy_stable: bool = True
 
             for state_index in state_space:
+                
+                state: State[A] = state_space.get_state(state_index)
 
-                # TODO create has_actions method
-                if len(state_space[state_index].actions) == 0:
+                if not state.has_actions():
+
                     continue
 
                 old_state_policy: ActionProbabilityDistribution[A] = deepcopy(self.policy.get_action_probability_distribution(state_index))
