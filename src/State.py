@@ -31,7 +31,7 @@ class State[A: Action]:
 
     @property
     def actions(self) -> List[A]:
-        
+
         return self._actions
 
     @actions.setter
@@ -39,12 +39,16 @@ class State[A: Action]:
         self,
         actions: List[A]
         ) -> None:
-        
+
         self._actions = actions
+
+    def has_actions(self) -> bool:
+        
+        return bool(self._actions)
 
     @property
     def estimated_return(self) -> float:
-        
+
         return self._estimated_return
 
     @estimated_return.setter
