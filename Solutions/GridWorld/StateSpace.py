@@ -18,7 +18,10 @@ class GridWorldStateSpace(StateSpace[GridWorldStateIndex, GridWorldAction]):
         ) -> None:
 
         # TODO will probably have some config file for these terminal states. 
-        terminal_states: List[GridWorldStateIndex] = [(0, 0), (number_of_rows - 1, number_of_columns - 1)]
+        terminal_states: List[GridWorldStateIndex] = [
+            (0, 0),
+            (number_of_rows - 1, number_of_columns - 1)
+            ]
 
         self.number_of_rows = number_of_rows
 
@@ -34,12 +37,10 @@ class GridWorldStateSpace(StateSpace[GridWorldStateIndex, GridWorldAction]):
 
                 self[(row, column)] = grid_world_state
 
-        for state in terminal_states:
+        for state_index in terminal_states:
 
-            self[state].is_terminal = True
+            state = self[state_index]
 
-            self[state].reward = 1.0
+            state.is_terminal = True
 
-    def get_dimensions(self) -> Tuple[Any, ...]:
-
-        return (self.number_of_rows, self.number_of_columns)
+            state.reward = 1.0
