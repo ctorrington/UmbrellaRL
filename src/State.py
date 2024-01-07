@@ -32,7 +32,7 @@ class State[A: Action]:
     @property
     def actions(self) -> List[A]:
         
-        return self.actions
+        return self._actions
 
     @actions.setter
     def actions(
