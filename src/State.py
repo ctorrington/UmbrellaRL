@@ -10,7 +10,7 @@ from src.Action import Action
 
 class State[A: Action]:
     """
-    States representation for a reinforcement learning environment.
+    State representation for a reinforcement learning environment.
 
     Inherit from this class to define additional State member fields.
     """
