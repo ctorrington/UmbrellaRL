@@ -39,7 +39,7 @@ class GridWorldStateSpace(StateSpace[GridWorldStateIndex, GridWorldAction]):
 
         for state_index in terminal_states:
 
-            state = self[state_index]
+            state = self.get_state(state_index)
 
             state.is_terminal = True
 
