@@ -13,16 +13,17 @@ from src.Service.BellmanEquation import BellmanEquation
 
 class AgentService[SI: StateIndex, A: Action]():
     """Class to handle calculations for the Agent."""
-    
+
     @classmethod
-    def calculate_state_value(cls,
-                              state: SI,
-                              state_space: StateSpace[SI, A],
-                              policy: BasePolicy[SI, A],
-                              environment: Environment[SI, A],
-                              gamma: float
-                             ) -> float:
-        
+    def calculate_state_value(
+        cls,
+        state: SI,
+        state_space: StateSpace[SI, A],
+        policy: BasePolicy[SI, A],
+        environment: Environment[SI, A],
+        gamma: float
+        ) -> float:
+
         state_value: float = BellmanEquation.calculate_state_value(
             state,
             state_space,
@@ -30,50 +31,52 @@ class AgentService[SI: StateIndex, A: Action]():
             environment,
             gamma
         )
-        
+
         return state_value
-    
+
     @classmethod
-    def determine_greedy_actions(cls,
-                                 state: SI,
-                                 state_space: StateSpace[SI, A],
-                                 environment: Environment[SI, A],
-                                 gamma: float
-                                ) -> List[A]:
+    def determine_greedy_actions(
+        cls,
+        state: SI,
+        state_space: StateSpace[SI, A],
+        environment: Environment[SI, A],
+        gamma: float
+        ) -> List[A]:
         """
         Determine the Actions resulting in the greatest estimated return 
         from the given State.
         """
-        
+
         action_value_distribution: Dict[A, float] = cls.calculate_greedy_actions_estimated_return(
             state,
             state_space,
             environment,
             gamma
             )
-        
+
         best_actions: List[A] = cls.determine_best_actions(
             action_value_distribution
         )
-        
+
         return best_actions
 
     @classmethod
-    def calculate_greedy_actions_estimated_return(cls,
-                                                  state: SI,
-                                                  state_space: StateSpace[SI, A],
-                                                  environment: Environment[SI, A],
-                                                  gamma: float
-                                                 ) -> Dict[A, float]:
+    def calculate_greedy_actions_estimated_return(
+        cls,
+        state: SI,
+        state_space: StateSpace[SI, A],
+        environment: Environment[SI, A],
+        gamma: float
+        ) -> Dict[A, float]:
         """
         Calculate the Actions resulting in the highest estimated return from 
         the given State.
         """
-        
+
         action_value_distribution: Dict[A, float] = {}
-        
+
         for action in state_space[state].actions:
-            
+
             action_value: float = BellmanEquation.calculate_update_value(
                 state,
                 action,
@@ -81,27 +84,28 @@ class AgentService[SI: StateIndex, A: Action]():
                 environment,
                 gamma
             )
-                
+
             action_value_distribution[action] = action_value
-            
+
         return action_value_distribution
 
     @classmethod
-    def determine_best_actions(cls,
-                               action_value_distribution: Dict[A, float]
-                              ) -> List[A]:
+    def determine_best_actions(
+        cls,
+        action_value_distribution: Dict[A, float]
+        ) -> List[A]:
         """Return the Actions that result in the greatest esimated return."""
-        
+
         best_value: float = max(action_value_distribution.values())
-        
+
         best_actions: List[A] = []
-        
+
         for action in action_value_distribution:
-            
+
             if action_value_distribution[action] >= best_value:
-                
+
                 best_value = action_value_distribution[action]
-                
+
                 best_actions.append(action)
-                
+
         return best_actions
