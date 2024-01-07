@@ -5,8 +5,8 @@ Structure containing every State in the Environment that can be interacted with
 by a reinforcement learning Agent.
 """
 
-from typing import Dict, Tuple, Any, cast
-from abc import ABC, abstractmethod
+from typing import Dict, Tuple, cast
+from abc import ABC
 
 import numpy as np
 import numpy.typing as npt
