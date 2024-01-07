@@ -24,22 +24,14 @@ class StateSpace[SI: StateIndex, A: Action](ABC, Dict[SI, State[A]]):
     Dictionary structure mapping each index to its State.
     """
 
-    def get_reward(
+    def get_state(
         self,
-        key: SI
-        ) -> float:
-        """Return the reward of the given State."""
-        
-        return self[key].reward
-    
-    def get_estimated_return(
-        self,
-        key: SI
-        ) -> float:
-        """Return the estimated return (value) of the given State."""
-        
-        return self[key].estimated_return
-    
+        state: SI
+    ) -> State[A]:
+        """Return the State object of the given State Index."""
+
+        return self[state]
+
     def get_dimensionality(
         self
         ) -> int:
@@ -86,10 +78,3 @@ class StateSpace[SI: StateIndex, A: Action](ABC, Dict[SI, State[A]]):
         else:
 
             raise ValueError("Dimensionality currently unsupported.")
-
-    # TODO Any type here, & any reference to StateIndex, needs to change to be bound to a type (similar to Action).
-    @abstractmethod
-    def get_dimensions(self) -> Tuple[Any, ...]:
-        """Return the dimensions of the State Space."""
-
-        pass
