@@ -10,18 +10,11 @@ from typing import Dict
 from src.StateIndex import StateIndex
 
 class StateProbabilityDistribution[SI: StateIndex](Dict[SI, float]):
-    
-    def __getitem__(
-        self,
-        key: SI
-        ) -> float:
-        
-        return self[key]
-    
+
     def get_state_probability(
         self,
-        state: SI
+        state_index: SI
         ) -> float:
         """Return the probability of reaching the given State."""
-        
-        return self[state]
+
+        return self[state_index]
