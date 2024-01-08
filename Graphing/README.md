@@ -8,7 +8,7 @@
 
 ## Usage
 
-### UmbrellaRL's graphing module's features are accessed through its object's methods below.
+### UmbrellaRL's ☂ graphing module's features are accessed through its object's methods. The details for these methods can be found below.
 
 #### plot graph
 
