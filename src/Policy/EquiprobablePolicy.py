@@ -15,9 +15,10 @@ from src.StateIndex import StateIndex
 from src.Action import Action
 
 class EquiprobablePolicy[SI: StateIndex, A: Action](BasePolicy[SI, A]):
-    def __init__(self,
-                 state_space: StateSpace[SI, A]
-                ) -> None:
+    def __init__(
+        self,
+        state_space: StateSpace[SI, A]
+    ) -> None:
         
         self.state_space: StateSpace[SI, A] = state_space
         
@@ -34,17 +35,19 @@ class EquiprobablePolicy[SI: StateIndex, A: Action](BasePolicy[SI, A]):
                 
                 self[state][action] = action_probability
             
-    def choose_action(self,
-                      state: SI
-                     ) -> A:
+    def choose_action(
+        self,
+        state_index: SI
+    ) -> A:
         """Choose an action based on the Action Probability Distribution."""
 
-        actions: List[A] = list(self[state].keys())
+        actions: List[A] = list(self[state_index].keys())
         
         return random.choice(actions)
 
-    def get_action_probability_distribution(self,
-                                            state: SI
-                                           ) -> ActionProbabilityDistribution[A]:
+    def get_action_probability_distribution(
+        self,
+        state_index: SI
+    ) -> ActionProbabilityDistribution[A]:
 
-        return self[state]
+        return self[state_index]
