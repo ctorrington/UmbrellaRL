@@ -11,18 +11,21 @@ from src.Action import Action
 
 class ActionProbabilityDistribution[A: Action](Dict[A, float]):
 
-    def __getitem__(
-        self,
-        key: A
-        ) -> float:
-
-        return self[key]
-
     def get_action_probability(
         self,
         action: A
-        ) -> float:
+    ) -> float:
 
-        """Return the probability of the given action being chosen."""
+        """Return the probability of the given Action being chosen."""
 
-        return super().get(action, 0)
+        return self[action]
+    
+    def set_action_probability(
+        self,
+        action: A,
+        action_probability: float
+    ) -> None:
+        
+        """Set the probability of the Action being chosen."""
+        
+        self[action] = action_probability
