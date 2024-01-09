@@ -25,13 +25,15 @@ class Agent[SI: StateIndex, A: Action]:
         self,
         environment: Environment[SI, A],
         policy: BasePolicy[SI, A],
+        theta: float = 0.01,
+        gamma: float = 0.9
         ) -> None:
 
         self.history = History[SI, A]()
 
-        self.theta: float = 0.01
+        self.theta: float = theta
 
-        self.gamma: float = 0.9
+        self.gamma: float = gamma
 
         self.environment: Environment[SI, A] = environment
 
