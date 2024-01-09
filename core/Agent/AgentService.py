@@ -2,12 +2,12 @@
 
 from typing import List, Dict
 
-from src.StateIndex import StateIndex
-from src.Action import Action
-from src.StateSpace import StateSpace
-from src.Environment.Environment import Environment
-from src.Policy.BasePolicy import BasePolicy
-from src.Service.BellmanEquation import BellmanEquation
+from core.StateIndex import StateIndex
+from core.Action import Action
+from core.StateSpace import StateSpace
+from core.Environment.Environment import Environment
+from core.Policy.BasePolicy import BasePolicy
+from core.Service.BellmanEquation import BellmanEquation
 
 # TODO Service class could probably do with a Bellman Service class of its own.
 

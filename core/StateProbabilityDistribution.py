@@ -7,7 +7,7 @@ chance of the State occuring, according to the Environment.
 
 from typing import Dict
 
-from src.StateIndex import StateIndex
+from core.StateIndex import StateIndex
 
 class StateProbabilityDistribution[SI: StateIndex](Dict[SI, float]):
 

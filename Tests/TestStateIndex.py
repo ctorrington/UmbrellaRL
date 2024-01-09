@@ -2,7 +2,7 @@
 
 import unittest
 
-from src.StateIndex import StateIndex
+from core.StateIndex import StateIndex
 
 # TODO Find a better way to do this.
 # TODO Currently do not know how to test Tuples.

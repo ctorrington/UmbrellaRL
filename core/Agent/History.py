@@ -8,9 +8,9 @@ Currently trackable metrics:
 from typing import Dict
 from copy import deepcopy
 
-from src.Action import Action
-from src.StateSpace import StateSpace
-from src.StateIndex import StateIndex
+from core.Action import Action
+from core.StateSpace import StateSpace
+from core.StateIndex import StateIndex
 
 # TODO Allow for tracking the policy actions as well.
 # TODO Class currently tracks the entire State Space.

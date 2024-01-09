@@ -3,15 +3,15 @@
 from typing import List
 from copy import deepcopy
 
-from src.ActionProbabilityDistribution import ActionProbabilityDistribution
-from src.StateSpace import StateSpace
-from src.Environment.Environment import Environment
-from src.Policy.BasePolicy import BasePolicy
-from src.StateIndex import StateIndex
-from src.State import State
-from src.Action import Action
-from src.Agent.AgentService import AgentService
-from src.Agent.History import History
+from core.ActionProbabilityDistribution import ActionProbabilityDistribution
+from core.StateSpace import StateSpace
+from core.Environment.Environment import Environment
+from core.Policy.BasePolicy import BasePolicy
+from core.StateIndex import StateIndex
+from core.State import State
+from core.Action import Action
+from core.Agent.AgentService import AgentService
+from core.Agent.History import History
 
 # TODO Need option to improve Policy without changing the current State Space. (in place)
     # Need copy of old State Value function, improve according to those values - set State Value Function to those updated values all at once (optional, include with current implementation)

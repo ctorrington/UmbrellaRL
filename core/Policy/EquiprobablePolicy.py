@@ -8,11 +8,11 @@ learning agent.
 import random
 from typing import List
 
-from src.ActionProbabilityDistribution import ActionProbabilityDistribution
-from src.Policy.BasePolicy import BasePolicy
-from src.StateSpace import StateSpace
-from src.StateIndex import StateIndex
-from src.Action import Action
+from core.ActionProbabilityDistribution import ActionProbabilityDistribution
+from core.Policy.BasePolicy import BasePolicy
+from core.StateSpace import StateSpace
+from core.StateIndex import StateIndex
+from core.Action import Action
 
 class EquiprobablePolicy[SI: StateIndex, A: Action](BasePolicy[SI, A]):
     def __init__(

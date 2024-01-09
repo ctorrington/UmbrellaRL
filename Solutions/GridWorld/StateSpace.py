@@ -2,7 +2,7 @@
 
 from typing import Any, Tuple, List
 
-from src.StateSpace import StateSpace
+from core.StateSpace import StateSpace
 
 from Solutions.GridWorld.State import GridWorldState
 from Solutions.GridWorld.Action import GridWorldAction

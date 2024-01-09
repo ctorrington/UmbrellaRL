@@ -2,7 +2,7 @@
 
 from typing import Optional
 
-from src.State import State
+from core.State import State
 from Solutions.GridWorld.Action import GridWorldAction
 
 class GridWorldState(State[GridWorldAction]):

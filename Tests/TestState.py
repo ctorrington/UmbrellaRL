@@ -1,7 +1,7 @@
 import unittest
 
-from src.Action import Action
-from src.State import State
+from core.Action import Action
+from core.State import State
 
 class TestState(unittest.TestCase):
     def test_state_attributes_initialization(self):

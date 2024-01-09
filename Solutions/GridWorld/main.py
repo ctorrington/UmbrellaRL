@@ -1,4 +1,4 @@
-from src.Agent.Agent import Agent
+from core.Agent.Agent import Agent
 
 from Solutions.GridWorld.StateSpace import GridWorldStateSpace
 from Solutions.GridWorld.Action import GridWorldAction

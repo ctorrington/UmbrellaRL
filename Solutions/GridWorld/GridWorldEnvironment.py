@@ -2,9 +2,9 @@
 
 from typing import Dict
 
-from src.Environment.Environment import Environment
-from src.StateActions import StateActions
-from src.StateProbabilityDistribution import StateProbabilityDistribution
+from core.Environment.Environment import Environment
+from core.StateActions import StateActions
+from core.StateProbabilityDistribution import StateProbabilityDistribution
 
 from Solutions.GridWorld.StateSpace import GridWorldStateSpace
 from Solutions.GridWorld.Action import GridWorldAction

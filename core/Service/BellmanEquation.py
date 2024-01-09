@@ -2,14 +2,14 @@
 
 from typing import List
 
-from src.StateIndex import StateIndex
-from src.Action import Action
-from src.StateSpace import StateSpace
-from src.State import State
-from src.Environment.Environment import Environment
-from src.StateProbabilityDistribution import StateProbabilityDistribution
-from src.ActionProbabilityDistribution import ActionProbabilityDistribution
-from src.Policy.BasePolicy import BasePolicy
+from core.StateIndex import StateIndex
+from core.Action import Action
+from core.StateSpace import StateSpace
+from core.State import State
+from core.Environment.Environment import Environment
+from core.StateProbabilityDistribution import StateProbabilityDistribution
+from core.ActionProbabilityDistribution import ActionProbabilityDistribution
+from core.Policy.BasePolicy import BasePolicy
 
 class BellmanEquation[SI: StateIndex, A: Action]():
     """Bellman Equation service class."""
