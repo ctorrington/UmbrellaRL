@@ -3,13 +3,13 @@
 from typing import List
 from copy import deepcopy
 
-from core.ActionProbabilityDistribution import ActionProbabilityDistribution
-from core.StateSpace import StateSpace
+from core.dependency.ActionProbabilityDistribution import ActionProbabilityDistribution
+from core.dependency.StateSpace import StateSpace
 from core.Environment.Environment import Environment
 from core.Policy.BasePolicy import BasePolicy
-from core.StateIndex import StateIndex
-from core.State import State
-from core.Action import Action
+from core.dependency.StateIndex import StateIndex
+from core.dependency.State import State
+from core.dependency.Action import Action
 from core.Agent.AgentService import AgentService
 from core.Agent.History import History
 

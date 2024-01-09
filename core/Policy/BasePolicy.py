@@ -10,9 +10,9 @@ their probability of being taken by the Policy.
 from abc import ABC, abstractmethod
 from typing import Dict, List
 
-from core.ActionProbabilityDistribution import ActionProbabilityDistribution
-from core.StateIndex import StateIndex
-from core.Action import Action
+from core.dependency.ActionProbabilityDistribution import ActionProbabilityDistribution
+from core.dependency.StateIndex import StateIndex
+from core.dependency.Action import Action
 
 # TODO Relook at the Policies, they need to be tidied up.
 

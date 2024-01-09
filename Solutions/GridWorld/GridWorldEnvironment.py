@@ -3,8 +3,8 @@
 from typing import Dict
 
 from core.Environment.Environment import Environment
-from core.StateActions import StateActions
-from core.StateProbabilityDistribution import StateProbabilityDistribution
+from core.dependency.StateActions import StateActions
+from core.dependency.StateProbabilityDistribution import StateProbabilityDistribution
 
 from Solutions.GridWorld.StateSpace import GridWorldStateSpace
 from Solutions.GridWorld.Action import GridWorldAction

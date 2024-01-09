@@ -1,7 +1,7 @@
 import unittest
 
-from core.Action import Action
-from core.State import State
+from core.dependency.Action import Action
+from core.dependency.State import State
 
 class TestState(unittest.TestCase):
     def test_state_attributes_initialization(self):

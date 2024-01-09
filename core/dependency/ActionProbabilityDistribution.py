@@ -7,7 +7,7 @@ chosen by the Policy.
 
 from typing import Dict
 
-from core.Action import Action
+from core.dependency.Action import Action
 
 class ActionProbabilityDistribution[A: Action](Dict[A, float]):
 

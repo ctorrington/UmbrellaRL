@@ -12,9 +12,9 @@ import numpy as np
 import numpy.typing as npt
 from numpy import float64
 
-from core.State import State
-from core.StateIndex import StateIndex
-from core.Action import Action
+from core.dependency.State import State
+from core.dependency.StateIndex import StateIndex
+from core.dependency.Action import Action
 
 class StateSpace[SI: StateIndex, A: Action](ABC, Dict[SI, State[A]]):
     """

@@ -7,11 +7,11 @@ Environment type is a mapping from a State Index to the State's possible Actions
 from abc import ABC
 from typing import Dict
 
-from core.StateIndex import StateIndex
-from core.StateSpace import StateSpace
-from core.StateProbabilityDistribution import StateProbabilityDistribution
-from core.StateActions import StateActions
-from core.Action import Action
+from core.dependency.StateIndex import StateIndex
+from core.dependency.StateSpace import StateSpace
+from core.dependency.StateProbabilityDistribution import StateProbabilityDistribution
+from core.dependency.StateActions import StateActions
+from core.dependency.Action import Action
 
 class Environment[SI: StateIndex, A: Action](ABC, Dict[SI, StateActions[SI, A]]):
     

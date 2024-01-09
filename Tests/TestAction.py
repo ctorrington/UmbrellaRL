@@ -1,6 +1,6 @@
 import unittest
 
-from core.Action import Action
+from core.dependency.Action import Action
 
 class TestAction(unittest.TestCase):
     def test_members_return_type(self):

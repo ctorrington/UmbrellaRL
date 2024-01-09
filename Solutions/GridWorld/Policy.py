@@ -2,9 +2,9 @@
 Grid World Policy.
 """
 
-from core.StateIndex import StateIndex
-from core.Action import Action
-from core.StateSpace import StateSpace
+from core.dependency.StateIndex import StateIndex
+from core.dependency.Action import Action
+from core.dependency.StateSpace import StateSpace
 from core.Policy.EquiprobablePolicy import EquiprobablePolicy
 
 class GridWorldEquiprobablePolicy[SI: StateIndex, A: Action](EquiprobablePolicy[SI, A]):

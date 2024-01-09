@@ -5,8 +5,8 @@ Graphing module for UmbrellaRL ☂️
 import matplotlib.pyplot as plt
 
 from Graphing.abstract_graphing import Graphing
-from core.StateIndex import StateIndex
-from core.Action import Action
+from core.dependency.StateIndex import StateIndex
+from core.dependency.Action import Action
 from core.Agent.Agent import Agent
 from core.Agent.History import History
 
