@@ -33,4 +33,3 @@ UmbrellaRL comes with abstract Agent, Environment & Policy classes. These abstra
 UmbrellaRL also comes with various types to make implementation easier.
 A 'Solutions' directory is included in the package. The modules within the 'Solutions' directory are commonly found reinforcement learning problems that implement UmbrellaRL's classes & types.
 The modules within the 'Solutions' directory could also function as tutorials.
-
