@@ -16,7 +16,7 @@ class StateActions[SI: StateIndex, A: Action](ABC, Dict[A, StateProbabilityDistr
     def get_state_probability_distribution(
         self,
         action: A
-        ) -> StateProbabilityDistribution[SI]:
+    ) -> StateProbabilityDistribution[SI]:
         """
         Return the State Probability Distribution for the State's accessible 
         following the given Action.
