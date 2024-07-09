@@ -15,28 +15,25 @@ class BellmanEquation[SI: StateIndex, A: Action]():
     """Bellman Equation service class."""
     
     @classmethod
-    def calculate_state_value(cls,
-                              state_index: SI,
-                              state_space: StateSpace[SI, A],
-                              policy: BasePolicy[SI, A],
-                              environment: Environment[SI,A],
-                              gamma: float
-                             ) -> float:
+    def calculate_state_value(
+        cls,
+        state_index: SI,
+        state_space: StateSpace[SI, A],
+        policy: BasePolicy[SI, A],
+        environment: Environment[SI,A],
+        gamma: float
+    ) -> float:
         """Calculate the state value """
 
         state_value: float = 0
-
         state_action_probability_distribution: ActionProbabilityDistribution[A] = policy.get_action_probability_distribution(state_index)
-
         state: State[A] = state_space.get_state(state_index)
-
         state_actions: List[A] = state.actions
         
         for action in state_actions:
             
             # TODO get method for below
             action_probability: float = state_action_probability_distribution[action]
-            
             update_value: float = cls.calculate_update_value(
                 state_index,
                 action,
@@ -50,17 +47,17 @@ class BellmanEquation[SI: StateIndex, A: Action]():
         return state_value
         
     @classmethod
-    def calculate_update_value(cls,
-                               state: SI,
-                               action: A,
-                               state_space: StateSpace[SI, A],
-                               environment: Environment[SI, A],
-                               gamma: float
-                              ) -> float:
+    def calculate_update_value(
+        cls,
+        state: SI,
+        action: A,
+        state_space: StateSpace[SI, A],
+        environment: Environment[SI, A],
+        gamma: float
+    ) -> float:
         """Calculate the update to the Bellman Equation."""
 
         update_value: float = 0
-
         next_states: StateProbabilityDistribution[SI] = environment.get_next_states(
             state,
             action
@@ -73,25 +70,22 @@ class BellmanEquation[SI: StateIndex, A: Action]():
                 action,
                 next_state_index
             )
-
             next_state: State[A] = state_space.get_state(next_state_index)
-
             next_state_reward: float = next_state.reward
-
             next_state_value: float = next_state.estimated_return
-
             update_value += next_state_probability * (next_state_reward + (gamma * next_state_value))
 
         return update_value
 
     @classmethod
-    def calculate_state_action_value(cls,
-                                     state: SI,
-                                     action: A,
-                                     state_space: StateSpace[SI,A],
-                                     environment: Environment[SI, A],
-                                     gamma: float
-                                     ) -> float:
+    def calculate_state_action_value(
+        cls,
+        state: SI,
+        action: A,
+        state_space: StateSpace[SI,A],
+        environment: Environment[SI, A],
+        gamma: float
+    ) -> float:
         """
         Calculate the state action-value.
 
