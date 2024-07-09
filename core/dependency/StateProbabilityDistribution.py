@@ -14,7 +14,6 @@ class StateProbabilityDistribution[SI: StateIndex](Dict[SI, float]):
     def get_state_probability(
         self,
         state_index: SI
-        ) -> float:
+    ) -> float:
         """Return the probability of reaching the given State."""
-
         return self[state_index]
