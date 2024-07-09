@@ -15,7 +15,6 @@ class ActionProbabilityDistribution[A: Action](Dict[A, float]):
         self,
         action: A
     ) -> float:
-
         """Return the probability of the given Action being chosen."""
 
         return self[action]
