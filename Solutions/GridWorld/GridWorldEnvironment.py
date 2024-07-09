@@ -22,25 +22,23 @@ class GridWorldEnvironment(Environment[GridWorldStateIndex, GridWorldAction]):
     def __init__(
         self,
         state_space: GridWorldStateSpace
-        ) -> None:
-
+    ) -> None:
         # TODO fix these overriding errors.
         self.state_space: GridWorldStateSpace = state_space
-        
         self.initialize_environment()
         
     def initialize_environment(self) -> None:
+        # TODO Doc string.
         
         for state in self.state_space:
 
             state_actions: StateActions[GridWorldStateIndex, GridWorldAction] = self.determine_state_actions(state)
-
             self[state] = state_actions
             
     def determine_state_actions(
         self, 
         state: GridWorldStateIndex
-        ) -> StateActions[GridWorldStateIndex, GridWorldAction]:
+    ) -> StateActions[GridWorldStateIndex, GridWorldAction]:
         """Determine the Actions available for each State."""
         
         # TODO Figure out defaultdict for this.
@@ -49,9 +47,7 @@ class GridWorldEnvironment(Environment[GridWorldStateIndex, GridWorldAction]):
         for action in self.state_space[state].actions:
             
             possible_next_states_distribution: Dict[GridWorldStateIndex, float] = self.determine_next_state_probability_distribution(state, action)
-            
             state_actions[action] = possible_next_states_distribution
-            
             # TODO understand why update method returns KeyErorr.
             # state_actions[action].update(possible_next_states_distribution)
             
@@ -61,7 +57,7 @@ class GridWorldEnvironment(Environment[GridWorldStateIndex, GridWorldAction]):
         self,
         state: GridWorldStateIndex,
         action: GridWorldAction
-        ) -> StateProbabilityDistribution[GridWorldStateIndex]:
+    ) -> StateProbabilityDistribution[GridWorldStateIndex]:
         """
         Return a mapping of the possible next States & their probability of
         occuring.
@@ -76,7 +72,6 @@ class GridWorldEnvironment(Environment[GridWorldStateIndex, GridWorldAction]):
         # TODO error checking State is correct type for Grid World problem.
         # TODO service class.
         row, column = state
-        
         # TODO defaultdict.
         possible_next_states: StateProbabilityDistribution[GridWorldStateIndex] = {}
         
