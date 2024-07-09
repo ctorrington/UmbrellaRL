@@ -16,39 +16,29 @@ class State[A: Action]:
     """
 
     def __init__(self):
-
         self._actions: List[A] = []
-
         self._estimated_return: float = 0.0
-
         self._counter: int = 0
-
         self._reward: float = 0
-
         self._is_current: bool = False
-
         self._is_terminal: bool = False
 
     @property
     def actions(self) -> List[A]:
-
         return self._actions
 
     @actions.setter
     def actions(
         self,
         actions: List[A]
-        ) -> None:
-
+    ) -> None:
         self._actions = actions
 
     def has_actions(self) -> bool:
-        
         return bool(self._actions)
 
     @property
     def estimated_return(self) -> float:
-
         return self._estimated_return
 
     @estimated_return.setter
@@ -56,21 +46,17 @@ class State[A: Action]:
         self,
         estimated_return: float
     ) -> None:
-        
         self._estimated_return = estimated_return
 
     @property
     def counter(self) -> int:
-        
         return self._counter
     
     def increment_counter(self) -> None:
-        
         self._counter += 1
 
     @property
     def reward(self) -> float:
-        
         return self._reward
 
     @reward.setter
@@ -78,12 +64,10 @@ class State[A: Action]:
         self,
         reward: float
     ) -> None:
-        
         self._reward = reward
 
     @property
     def is_current(self) -> bool:
-        
         return self._is_current
 
     @is_current.setter
@@ -91,12 +75,10 @@ class State[A: Action]:
         self,
         is_current: bool
     ) -> None:
-        
         self._is_current = is_current
 
     @property
     def is_terminal(self) -> bool:
-        
         return self._is_terminal
 
     @is_terminal.setter
@@ -104,5 +86,4 @@ class State[A: Action]:
         self,
         is_terminal: bool
     ) -> None:
-        
         self._is_terminal = is_terminal
