@@ -29,52 +29,35 @@ class StateSpace[SI: StateIndex, A: Action](ABC, Dict[SI, State[A]]):
         state: SI
     ) -> State[A]:
         """Return the State object of the given State Index."""
-
         return self[state]
 
-    def get_dimensionality(
-        self
-        ) -> int:
+    def get_dimensionality(self) -> int:
         """Return the dimensionality of the State Space."""
         
         first_index_key = next(iter(self.keys()))
         
         if isinstance(first_index_key, tuple):
-            
             # Queting the type checker.
             return len(cast(Tuple[int, ...], first_index_key))
-        
         else:
-            
             raise TypeError("Type for State Index not currently supported.")
     
-    def get_state_value_function(
-        self
-        ) -> npt.NDArray[float64]:
+    def get_state_value_function(self) -> npt.NDArray[float64]:
         
         dimensionality: int = self.get_dimensionality()
         
         if dimensionality == 2:
-            
             x, y = zip(*self.keys())
-            
             values = np.zeros((max(x) + 1, max(y) + 1))
-            
             for state_index, state in self.items():
                 
                 if isinstance(state_index, tuple):
-                    
                     # Quieting the type checker.
                     i, j = cast(Tuple[int, ...], state_index)
-                    
                     values[i, j] = state.estimated_return
-
                 else:
-
                     raise TypeError("Type for State Index not currently supported.")
 
             return values
-
         else:
-
             raise ValueError("Dimensionality currently unsupported.")
