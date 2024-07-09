@@ -11,27 +11,19 @@ from Solutions.GridWorld.StateIndex import GridWorldStateIndex
 def main():
 
     number_of_rows: int = 4
-
     number_of_columns: int = 4
-
     state_space: GridWorldStateSpace = GridWorldStateSpace(
         number_of_rows,
         number_of_columns
     )
-
     environment: GridWorldEnvironment = GridWorldEnvironment(state_space)
-
     policy: GridWorldEquiprobablePolicy[GridWorldStateIndex, GridWorldAction] = GridWorldEquiprobablePolicy(state_space)
-
     agent: Agent[GridWorldStateIndex, GridWorldAction] = Agent(
         environment,
         policy
     )
-
     agent.evaluate_policy()
-
     agent.improve_policy()
-
     for state in state_space:
 
         print(f"{state} value: {state_space[state].estimated_return}. Policy: {policy.get_action_probability_distribution(state)}")
@@ -47,5 +39,4 @@ def main():
     # graph.show_graph()
 
 if __name__ == "__main__":
-
     main()
