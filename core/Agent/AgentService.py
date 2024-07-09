@@ -22,8 +22,8 @@ class AgentService[SI: StateIndex, A: Action]():
         policy: BasePolicy[SI, A],
         environment: Environment[SI, A],
         gamma: float
-        ) -> float:
-
+    ) -> float:
+        # TODO Doc string.
         state_value: float = BellmanEquation.calculate_state_value(
             state,
             state_space,
@@ -41,7 +41,7 @@ class AgentService[SI: StateIndex, A: Action]():
         state_space: StateSpace[SI, A],
         environment: Environment[SI, A],
         gamma: float
-        ) -> List[A]:
+    ) -> List[A]:
         """
         Determine the Actions resulting in the greatest estimated return 
         from the given State.
@@ -53,7 +53,6 @@ class AgentService[SI: StateIndex, A: Action]():
             environment,
             gamma
             )
-
         best_actions: List[A] = cls.determine_best_actions(
             action_value_distribution
         )
@@ -67,7 +66,7 @@ class AgentService[SI: StateIndex, A: Action]():
         state_space: StateSpace[SI, A],
         environment: Environment[SI, A],
         gamma: float
-        ) -> Dict[A, float]:
+    ) -> Dict[A, float]:
         """
         Calculate the Actions resulting in the highest estimated return from 
         the given State.
@@ -84,7 +83,6 @@ class AgentService[SI: StateIndex, A: Action]():
                 environment,
                 gamma
             )
-
             action_value_distribution[action] = action_value
 
         return action_value_distribution
@@ -93,19 +91,16 @@ class AgentService[SI: StateIndex, A: Action]():
     def determine_best_actions(
         cls,
         action_value_distribution: Dict[A, float]
-        ) -> List[A]:
+    ) -> List[A]:
         """Return the Actions that result in the greatest esimated return."""
 
         best_value: float = max(action_value_distribution.values())
-
         best_actions: List[A] = []
 
         for action in action_value_distribution:
 
             if action_value_distribution[action] >= best_value:
-
                 best_value = action_value_distribution[action]
-
                 best_actions.append(action)
 
         return best_actions
