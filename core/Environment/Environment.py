@@ -26,7 +26,8 @@ class Environment[SI: StateIndex, A: Action](ABC, Dict[SI, StateActions[SI, A]])
         current_state_index: SI,
         action: A
     ) -> StateProbabilityDistribution[SI]:
-        return self.get_state_actions(current_state_index).get_state_probability_distribution(action)
+        return self.get_state_actions(current_state_index) \
+            .get_state_probability_distribution(action)
 
     def get_state_actions(
         self,
@@ -44,7 +45,9 @@ class Environment[SI: StateIndex, A: Action](ABC, Dict[SI, StateActions[SI, A]])
         Return the probability of transitioning from one state to another
         given an action.
         """
-        return self.get_state_actions(current_state_index).get_state_probability_distribution(action).get_state_probability(next_state_index)
+        return self.get_state_actions(current_state_index) \
+            .get_state_probability_distribution(action) \
+                .get_state_probability(next_state_index)
 
     def number_of_states(self) -> int:
         """Return the number of State's in the State Space."""
