@@ -37,6 +37,7 @@ class Agent[SI: StateIndex, A: Action]:
         self.policy: BasePolicy[SI, A] = policy
 
     def evaluate_policy(self) -> None:
+        # TODO Understand why result different from page 77.
         """
         Evaluate the policy.
 
@@ -65,8 +66,8 @@ class Agent[SI: StateIndex, A: Action]:
                 delta = max(delta, (abs(old_state_value - updated_state_value)))
 
             if delta < self.theta:
-                self.history.track_state_space(state_space)
-                self.history.increment_history_count()
+                # self.history.track_state_space(state_space)
+                # self.history.increment_history_count()
                 break
 
     def improve_policy(self) -> None:
@@ -75,46 +76,38 @@ class Agent[SI: StateIndex, A: Action]:
 
         Determine optimal actions for each State in the State Space.
         """
-
         state_space: StateSpace[SI, A] = self.environment.get_state_space()
 
-        while True:
+        for state_index in state_space:
+            
+            state: State[A] = state_space.get_state(state_index)
+            if not state.has_actions():
+                continue
 
-            policy_stable: bool = True
-            for state_index in state_space:
-                
-                state: State[A] = state_space.get_state(state_index)
-                if not state.has_actions():
-                    continue
-
-                old_state_policy: ActionProbabilityDistribution[A] = (
-                    deepcopy(
-                        self.policy.get_action_probability_distribution(
-                            state_index
-                        )
-                    )
-                )
-                new_greedy_actions: List[A] = (
-                    AgentService.determine_greedy_actions(
-                        state_index,
-                        state_space,
-                        self.environment,
-                        self.gamma
-                    )
-                )
-                self.policy.set_new_state_policy(
+            new_greedy_actions: List[A] = (
+                AgentService.determine_greedy_actions(
                     state_index,
-                    new_greedy_actions
+                    state_space,
+                    self.environment,
+                    self.gamma
                 )
-                new_state_policy: ActionProbabilityDistribution[A] = (
-                    self.policy.get_action_probability_distribution(
-                        state_index
-                    )
-                )
-                if old_state_policy != new_state_policy:
-                    policy_stable = False
+            )
+            self.policy.set_new_state_policy(
+                state_index,
+                new_greedy_actions
+            )
 
-            if policy_stable:
+    def iterate_policy(self) -> None:
+        """Iterate the Agent's Policy using iterative policy evaluation to 
+        estimate an optimal Policy.
+        """
+        print("Beginning Policy Iteration process.")
+        while True:
+            self.evaluate_policy()
+            old_policy = deepcopy(self.policy)
+            self.improve_policy()
+            
+            # Check if the new improved policy equals the old policy.
+            if self.policy == old_policy:
+                print("Policy is stable. Policy Iteration ending.")
                 break
-            else:
-                self.evaluate_policy()
