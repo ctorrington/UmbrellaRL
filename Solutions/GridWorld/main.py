@@ -8,8 +8,10 @@ from Solutions.GridWorld.StateIndex import GridWorldStateIndex
 
 from Graphing.graphing import Graphing
 
-def main():
+from log.logger_manager import LoggerManager
 
+def main():
+    logger_manager: LoggerManager = LoggerManager()
     number_of_rows: int = 4
     number_of_columns: int = 4
     state_space: GridWorldStateSpace = GridWorldStateSpace(
@@ -21,9 +23,11 @@ def main():
     policy: GridWorldEquiprobablePolicy[GridWorldStateIndex, GridWorldAction] = GridWorldEquiprobablePolicy(state_space)
     agent: Agent[GridWorldStateIndex, GridWorldAction] = Agent(
         environment,
-        policy
+        policy,
+        logger=logger_manager
     )
     # agent.evaluate_policy()
+    # agent.evaluate_policy_synchronous()
     # agent.improve_policy()
     agent.iterate_policy()
     
@@ -33,11 +37,11 @@ def main():
         for action in policy.get_action_probability_distribution(state):
             print(f"    {action.value}: {policy.get_action_probability_distribution(state)[action]}")
 
-    # graph = Graphing(agent)
-    # graph.plot_graph("state value function")
+    graph = Graphing(agent)
+    graph.plot_graph("state value function")
     # # graph.plot_history("state value function")
-    # graph.plot_action_annotations("greedy")
-    # graph.show_graph()
+    graph.plot_action_annotations("greedy")
+    graph.show_graph()
 
 if __name__ == "__main__":
     main()
