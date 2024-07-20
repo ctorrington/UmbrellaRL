@@ -87,18 +87,30 @@ class Agent[SI: StateIndex, A: Action]:
                 if not state.has_actions():
                     continue
 
-                old_state_policy: ActionProbabilityDistribution[A] = deepcopy(self.policy.get_action_probability_distribution(state_index))
-                new_greedy_actions: List[A] = AgentService.determine_greedy_actions(
-                    state_index,
-                    state_space,
-                    self.environment,
-                    self.gamma
+                old_state_policy: ActionProbabilityDistribution[A] = (
+                    deepcopy(
+                        self.policy.get_action_probability_distribution(
+                            state_index
+                        )
+                    )
+                )
+                new_greedy_actions: List[A] = (
+                    AgentService.determine_greedy_actions(
+                        state_index,
+                        state_space,
+                        self.environment,
+                        self.gamma
+                    )
                 )
                 self.policy.set_new_state_policy(
                     state_index,
                     new_greedy_actions
                 )
-                new_state_policy: ActionProbabilityDistribution[A] = self.policy.get_action_probability_distribution(state_index)
+                new_state_policy: ActionProbabilityDistribution[A] = (
+                    self.policy.get_action_probability_distribution(
+                        state_index
+                    )
+                )
                 if old_state_policy != new_state_policy:
                     policy_stable = False
 
