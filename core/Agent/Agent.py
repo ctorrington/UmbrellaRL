@@ -27,8 +27,8 @@ class Agent[SI: StateIndex, A: Action]:
         environment: Environment[SI, A],
         policy: BasePolicy[SI, A],
         logger: ILogger,
-        theta: float = 0.01,
-        gamma: float = 0.9,
+        theta: float,
+        gamma: float,
     ) -> None:
         # TODO Doc String.
 
