@@ -66,7 +66,8 @@ class GridWorldEnvironment(Environment[GridWorldStateIndex, GridWorldAction]):
         Up will only go up (if possible).
         
         If an Action would take the Agent off the State Space, then the next 
-        state is the State the Agent is currently in.
+        state is the State the Agent is currently in. This happens with 
+        probability 1.
         """
         
         # TODO error checking State is correct type for Grid World problem.
