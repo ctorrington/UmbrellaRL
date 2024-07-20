@@ -12,6 +12,8 @@ from core.dependency.Action import Action
 from core.Agent.AgentService import AgentService
 from core.Agent.History import History
 
+from log.ilogger import ILogger
+
 # TODO Need option to improve Policy without changing the current State Space. (in place)
     # Need copy of old State Value function, improve according to those values - set State Value Function to those updated values all at once (optional, include with current implementation)
 
@@ -24,8 +26,9 @@ class Agent[SI: StateIndex, A: Action]:
         self,
         environment: Environment[SI, A],
         policy: BasePolicy[SI, A],
+        logger: ILogger,
         theta: float = 0.01,
-        gamma: float = 0.9
+        gamma: float = 0.9,
     ) -> None:
         # TODO Doc String.
 
@@ -34,6 +37,7 @@ class Agent[SI: StateIndex, A: Action]:
         self.gamma: float = gamma
         self.environment: Environment[SI, A] = environment
         self.policy: BasePolicy[SI, A] = policy
+        self._logger = logger.get_logger(self.__class__.__name__)
 
     def evaluate_policy_synchronous(self) -> None:
         """Evaluate the Agent's Policy.
@@ -44,7 +48,7 @@ class Agent[SI: StateIndex, A: Action]:
         estimated return is only updated after the entire State Space has been 
         iterated through.
         """
-        print("Evaluating Agent Policy synchronously.")
+        self._logger.info("Evaluating Agent Policy synchronously.")
         state_value_history: dict[SI, float] = {}
         state_space: StateSpace[SI, A] = self.environment.get_state_space()
         while True:
@@ -77,7 +81,7 @@ class Agent[SI: StateIndex, A: Action]:
             
             # Check whether State values have converged with parameter value.
             if delta < self.theta:
-                print(f"State value delta converged at value: {delta}.")
+                self._logger.info(f"State value delta converged at value: {delta}.")
                 # self.history.track_state_space(state_space)
                 # self.history.increment_history_count()
                 break
