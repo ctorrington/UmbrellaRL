@@ -2,6 +2,7 @@
 State Type.
 
 State representation for a reinforcement learning environment.
+A State's estimated return is synonymous a State's value.
 """
 
 from typing import List
