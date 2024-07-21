@@ -63,7 +63,7 @@ class Agent[SI: StateIndex, A: Action]:
         estimated return is only updated after the entire State Space has been 
         iterated.
         """
-        self._logger.info("Evaluating Agent Policy synchronously.")
+        self._logger.info("Beginning synchronous Policy Evaluation process.")
         # Dictionary to store State values for updating after iterating through the State Space.
         state_value_history: dict[SI, float] = {}
         state_space: StateSpace[SI, A] = self.environment.get_state_space()
@@ -96,7 +96,7 @@ class Agent[SI: StateIndex, A: Action]:
             
             # Check whether State values have converged with parameter value.
             if delta < self.theta:
-                self._logger.info(f"State value delta converged at value: {delta}.")
+                self._logger.info(f"State value delta converged at value: {delta}. Ending synchronous Policy Evaluation process.")
                 # self.history.track_state_space(state_space)
                 # self.history.increment_history_count()
                 break
@@ -107,6 +107,7 @@ class Agent[SI: StateIndex, A: Action]:
 
         Determine the state-value function for the policy.
         """
+        self._logger.info("Beginning Policy Evaluation process.")
 
         state_space: StateSpace[SI, A] = self.environment.get_state_space()
 
@@ -133,6 +134,7 @@ class Agent[SI: StateIndex, A: Action]:
             if delta < self.theta:
                 # self.history.track_state_space(state_space)
                 # self.history.increment_history_count()
+                self._logger.info(f"State value delta converged at value: {delta}. Ending Policy Evaluation process.")
                 break
 
     def improve_policy(self) -> None:
@@ -141,6 +143,8 @@ class Agent[SI: StateIndex, A: Action]:
 
         Determine optimal actions for each State in the State Space.
         """
+        self._logger.info("Beginning Policy Improvement process.")
+
         state_space: StateSpace[SI, A] = self.environment.get_state_space()
 
         for state_index in state_space:
@@ -162,11 +166,13 @@ class Agent[SI: StateIndex, A: Action]:
                 new_greedy_actions
             )
 
+        self._logger.info("Ending Policy Improvement process.")
+
     def iterate_policy(self) -> None:
         """Iterate the Agent's Policy using iterative policy evaluation to 
         estimate an optimal Policy.
         """
-        print("Beginning Policy Iteration process.")
+        self._logger.info("Beginning Policy Iteration process.")
         while True:
             self.evaluate_policy()
             old_policy = deepcopy(self.policy)
@@ -174,5 +180,6 @@ class Agent[SI: StateIndex, A: Action]:
             
             # Check if the new improved policy equals the old policy.
             if self.policy == old_policy:
-                print("Policy is stable. Policy Iteration ending.")
+                self._logger.info("Policy stable. Ending Policy Iteration.")
                 break
+            self._logger.info("Policies not equal - continuing Policy Iteration.")
