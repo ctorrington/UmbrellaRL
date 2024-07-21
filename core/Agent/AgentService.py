@@ -17,7 +17,7 @@ class AgentService[SI: StateIndex, A: Action]():
     @classmethod
     def calculate_state_value(
         cls,
-        state: SI,
+        state_index: SI,
         state_space: StateSpace[SI, A],
         policy: BasePolicy[SI, A],
         environment: Environment[SI, A],
@@ -25,11 +25,11 @@ class AgentService[SI: StateIndex, A: Action]():
     ) -> float:
         # TODO Doc string.
         state_value: float = BellmanEquation.calculate_state_value(
-            state,
-            state_space,
-            policy,
-            environment,
-            gamma
+            state_index=state_index,
+            state_space=state_space,
+            policy=policy,
+            environment=environment,
+            gamma=gamma
         )
 
         return state_value
@@ -37,7 +37,7 @@ class AgentService[SI: StateIndex, A: Action]():
     @classmethod
     def determine_greedy_actions(
         cls,
-        state: SI,
+        state_index: SI,
         state_space: StateSpace[SI, A],
         environment: Environment[SI, A],
         gamma: float
@@ -48,7 +48,7 @@ class AgentService[SI: StateIndex, A: Action]():
         """
 
         action_value_distribution: Dict[A, float] = cls.calculate_greedy_actions_estimated_return(
-            state,
+            state_index,
             state_space,
             environment,
             gamma
@@ -62,7 +62,7 @@ class AgentService[SI: StateIndex, A: Action]():
     @classmethod
     def calculate_greedy_actions_estimated_return(
         cls,
-        state: SI,
+        state_index: SI,
         state_space: StateSpace[SI, A],
         environment: Environment[SI, A],
         gamma: float
@@ -77,7 +77,7 @@ class AgentService[SI: StateIndex, A: Action]():
         for action in state_space[state].actions:
 
             action_value: float = BellmanEquation.calculate_update_value(
-                state,
+                state_index,
                 action,
                 state_space,
                 environment,
