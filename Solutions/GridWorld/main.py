@@ -39,10 +39,10 @@ def main():
         policy=policy,
         logger=logger_manager,
         theta=0.0001,
-        gamma=0.9
+        gamma=0.999
     )
-    # agent.evaluate_policy()
-    agent.evaluate_policy_synchronous()
+    agent.evaluate_policy()
+    # agent.evaluate_policy_synchronous()
     # agent.improve_policy()
     # agent.iterate_policy()
     
