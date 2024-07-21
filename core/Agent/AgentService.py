@@ -74,7 +74,7 @@ class AgentService[SI: StateIndex, A: Action]():
 
         action_value_distribution: Dict[A, float] = {}
 
-        for action in state_space[state].actions:
+        for action in state_space[state_index].actions:
 
             action_value: float = BellmanEquation.calculate_update_value(
                 state_index,
