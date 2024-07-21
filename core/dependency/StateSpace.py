@@ -25,9 +25,11 @@ class StateSpace[SI: StateIndex, A: Action](ABC, Dict[SI, State[A]]):
     """
     def __init__(
         self,
-        state_actions: list[A]
+        state_actions: list[A],
+        state_estimated_return: float
     ) -> None:
         self.state_actions: list[A] = state_actions
+        self.state_estimated_return: float = state_estimated_return
 
     def get_state(
         self,

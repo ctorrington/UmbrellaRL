@@ -17,7 +17,8 @@ class State[A: Action]:
 
     def __init__(
         self,
-        action_list: List[A]
+        action_list: List[A],
+        estimated_return: float
     ):
         """Initialisation for an individual State.
 
@@ -27,7 +28,7 @@ class State[A: Action]:
             core.dependency.action class.
         """
         self._actions: List[A] = action_list
-        self._estimated_return: float = 0.0
+        self._estimated_return: float = estimated_return
         self._counter: int = 0
         self._reward: float = 0
         self._is_current: bool = False

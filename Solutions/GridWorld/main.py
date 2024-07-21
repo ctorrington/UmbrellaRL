@@ -17,10 +17,12 @@ def main():
     number_of_rows: int = 4
     number_of_columns: int = 4
     state_actions: List[GridWorldAction] = GridWorldAction.members()
+    state_estimated_return: float = 0
     state_space: GridWorldStateSpace = GridWorldStateSpace(
         number_of_rows=number_of_rows,
         number_of_columns=number_of_columns,
-        state_actions=state_actions
+        state_actions=state_actions,
+        state_estimated_return=state_estimated_return
         # [(0, 0), (2, 5)]
     )
     environment: GridWorldEnvironment = GridWorldEnvironment(state_space)
