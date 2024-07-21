@@ -8,6 +8,7 @@ from Graphing.abstract_graphing import Graphing
 
 from core.dependency.StateIndex import StateIndex
 from core.dependency.Action import Action
+from core.dependency.State import State
 from core.Agent.Agent import Agent
 from core.Agent.History import History
 from core.Environment.Environment import Environment
@@ -59,9 +60,9 @@ class Graphing[SI: StateIndex, A: Action](Graphing):
     def plot_rewards(
         self
     ) -> None:
+        raise NotImplementedError
         # TODO add plotting rewards feature.
-        pass
-    
+
     def plot_action_annotations(
         self,
         action_type: str
@@ -72,29 +73,38 @@ class Graphing[SI: StateIndex, A: Action](Graphing):
             state_space = self.agent.environment.get_state_space()
         else:
             state_space = self.agent.history[self.history_iteration]
-        for state in state_space:
+        for state_index in state_space:
+            state: State[A] = state_space.get_state(state_index)
+            # Do not annotate Actions from terminal States.
+            if state.is_terminal:
+                continue
+            
+            # Get Actions for the State.
             match action_type:
                 case "greedy":
                     actions = self.agent.policy.get_greedy_actions(
-                        state_index=state,
+                        state_index=state_index,
                         environment=self.environment
                     )
                 case "all":
-                    actions = state_space[state].actions
+                    actions = state_space[state_index].actions
                 case _:
                     raise AttributeError(f"Attribute of type {action_type} is not supported.")
 
+            # Plot the Actions as annotations.
             for action in actions:
+                # Get the possible next States for the Action from the current State.
                 next_states = self.agent.environment.get_next_states(
-                    state,
+                    state_index,
                     action
                 )
-                for next_state in next_states:
-                    if next_state == state:
+                # Don't annotate to the current State.
+                for next_state_index in next_states:
+                    if next_state_index == state_index:
                         continue
                     
-                    current_center_y, current_center_x = state
-                    next_center_y, next_center_x = next_state
+                    current_center_y, current_center_x = state_index
+                    next_center_y, next_center_x = next_state_index
                     direction_vector = (next_center_x - current_center_x,
                                         next_center_y - current_center_y)
                     scaled_direction = (direction_vector[0] * 0.5,
@@ -143,8 +153,8 @@ class Graphing[SI: StateIndex, A: Action](Graphing):
             
     def animate_history(self) -> None:
         # TODO future release.
-        pass
-                    
+        raise NotImplementedError
+
     def show_graph(
         self
     ) -> None:
