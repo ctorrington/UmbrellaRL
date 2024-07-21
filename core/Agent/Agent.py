@@ -108,28 +108,27 @@ class Agent[SI: StateIndex, A: Action]:
         Determine the state-value function for the policy.
         """
         self._logger.info("Beginning Policy Evaluation process.")
-
         state_space: StateSpace[SI, A] = self.environment.get_state_space()
-
         while True:
             delta = 0
             for state_index in state_space:
-
-                # Value of terminal states are not evaluated.
                 state: State[A] = state_space.get_state(state_index)
+                # Value of terminal states are not evaluated.
                 if state.is_terminal:
                     continue
 
                 old_state_value: float = state.estimated_return
+                # Determine updated State's value.
                 updated_state_value: float = AgentService.calculate_state_value(
-                    state_index,
-                    state_space,
-                    self.policy,
-                    self.environment,
-                    self.gamma
+                    state_index=state_index,
+                    state_space=state_space,
+                    policy=self.policy,
+                    environment=self.environment,
+                    gamma=self.gamma
                 )
-                state.estimated_return = updated_state_value
                 delta = max(delta, (abs(old_state_value - updated_state_value)))
+                # Update the State's value.
+                state.estimated_return = updated_state_value
 
             if delta < self.theta:
                 # self.history.track_state_space(state_space)
