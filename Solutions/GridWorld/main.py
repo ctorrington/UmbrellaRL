@@ -15,27 +15,30 @@ def main():
     number_of_rows: int = 4
     number_of_columns: int = 4
     state_space: GridWorldStateSpace = GridWorldStateSpace(
-        number_of_rows,
-        number_of_columns,
+        number_of_rows=number_of_rows,
+        number_of_columns=number_of_columns,
         # [(0, 0), (2, 5)]
     )
     environment: GridWorldEnvironment = GridWorldEnvironment(state_space)
     policy: GridWorldEquiprobablePolicy[GridWorldStateIndex, GridWorldAction] = GridWorldEquiprobablePolicy(state_space)
     agent: Agent[GridWorldStateIndex, GridWorldAction] = Agent(
-        environment,
-        policy,
-        logger=logger_manager
+        environment=environment,
+        policy=policy,
+        logger=logger_manager,
+        theta=0.0001,
+        gamma=0.999
     )
     # agent.evaluate_policy()
     # agent.evaluate_policy_synchronous()
     # agent.improve_policy()
     agent.iterate_policy()
     
-    for state in state_space:
-        print(f"State ({state})")
-        print(f"Value: {state_space[state].estimated_return}")
-        for action in policy.get_action_probability_distribution(state):
-            print(f"    {action.value}: {policy.get_action_probability_distribution(state)[action]}")
+    for state_index in state_space:
+        print(f"State ({state_index})")
+        print(f"Value: {state_space[state_index].estimated_return}")
+        for action in policy.get_action_probability_distribution(state_index):
+            print(f"    {action.value}: {policy.get_action_probability_distribution(state_index)[action]}")                
+            
 
     graph = Graphing(agent)
     graph.plot_graph("state value function")
