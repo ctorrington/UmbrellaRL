@@ -15,8 +15,18 @@ class State[A: Action]:
     Inherit from this class to define additional State member fields.
     """
 
-    def __init__(self):
-        self._actions: List[A] = []
+    def __init__(
+        self,
+        action_list: List[A]
+    ):
+        """Initialisation for an individual State.
+
+        Args:
+            state_action_list (List[A]): Agent Actions available within the 
+            State. The type of the list is inherited from the 
+            core.dependency.action class.
+        """
+        self._actions: List[A] = action_list
         self._estimated_return: float = 0.0
         self._counter: int = 0
         self._reward: float = 0

@@ -23,6 +23,11 @@ class StateSpace[SI: StateIndex, A: Action](ABC, Dict[SI, State[A]]):
     
     Dictionary structure mapping each index to its State.
     """
+    def __init__(
+        self,
+        state_actions: list[A]
+    ) -> None:
+        self.state_actions: list[A] = state_actions
 
     def get_state(
         self,

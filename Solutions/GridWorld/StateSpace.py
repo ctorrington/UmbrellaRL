@@ -9,21 +9,29 @@ from Solutions.GridWorld.Action import GridWorldAction
 from Solutions.GridWorld.StateIndex import GridWorldStateIndex
 
 class GridWorldStateSpace(StateSpace[GridWorldStateIndex, GridWorldAction]):
-    """Grid World State Space representation."""
+    """
+    Grid World State Space representation.
+    
+    Every State is initialised the same.
+    Terminal State values are then set afterwards.
+    """
     
     def __init__(
         self,
         number_of_rows: int,
         number_of_columns: int,
+        state_actions: List[GridWorldAction],
         terminal_states: Optional[List[GridWorldStateIndex]] = None
     ) -> None:
+        super().__init__(
+            state_actions=state_actions
+        )
         self.number_of_rows = number_of_rows
         self.number_of_columns = number_of_columns
         self.terminal_states = terminal_states or [
             (0, 0),
             (number_of_rows - 1, number_of_columns - 1)
         ]
-        
         self._initialise_states()
         self._initialise_terminal_states()
 
@@ -31,8 +39,11 @@ class GridWorldStateSpace(StateSpace[GridWorldStateIndex, GridWorldAction]):
         """Initialise all states."""
         for row in range(self.number_of_rows):
             for column in range(self.number_of_columns):
-                grid_world_state: GridWorldState = GridWorldState(row, column)
-                grid_world_state.actions = GridWorldAction.members()
+                grid_world_state: GridWorldState = GridWorldState(
+                    action_list=self.state_actions,
+                    x=row,
+                    y=column
+                )
                 self[(row, column)] = grid_world_state
 
     def _initialise_terminal_states(self) -> None:

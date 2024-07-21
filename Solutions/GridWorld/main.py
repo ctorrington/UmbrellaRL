@@ -1,3 +1,5 @@
+from typing import List
+
 from core.Agent.Agent import Agent
 
 from Solutions.GridWorld.StateSpace import GridWorldStateSpace
@@ -14,9 +16,11 @@ def main():
     logger_manager: LoggerManager = LoggerManager()
     number_of_rows: int = 4
     number_of_columns: int = 4
+    state_actions: List[GridWorldAction] = GridWorldAction.members()
     state_space: GridWorldStateSpace = GridWorldStateSpace(
         number_of_rows=number_of_rows,
         number_of_columns=number_of_columns,
+        state_actions=state_actions
         # [(0, 0), (2, 5)]
     )
     environment: GridWorldEnvironment = GridWorldEnvironment(state_space)

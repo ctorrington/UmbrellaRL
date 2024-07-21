@@ -1,4 +1,4 @@
-"""Grid World actions."""
+"""Grid World Actions."""
 
 from core.dependency.Action import Action
 
