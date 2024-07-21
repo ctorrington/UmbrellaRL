@@ -14,12 +14,19 @@ from core.dependency.StateSpace import StateSpace
 from core.dependency.StateIndex import StateIndex
 from core.dependency.Action import Action
 
+from log.ilogger import ILogger
+
 class EquiprobablePolicy[SI: StateIndex, A: Action](BasePolicy[SI, A]):
     def __init__(
         self,
-        state_space: StateSpace[SI, A]
+        state_space: StateSpace[SI, A],
+        logger: ILogger
     ) -> None:
         # TODO Doc string.
+        
+        super().__init__(
+            logger=logger
+        )
 
         self.state_space: StateSpace[SI, A] = state_space
 

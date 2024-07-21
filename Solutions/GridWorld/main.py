@@ -28,7 +28,12 @@ def main():
         # [(0, 0), (2, 5)]
     )
     environment: GridWorldEnvironment = GridWorldEnvironment(state_space)
-    policy: GridWorldEquiprobablePolicy[GridWorldStateIndex, GridWorldAction] = GridWorldEquiprobablePolicy(state_space)
+    policy: GridWorldEquiprobablePolicy[GridWorldStateIndex, GridWorldAction] = (
+        GridWorldEquiprobablePolicy(
+            state_space=state_space,
+            logger=logger_manager
+        )
+    )
     agent: Agent[GridWorldStateIndex, GridWorldAction] = Agent(
         environment=environment,
         policy=policy,
@@ -41,17 +46,20 @@ def main():
     # agent.improve_policy()
     # agent.iterate_policy()
     
-    for state_index in state_space:
-        print(f"State ({state_index})")
-        print(f"Value: {state_space[state_index].estimated_return}")
-        for action in policy.get_action_probability_distribution(state_index):
-            print(f"    {action.value}: {policy.get_action_probability_distribution(state_index)[action]}")                
+    # for state_index in state_space:
+    #     print(f"State ({state_index})")
+    #     print(f"Value: {state_space[state_index].estimated_return}")
+    #     for action in policy.get_action_probability_distribution(state_index):
+    #         print(f"    {action.value}: {policy.get_action_probability_distribution(state_index)[action]}")                
             
 
-    graph = Graphing(agent)
+    graph = Graphing(
+        agent=agent,
+        environment=environment
+    )
     graph.plot_graph("state value function")
-    # # graph.plot_history("state value function")
-    # graph.plot_action_annotations("greedy")
+    # graph.plot_history("state value function")
+    graph.plot_action_annotations("greedy")
     graph.show_graph()
 
 if __name__ == "__main__":
