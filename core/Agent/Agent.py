@@ -61,9 +61,10 @@ class Agent[SI: StateIndex, A: Action]:
         State within the Environment.
         This method evaluates the Agent's Policy synchronously - each State's 
         estimated return is only updated after the entire State Space has been 
-        iterated through.
+        iterated.
         """
         self._logger.info("Evaluating Agent Policy synchronously.")
+        # Dictionary to store State values for updating after iterating through the State Space.
         state_value_history: dict[SI, float] = {}
         state_space: StateSpace[SI, A] = self.environment.get_state_space()
         while True:
@@ -77,11 +78,11 @@ class Agent[SI: StateIndex, A: Action]:
 
                 old_state_value: float = state.estimated_return
                 updated_state_value: float = AgentService.calculate_state_value(
-                    state_index,
-                    state_space,
-                    self.policy,
-                    self.environment,
-                    self.gamma
+                    state_index=state_index,
+                    state_space=state_space,
+                    policy=self.policy,
+                    environment=self.environment,
+                    gamma=self.gamma
                 )
                 state_value_history[state_index] = updated_state_value
                 delta = max(delta, (abs(old_state_value - updated_state_value)))
