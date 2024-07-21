@@ -34,9 +34,8 @@ class BellmanEquation[SI: StateIndex, A: Action]():
         for action in state_actions:
 
             action_probability: float = (
-                state_action_probability_distribution.get_action_probability(
-                    action
-                )
+                # TODO Get method for below.
+                state_action_probability_distribution[action]
             )
             update_value: float = cls.calculate_update_value(
                 state_index=state_index,
