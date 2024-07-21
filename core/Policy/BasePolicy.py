@@ -83,8 +83,7 @@ class BasePolicy[SI: StateIndex, A: Action](ABC, Dict[SI, ActionProbabilityDistr
                     action=action
                 )
             )
-            # self._logger.info(f"Next states for Action {action}: {next_states}.")
-            # print(f"Next state: {next_states}")
+            self._logger.debug(f"Next states for Action {action}: {next_states}.")
 
             # Get the values of the possible next States.
             next_state_values: List[float] = []
@@ -94,8 +93,7 @@ class BasePolicy[SI: StateIndex, A: Action](ABC, Dict[SI, ActionProbabilityDistr
 
                 state: State[A] = state_space.get_state(next_state_index)
                 state_value: float = state.estimated_return
-                # self._logger.info(f"Next sstate: {next_state_index}, value: {state_value}.")
-                # print(f"Next State: {next_state_index}. Value{state_value}.")
+                self._logger.debug(f"Next State: {next_state_index}, value: {state_value}.")
                 next_state_values.append(state_value)
 
             if len(next_state_values) == 0:
@@ -108,7 +106,6 @@ class BasePolicy[SI: StateIndex, A: Action](ABC, Dict[SI, ActionProbabilityDistr
         max_value: float = max(action_max_value.values())
         
         greedy_actions: List[A] = (
-            # [action for action, value in action_max_value.items() if value == max_value]
             [action for action, value in action_max_value.items() if math.isclose(value, max_value, rel_tol=1e-9)]
         )
 
