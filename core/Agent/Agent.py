@@ -30,6 +30,21 @@ class Agent[SI: StateIndex, A: Action]:
         theta: float,
         gamma: float,
     ) -> None:
+        """Agent Initialisation.
+        
+        The Agent is capable of interacting with the provided Environment. It 
+        does so in accordance with it's provided Policy.
+
+        Args:
+            environment (Environment[SI, A]): Environment the Agent shall 
+            interact with.
+            policy (BasePolicy[SI, A]): Policy the Agent follows.
+            logger (ILogger): Logger class for logging processes.
+            theta (float): Theta value used as threshold value for Policy 
+            Evaluation.
+            gamma (float): Gamma value used for determining State value 
+            function.
+        """
         # TODO Doc String.
 
         self.history = History[SI, A]()
@@ -61,7 +76,6 @@ class Agent[SI: StateIndex, A: Action]:
                     continue
 
                 old_state_value: float = state.estimated_return
-                print(old_state_value)
                 updated_state_value: float = AgentService.calculate_state_value(
                     state_index,
                     state_space,
