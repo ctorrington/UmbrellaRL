@@ -22,11 +22,13 @@ class GridWorldStateSpace(StateSpace[GridWorldStateIndex, GridWorldAction]):
         number_of_columns: int,
         state_actions: List[GridWorldAction],
         state_estimated_return: float,
+        state_reward: float,
         terminal_states: Optional[List[GridWorldStateIndex]] = None
     ) -> None:
         super().__init__(
             state_actions=state_actions,
-            state_estimated_return=state_estimated_return
+            state_estimated_return=state_estimated_return,
+            state_reward=state_reward
         )
         self.number_of_rows = number_of_rows
         self.number_of_columns = number_of_columns
@@ -45,6 +47,7 @@ class GridWorldStateSpace(StateSpace[GridWorldStateIndex, GridWorldAction]):
                 grid_world_state: GridWorldState = GridWorldState(
                     action_list=self.state_actions,
                     estimated_return=self.state_estimated_return,
+                    reward=self.state_reward,
                     x=row,
                     y=column
                 )

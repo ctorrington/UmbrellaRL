@@ -18,11 +18,13 @@ def main():
     number_of_columns: int = 4
     state_actions: List[GridWorldAction] = GridWorldAction.members()
     state_estimated_return: float = 0
+    state_reward: float = 0
     state_space: GridWorldStateSpace = GridWorldStateSpace(
         number_of_rows=number_of_rows,
         number_of_columns=number_of_columns,
         state_actions=state_actions,
-        state_estimated_return=state_estimated_return
+        state_estimated_return=state_estimated_return,
+        state_reward=state_reward
         # [(0, 0), (2, 5)]
     )
     environment: GridWorldEnvironment = GridWorldEnvironment(state_space)
@@ -34,10 +36,10 @@ def main():
         theta=0.0001,
         gamma=0.999
     )
-    # agent.evaluate_policy()
+    agent.evaluate_policy()
     # agent.evaluate_policy_synchronous()
     # agent.improve_policy()
-    agent.iterate_policy()
+    # agent.iterate_policy()
     
     for state_index in state_space:
         print(f"State ({state_index})")

@@ -14,6 +14,7 @@ class GridWorldState(State[GridWorldAction]):
         self,
         action_list: List[GridWorldAction],
         estimated_return: float,
+        reward: float,
         x: Optional[int] = None,
         y: Optional[int] = None
     ):
@@ -30,7 +31,8 @@ class GridWorldState(State[GridWorldAction]):
         """
         super().__init__(
             action_list=action_list,
-            estimated_return=estimated_return
+            estimated_return=estimated_return,
+            reward=reward
         )
         
         self.reward = -1

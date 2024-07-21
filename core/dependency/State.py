@@ -18,7 +18,8 @@ class State[A: Action]:
     def __init__(
         self,
         action_list: List[A],
-        estimated_return: float
+        estimated_return: float,
+        reward: float
     ):
         """Initialisation for an individual State.
 
@@ -29,10 +30,10 @@ class State[A: Action]:
         """
         self._actions: List[A] = action_list
         self._estimated_return: float = estimated_return
-        self._counter: int = 0
-        self._reward: float = 0
+        self._reward: float = reward
         self._is_current: bool = False
         self._is_terminal: bool = False
+        self._counter: int = 0
 
     @property
     def actions(self) -> List[A]:
