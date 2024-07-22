@@ -14,9 +14,6 @@ from core.Agent.History import History
 
 from log.ilogger import ILogger
 
-# TODO Need option to improve Policy without changing the current State Space. (in place)
-    # Need copy of old State Value function, improve according to those values - set State Value Function to those updated values all at once (optional, include with current implementation)
-
 class Agent[SI: StateIndex, A: Action]:
     """RL Agent."""
 
@@ -79,7 +76,6 @@ class Agent[SI: StateIndex, A: Action]:
                 old_state_value: float = state.estimated_return
                 updated_state_value: float = AgentService.calculate_state_value(
                     state_index=state_index,
-                    state_space=state_space,
                     policy=self.policy,
                     environment=self.environment,
                     gamma=self.gamma
@@ -121,7 +117,6 @@ class Agent[SI: StateIndex, A: Action]:
                 # Determine updated State's value.
                 updated_state_value: float = AgentService.calculate_state_value(
                     state_index=state_index,
-                    state_space=state_space,
                     policy=self.policy,
                     environment=self.environment,
                     gamma=self.gamma
@@ -154,10 +149,9 @@ class Agent[SI: StateIndex, A: Action]:
 
             new_greedy_actions: List[A] = (
                 AgentService.determine_greedy_actions(
-                    state_index,
-                    state_space,
-                    self.environment,
-                    self.gamma
+                    state_index=state_index,
+                    environment=self.environment,
+                    gamma=self.gamma
                 )
             )
             self.policy.set_new_state_policy(

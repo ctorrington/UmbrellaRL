@@ -18,7 +18,6 @@ class AgentService[SI: StateIndex, A: Action]():
     def calculate_state_value(
         cls,
         state_index: SI,
-        state_space: StateSpace[SI, A],
         policy: BasePolicy[SI, A],
         environment: Environment[SI, A],
         gamma: float
@@ -26,7 +25,6 @@ class AgentService[SI: StateIndex, A: Action]():
         # TODO Doc string.
         state_value: float = BellmanEquation.calculate_state_value(
             state_index=state_index,
-            state_space=state_space,
             policy=policy,
             environment=environment,
             gamma=gamma
@@ -38,7 +36,6 @@ class AgentService[SI: StateIndex, A: Action]():
     def determine_greedy_actions(
         cls,
         state_index: SI,
-        state_space: StateSpace[SI, A],
         environment: Environment[SI, A],
         gamma: float
     ) -> List[A]:
@@ -46,12 +43,10 @@ class AgentService[SI: StateIndex, A: Action]():
         Determine the Actions resulting in the greatest estimated return 
         from the given State.
         """
-
         action_value_distribution: Dict[A, float] = cls.calculate_greedy_actions_estimated_return(
-            state_index,
-            state_space,
-            environment,
-            gamma
+            state_index=state_index,
+            environment=environment,
+            gamma=gamma
             )
         best_actions: List[A] = cls.determine_best_actions(
             action_value_distribution
@@ -63,7 +58,6 @@ class AgentService[SI: StateIndex, A: Action]():
     def calculate_greedy_actions_estimated_return(
         cls,
         state_index: SI,
-        state_space: StateSpace[SI, A],
         environment: Environment[SI, A],
         gamma: float
     ) -> Dict[A, float]:
@@ -71,17 +65,16 @@ class AgentService[SI: StateIndex, A: Action]():
         Calculate the Actions resulting in the highest estimated return from 
         the given State.
         """
-
+        state_space: StateSpace[SI, A] = environment.get_state_space()
         action_value_distribution: Dict[A, float] = {}
 
         for action in state_space[state_index].actions:
 
             action_value: float = BellmanEquation.calculate_update_value(
-                state_index,
-                action,
-                state_space,
-                environment,
-                gamma
+                state_index=state_index,
+                action=action,
+                environment=environment,
+                gamma=gamma
             )
             action_value_distribution[action] = action_value
 

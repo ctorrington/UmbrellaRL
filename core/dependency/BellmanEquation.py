@@ -1,5 +1,4 @@
 """Bellman Equation service class."""
-# TODO Unittest for BellmanEquation.
 
 from typing import List
 
@@ -19,28 +18,38 @@ class BellmanEquation[SI: StateIndex, A: Action]():
     def calculate_state_value(
         cls,
         state_index: SI,
-        state_space: StateSpace[SI, A],
         policy: BasePolicy[SI, A],
         environment: Environment[SI,A],
         gamma: float
     ) -> float:
-        """Calculate the state value """
+        """Calculate the value of the State for the provided State Index.
 
-        state_value: float = 0
-        state_action_probability_distribution: ActionProbabilityDistribution[A] = policy.get_action_probability_distribution(state_index)
+        Args:
+            state_index (SI): State Index of the State to calcuate the value of.
+            state_space (StateSpace[SI, A]): State Space that the State is in.
+            policy (BasePolicy[SI, A]): Policy that the State is following.
+            environment (Environment[SI,A]): Environment that the State is in.
+            gamma (float): Gamma value for the State value.
+
+        Returns:
+            float: Value (estimated return) of the State.
+        """
+        state_space: StateSpace[SI, A] = environment.get_state_space()
+        state_action_probability_distribution: ActionProbabilityDistribution[A] = (
+            policy.get_action_probability_distribution(state_index)
+        )
         state: State[A] = state_space.get_state(state_index)
         state_actions: List[A] = state.actions
+        state_value: float = 0
 
         for action in state_actions:
 
             action_probability: float = (
-                # TODO Get method for below.
                 state_action_probability_distribution[action]
             )
             update_value: float = cls.calculate_update_value(
                 state_index=state_index,
                 action=action,
-                state_space=state_space,
                 environment=environment,
                 gamma=gamma
             )
@@ -53,12 +62,23 @@ class BellmanEquation[SI: StateIndex, A: Action]():
         cls,
         state_index: SI,
         action: A,
-        state_space: StateSpace[SI, A],
         environment: Environment[SI, A],
         gamma: float
     ) -> float:
-        """Calculate the update to the Bellman Equation."""
+        """Calculate the update value of the Bellman Equation.
 
+        Args:
+            state_index (SI): State Index of the State to calculate the update 
+            value of.
+            action (A): Action to calculate the update value 
+            state_space (StateSpace[SI, A]): State Space that the State is in.
+            environment (Environment[SI, A]): Environment that the State is in.
+            gamma (float): Gamma value to calculate the update value with.
+
+        Returns:
+            float: Update value for the Bellman Equation.
+        """
+        state_space: StateSpace[SI, A] = environment.get_state_space()
         update_value: float = 0
         next_states: StateProbabilityDistribution[SI] = (
             environment.get_next_states(state_index, action)
@@ -85,7 +105,6 @@ class BellmanEquation[SI: StateIndex, A: Action]():
         cls,
         state_index: SI,
         action: A,
-        state_space: StateSpace[SI,A],
         environment: Environment[SI, A],
         gamma: float
     ) -> float:
@@ -96,11 +115,9 @@ class BellmanEquation[SI: StateIndex, A: Action]():
         equivalent to the state-action value. When greedy policy simply chooses 
         the maximising state-action (update) value.
         """
-
         state_action_value: float = cls.calculate_update_value(
             state_index,
             action,
-            state_space,
             environment,
             gamma
             )

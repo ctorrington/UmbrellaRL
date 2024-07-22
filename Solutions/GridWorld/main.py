@@ -41,10 +41,10 @@ def main():
         theta=0.0001,
         gamma=0.999
     )
-    # agent.evaluate_policy()
+    agent.evaluate_policy()
     # agent.evaluate_policy_synchronous()
     # agent.improve_policy()
-    agent.iterate_policy(evaluation_synchronous=False)
+    # agent.iterate_policy(evaluation_synchronous=False)
     
     # for state_index in state_space:
     #     print(f"State ({state_index})")
