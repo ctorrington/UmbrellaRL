@@ -167,13 +167,29 @@ class Agent[SI: StateIndex, A: Action]:
 
         self._logger.info("Ending Policy Improvement process.")
 
-    def iterate_policy(self) -> None:
+    def iterate_policy(
+        self,
+        evaluation_synchronous: bool
+    ) -> None:
         """Iterate the Agent's Policy using iterative policy evaluation to 
         estimate an optimal Policy.
+
+        Args:
+            evaluation_synchronous (bool): Boolean value determining if Policy 
+            Evaluation is performed synchronously or asynchrnously.
         """
-        self._logger.info("Beginning Policy Iteration process.")
+        
+        policy_evaluation_method = (
+            self.evaluate_policy_synchronous if evaluation_synchronous else self.evaluate_policy
+        )
+        evaluation_method_string: str = (
+            "synchronous" if evaluation_synchronous else "asynchronous"
+        )
+
+        self._logger.info(f"Beginning Policy Iteration process with {evaluation_method_string} Policy Evaluation.")
+
         while True:
-            self.evaluate_policy()
+            policy_evaluation_method()
             old_policy = deepcopy(self.policy)
             self.improve_policy()
             
