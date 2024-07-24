@@ -8,7 +8,7 @@ from core.Environment.Environment import Environment
 from core.Policy.BasePolicy import BasePolicy
 from core.dependency.StateIndex import StateIndex
 from core.dependency.State import State
-from core.dependency.Action import Action
+from core.dependency.action import Action
 from core.Agent.AgentService import AgentService
 from core.Agent.History import History
 

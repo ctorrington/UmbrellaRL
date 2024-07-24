@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from Graphing.abstract_graphing import Graphing
 
 from core.dependency.StateIndex import StateIndex
-from core.dependency.Action import Action
+from core.dependency.action import Action
 from core.dependency.State import State
 from core.Agent.Agent import Agent
 from core.Agent.History import History

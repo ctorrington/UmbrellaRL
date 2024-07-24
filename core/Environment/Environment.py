@@ -11,7 +11,7 @@ from core.dependency.StateIndex import StateIndex
 from core.dependency.StateSpace import StateSpace
 from core.dependency.StateProbabilityDistribution import StateProbabilityDistribution
 from core.dependency.StateActions import StateActions
-from core.dependency.Action import Action
+from core.dependency.action import Action
 
 class Environment[SI: StateIndex, A: Action](ABC, Dict[SI, StateActions[SI, A]]):
     

@@ -7,7 +7,7 @@ Mapping from Actions to a list of potential States from that Action.
 from abc import ABC
 from typing import Dict
 
-from core.dependency.Action import Action
+from core.dependency.action import Action
 from core.dependency.StateIndex import StateIndex
 from core.dependency.StateProbabilityDistribution import StateProbabilityDistribution
 

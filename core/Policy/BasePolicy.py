@@ -14,7 +14,7 @@ from typing import Dict, List
 
 from core.dependency.ActionProbabilityDistribution import ActionProbabilityDistribution
 from core.dependency.StateIndex import StateIndex
-from core.dependency.Action import Action
+from core.dependency.action import Action
 from core.Environment.Environment import Environment
 from core.dependency.StateSpace import StateSpace
 from core.dependency.StateProbabilityDistribution import StateProbabilityDistribution

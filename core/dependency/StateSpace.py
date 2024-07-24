@@ -14,7 +14,7 @@ from numpy import float64
 
 from core.dependency.State import State
 from core.dependency.StateIndex import StateIndex
-from core.dependency.Action import Action
+from core.dependency.action import Action
 
 class StateSpace[SI: StateIndex, A: Action](ABC, Dict[SI, State[A]]):
     """

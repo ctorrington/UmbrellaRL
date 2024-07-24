@@ -8,7 +8,7 @@ Currently trackable metrics:
 from typing import Dict
 from copy import deepcopy
 
-from core.dependency.Action import Action
+from core.dependency.action import Action
 from core.dependency.StateSpace import StateSpace
 from core.dependency.StateIndex import StateIndex
 

@@ -12,7 +12,7 @@ from core.dependency.ActionProbabilityDistribution import ActionProbabilityDistr
 from core.Policy.BasePolicy import BasePolicy
 from core.dependency.StateSpace import StateSpace
 from core.dependency.StateIndex import StateIndex
-from core.dependency.Action import Action
+from core.dependency.action import Action
 
 from log.ilogger import ILogger
 

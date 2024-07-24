@@ -7,7 +7,7 @@ A State's estimated return is synonymous a State's value.
 
 from typing import List
 
-from core.dependency.Action import Action
+from core.dependency.action import Action
 
 class State[A: Action]:
     """
