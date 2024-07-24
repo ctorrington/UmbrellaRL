@@ -1,20 +1,29 @@
 import unittest
 
-from Solutions.GridWorld.Action import GridWorldAction
+from core.dependency.action import Action
 
-class TestGridWorldAction(unittest.TestCase):
-    def test_attributes(self):
-        """Test that GridWorldAction has the correct attributes."""
-        self.assertEqual(GridWorldAction.UP.value, "up")
-        self.assertEqual(GridWorldAction.DOWN.value, "down")
-        self.assertEqual(GridWorldAction.LEFT.value, "left")
-        self.assertEqual(GridWorldAction.RIGHT.value, "right")
+class TestAction(unittest.TestCase):
+    def test_inheritance(self):
+        class TestActions(Action):
+            ACTION_1 = 1
+            ACTION_2 = 2
+        
+        self.assertIsInstance(TestActions.ACTION_1, TestActions)
+        self.assertIsInstance(TestActions.ACTION_2, TestActions)
 
-    def test_members(self):
-        """Test that the members method returns all actions."""
-        expected_members = ["up", "down", "left", "right"]
-        actual_members = [member.value for member in GridWorldAction.members()]
-        self.assertListEqual(sorted(expected_members), sorted(actual_members))
+    def test_members_method(self):
+        class TestActions(Action):
+            ACTION_1 = 1
+            ACTION_2 = 2
+        
+        expected_members = [TestActions.ACTION_1, TestActions.ACTION_2]
+        self.assertListEqual(TestActions.members(), expected_members)
+    
+    def test_empty_actions(self):
+        class EmptyActions(Action):
+            pass
+        
+        self.assertListEqual(EmptyActions.members(), [])
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()
