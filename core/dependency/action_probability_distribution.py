@@ -16,8 +16,10 @@ class ActionProbabilityDistribution[A: Action](Dict[A, float]):
         action: A
     ) -> float:
         """Return the probability of the given Action being chosen."""
-
-        return self[action]
+        try:
+            return self[action]
+        except KeyError as e:
+            raise e
     
     def set_action_probability(
         self,

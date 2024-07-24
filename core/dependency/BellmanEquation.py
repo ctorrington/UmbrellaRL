@@ -8,7 +8,7 @@ from core.dependency.StateSpace import StateSpace
 from core.dependency.State import State
 from core.Environment.Environment import Environment
 from core.dependency.StateProbabilityDistribution import StateProbabilityDistribution
-from core.dependency.ActionProbabilityDistribution import ActionProbabilityDistribution
+from core.dependency.action_probability_distribution import ActionProbabilityDistribution
 from core.Policy.BasePolicy import BasePolicy
 
 class BellmanEquation[SI: StateIndex, A: Action]():

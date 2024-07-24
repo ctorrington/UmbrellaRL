@@ -12,7 +12,7 @@ import math
 from abc import ABC, abstractmethod
 from typing import Dict, List
 
-from core.dependency.ActionProbabilityDistribution import ActionProbabilityDistribution
+from core.dependency.action_probability_distribution import ActionProbabilityDistribution
 from core.dependency.StateIndex import StateIndex
 from core.dependency.action import Action
 from core.Environment.Environment import Environment
