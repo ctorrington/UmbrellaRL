@@ -6,9 +6,9 @@ import matplotlib.pyplot as plt
 
 from Graphing.abstract_graphing import Graphing
 
-from core.dependency.StateIndex import StateIndex
+from core.dependency.state_index import StateIndex
 from core.dependency.action import Action
-from core.dependency.State import State
+from core.dependency.state import State
 from core.Agent.Agent import Agent
 from core.Agent.History import History
 from core.Environment.Environment import Environment

@@ -6,8 +6,8 @@ from copy import deepcopy
 from core.dependency.StateSpace import StateSpace
 from core.Environment.Environment import Environment
 from core.Policy.BasePolicy import BasePolicy
-from core.dependency.StateIndex import StateIndex
-from core.dependency.State import State
+from core.dependency.state_index import StateIndex
+from core.dependency.state import State
 from core.dependency.action import Action
 from core.Agent.AgentService import AgentService
 from core.Agent.History import History

@@ -13,12 +13,12 @@ from abc import ABC, abstractmethod
 from typing import Dict, List
 
 from core.dependency.action_probability_distribution import ActionProbabilityDistribution
-from core.dependency.StateIndex import StateIndex
+from core.dependency.state_index import StateIndex
 from core.dependency.action import Action
 from core.Environment.Environment import Environment
 from core.dependency.StateSpace import StateSpace
 from core.dependency.StateProbabilityDistribution import StateProbabilityDistribution
-from core.dependency.State import State
+from core.dependency.state import State
 
 from log.ilogger import ILogger
 

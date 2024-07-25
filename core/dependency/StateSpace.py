@@ -12,8 +12,8 @@ import numpy as np
 import numpy.typing as npt
 from numpy import float64
 
-from core.dependency.State import State
-from core.dependency.StateIndex import StateIndex
+from core.dependency.state import State
+from core.dependency.state_index import StateIndex
 from core.dependency.action import Action
 
 class StateSpace[SI: StateIndex, A: Action](ABC, Dict[SI, State[A]]):

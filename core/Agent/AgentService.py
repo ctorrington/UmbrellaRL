@@ -2,7 +2,7 @@
 
 from typing import List, Dict
 
-from core.dependency.StateIndex import StateIndex
+from core.dependency.state_index import StateIndex
 from core.dependency.action import Action
 from core.dependency.StateSpace import StateSpace
 from core.Environment.Environment import Environment

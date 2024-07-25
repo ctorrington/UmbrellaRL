@@ -6,7 +6,7 @@ Each State has the same Actions, ie. Up, Down, Left, Right.
 
 from typing import Optional, List
 
-from core.dependency.State import State
+from core.dependency.state import State
 from Solutions.GridWorld.Action import GridWorldAction
 
 class GridWorldState(State[GridWorldAction]):

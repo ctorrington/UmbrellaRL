@@ -8,7 +8,7 @@ from abc import ABC
 from typing import Dict
 
 from core.dependency.action import Action
-from core.dependency.StateIndex import StateIndex
+from core.dependency.state_index import StateIndex
 from core.dependency.StateProbabilityDistribution import StateProbabilityDistribution
 
 class StateActions[SI: StateIndex, A: Action](ABC, Dict[A, StateProbabilityDistribution[SI]]):

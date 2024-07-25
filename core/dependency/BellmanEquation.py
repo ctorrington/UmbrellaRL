@@ -2,10 +2,10 @@
 
 from typing import List
 
-from core.dependency.StateIndex import StateIndex
+from core.dependency.state_index import StateIndex
 from core.dependency.action import Action
 from core.dependency.StateSpace import StateSpace
-from core.dependency.State import State
+from core.dependency.state import State
 from core.Environment.Environment import Environment
 from core.dependency.StateProbabilityDistribution import StateProbabilityDistribution
 from core.dependency.action_probability_distribution import ActionProbabilityDistribution
