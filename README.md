@@ -18,7 +18,8 @@ This allows for faster solution methods to reinforcement learning problems.
   - [ ] Dynamic programming
     - [x] Policy Evaluation
     - [x] Policy Improvement
-    - [ ] Policy Iteration
+      - [x] Grid World
+    - [x] Policy Iteration
       - [ ] Jack's Car Rental
     - [ ] Value Iteration
     - [ ] Generalised Policy Iteration
