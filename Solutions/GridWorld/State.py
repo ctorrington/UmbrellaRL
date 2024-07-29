@@ -3,11 +3,13 @@ Grid World representation of a State.
 
 Each State has the same Actions, ie. Up, Down, Left, Right.
 """
+import logging
 
 from typing import Optional, List
 
 from core.dependency.state import State
 from Solutions.GridWorld.Action import GridWorldAction
+from log.ilogger import ILogger
 
 class GridWorldState(State[GridWorldAction]):
     def __init__(
@@ -15,8 +17,9 @@ class GridWorldState(State[GridWorldAction]):
         action_list: List[GridWorldAction],
         estimated_return: float,
         reward: float,
-        x: Optional[int] = None,
-        y: Optional[int] = None
+        logger: ILogger,
+        x: int,
+        y: int
     ):
         """Initialisation for a GridWorld State. Each Attribute is expected to 
         be relevant for the GridWorld Solution.
@@ -29,13 +32,14 @@ class GridWorldState(State[GridWorldAction]):
             y (Optional[int], optional): Y value within the GridWorld grid. 
             Defaults to None.
         """
+        self._logger: logging.Logger = logger.get_logger(self.__class__.__name__)
         super().__init__(
             action_list=action_list,
             estimated_return=estimated_return,
-            reward=reward
+            reward=reward,
+            logger=logger
         )
         
-        self.reward = -1
-        
-        self.x: Optional[int] = x
-        self.y: Optional[int] = y
+        # Grid World State instance properties.
+        self.x: int = x
+        self.y: int = y

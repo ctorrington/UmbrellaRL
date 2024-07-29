@@ -83,7 +83,7 @@ class BasePolicy[SI: StateIndex, A: Action](ABC, Dict[SI, ActionProbabilityDistr
                     action=action
                 )
             )
-            self._logger.debug(f"Next states for Action {action}: {next_states}.")
+            self._logger.debug(f"State {state_index} next States with Action {action}: {next_states}.")
 
             # Get the values of the possible next States.
             next_state_values: List[float] = []
@@ -93,7 +93,7 @@ class BasePolicy[SI: StateIndex, A: Action](ABC, Dict[SI, ActionProbabilityDistr
 
                 state: State[A] = state_space.get_state(next_state_index)
                 state_value: float = state.estimated_return
-                self._logger.debug(f"Next State: {next_state_index}, value: {state_value}.")
+                self._logger.debug(f"Next State {next_state_index} value: {state_value}.")
                 next_state_values.append(state_value)
 
             if len(next_state_values) == 0:
@@ -136,17 +136,29 @@ class BasePolicy[SI: StateIndex, A: Action](ABC, Dict[SI, ActionProbabilityDistr
     # TODO should not be a list (this is equiprobable)
     def set_new_state_policy(
         self,
-        state: SI,
+        state_index: SI,
         new_actions: List[A]
     ) -> None:
         """Set a new Policy for given State."""
+        self._logger.info(
+            f"Setting new Policy for State {state_index} - new greedy Actions: {new_actions}."
+        )
 
-        state_action_probability_distribution: ActionProbabilityDistribution[A] = self.get_action_probability_distribution(state)
+        state_action_probability_distribution: ActionProbabilityDistribution[A] = (
+            self.get_action_probability_distribution(state_index)
+        )
         new_action_probability: float = 1 / len(new_actions)
 
         for action in state_action_probability_distribution:
 
             if action in new_actions:
-                self[state][action] = new_action_probability
+                self[state_index][action] = new_action_probability
+                self._logger.debug(
+                    f"State {state_index} Action {action} has a new Policy probability of {new_action_probability}."
+                )
             else:
-                self[state][action] = 0
+                self[state_index][action] = 0
+        
+        self._logger.info(
+            f"Setting new Policy for State {state_index} completed successfuly."
+        )

@@ -4,10 +4,12 @@ State Type.
 State representation for a reinforcement learning environment.
 A State's estimated return is synonymous a State's value.
 """
+import logging
 
 from typing import List
 
 from core.dependency.action import Action
+from log.ilogger import ILogger
 
 class State[A: Action]:
     """
@@ -20,7 +22,8 @@ class State[A: Action]:
         self,
         action_list: List[A],
         estimated_return: float,
-        reward: float
+        reward: float,
+        logger: ILogger
     ):
         """Initialisation for an individual State.
 
@@ -29,12 +32,19 @@ class State[A: Action]:
             State. The type of the list is inherited from the 
             core.dependency.action class.
         """
+        # TODO State class should have a State Index class as a property.
+        self._logger: logging.Logger = logger.get_logger(self.__class__.__name__)
+
         self._actions: List[A] = action_list
         self._estimated_return: float = estimated_return
         self._reward: float = reward
         self._is_current: bool = False
         self._is_terminal: bool = False
         self._counter: int = 0
+
+        self._logger.info(
+            f"State initialised with actions: {action_list}, estimated return: {estimated_return}, reward: {reward}, current state: {self._is_current}, terminal state: {self._is_terminal}, counter: {self._counter}."
+        )
 
     @property
     def actions(self) -> List[A]:

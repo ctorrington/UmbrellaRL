@@ -88,9 +88,9 @@ class BellmanEquation[SI: StateIndex, A: Action]():
 
             next_state_probability: float = (
                 environment.get_state_transition_probability(
-                    state_index,
-                    action,
-                    next_state_index
+                    current_state_index=state_index,
+                    action=action,
+                    next_state_index=next_state_index
                 )
             )
             next_state: State[A] = state_space.get_state(next_state_index)
