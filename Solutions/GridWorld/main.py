@@ -8,7 +8,7 @@ from Solutions.GridWorld.GridWorldEnvironment import GridWorldEnvironment
 from Solutions.GridWorld.Policy import GridWorldEquiprobablePolicy
 from Solutions.GridWorld.StateIndex import GridWorldStateIndex
 
-from Graphing.graphing import Graphing
+from graphing.graphing import Graphing
 
 from log.logger_manager import LoggerManager
 
@@ -18,7 +18,8 @@ def main():
     number_of_columns: int = 4
     state_actions: List[GridWorldAction] = GridWorldAction.members()
     state_estimated_return: float = 0
-    state_reward: float = 0
+    state_reward: float = -1
+    terminal_state_reward: float = 0
     state_space: GridWorldStateSpace = GridWorldStateSpace(
         number_of_rows=number_of_rows,
         number_of_columns=number_of_columns,
@@ -33,7 +34,9 @@ def main():
             (number_of_rows - 1, number_of_columns - 1),
             # (1, 2),
             (2, 1)
-        ]
+        ],
+        terminal_state_reward=terminal_state_reward,
+        logger=logger_manager
     )
     environment: GridWorldEnvironment = GridWorldEnvironment(state_space)
     policy: GridWorldEquiprobablePolicy[GridWorldStateIndex, GridWorldAction] = (
@@ -46,8 +49,8 @@ def main():
         environment=environment,
         policy=policy,
         logger=logger_manager,
-        theta=0.0001,
-        gamma=0.999
+        theta=0.001,
+        gamma=0.9
     )
     # agent.evaluate_policy()
     # agent.evaluate_policy_synchronous()
@@ -63,7 +66,8 @@ def main():
 
     graph = Graphing(
         agent=agent,
-        environment=environment
+        environment=environment,
+        logger=logger_manager
     )
     graph.plot_graph("state value function")
     # graph.plot_history("state value function")
