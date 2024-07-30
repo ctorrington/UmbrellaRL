@@ -1,6 +1,6 @@
 """RL Agent."""
 
-from typing import List
+from typing import List, Dict
 from copy import deepcopy
 
 from core.dependency.StateSpace import StateSpace
@@ -121,6 +121,7 @@ class Agent[SI: StateIndex, A: Action]:
                     environment=self.environment,
                     gamma=self.gamma
                 )
+                self._logger.debug(f"State {state_index} updated State Value: {updated_state_value}.")
                 delta = max(delta, (abs(old_state_value - updated_state_value)))
                 # Update the State's value.
                 state.estimated_return = updated_state_value
@@ -131,6 +132,10 @@ class Agent[SI: StateIndex, A: Action]:
                 self._logger.info(f"State value delta converged at value: {delta}. Ending Policy Evaluation process.")
                 break
 
+            self._logger.info(
+                f"State value delta {delta} still greater than break value theta {self.theta} - running Policy Evaluation again."
+            )
+
     def improve_policy(self) -> None:
         """
         Improve the Policy.
@@ -138,25 +143,51 @@ class Agent[SI: StateIndex, A: Action]:
         Determine optimal actions for each State in the State Space.
         """
         self._logger.info("Beginning Policy Improvement process.")
-
         state_space: StateSpace[SI, A] = self.environment.get_state_space()
 
         for state_index in state_space:
-            
             state: State[A] = state_space.get_state(state_index)
+
+            # Skip states that have no Actions.
             if not state.has_actions():
+                self._logger.info(
+                    f"State {state_index} has no Actions - skipping State. State Actions: {state.actions}."
+                )
                 continue
 
-            new_greedy_actions: List[A] = (
-                AgentService.determine_greedy_actions(
-                    state_index=state_index,
-                    environment=self.environment,
-                    gamma=self.gamma
+            # Get Action value function for State.
+            action_value: Dict[A, float] = {}
+            for action in state.actions:
+                value: float = (
+                    AgentService.calculate_action_value_for_action_in_state(
+                        state_index=state_index,
+                        action=action,
+                        environment=self.environment,
+                        gamma=self.gamma
+                    )
                 )
-            )
+                action_value[action] = value
+
+            # Determine greedy Actions.
+            # TODO error here when calculating state value for improved policy.
+            greedy_action_value: float = max(action_value.values())
+            greedy_actions: List[A] = []
+            for action in action_value:
+                if action_value[action] == greedy_action_value:
+                    greedy_actions.append(action)
+            # greedy_actions: List[A] = (
+            #     AgentService.determine_greedy_actions(
+            #         state_index=state_index,
+            #         environment=self.environment,
+            #         gamma=self.gamma,
+            #         logger=self._logger
+            #     )
+            # )
+
+            # Set the Policy for the State to be greedy.
             self.policy.set_new_state_policy(
-                state_index,
-                new_greedy_actions
+                state_index=state_index,
+                new_actions=greedy_actions
             )
 
         self._logger.info("Ending Policy Improvement process.")
@@ -179,14 +210,13 @@ class Agent[SI: StateIndex, A: Action]:
         evaluation_method_string: str = (
             "synchronous" if evaluation_synchronous else "asynchronous"
         )
-
         self._logger.info(f"Beginning Policy Iteration process with {evaluation_method_string} Policy Evaluation.")
 
         while True:
             policy_evaluation_method()
             old_policy = deepcopy(self.policy)
             self.improve_policy()
-            
+
             # Check if the new improved policy equals the old policy.
             if self.policy == old_policy:
                 self._logger.info("Policy stable. Ending Policy Iteration.")
