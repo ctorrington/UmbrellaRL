@@ -16,6 +16,9 @@ class Action(Enum):
 
     Generic type for each action available to the Agent.
     """
+    # TODO Action type may need further properties such as Action Value.
+        # TODO Following above, actions would need to be instantiated for each
+        # State then.
 
     @classmethod
     def members(cls) -> List[Self]:
