@@ -4,7 +4,7 @@ Abstract base class for UmbrellaRL's graphing module.
 
 from abc import ABC, abstractmethod
 
-class Graphing(ABC):
+class IGraphing(ABC):
     
     @abstractmethod
     def plot_graph(
