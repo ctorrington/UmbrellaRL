@@ -11,6 +11,7 @@ from core.dependency.action import Action
 
 class ActionProbabilityDistribution[A: Action](Dict[A, float]):
     """Probability that an Action is chosen.
+    Dictionary mapping Action type to float.
     
     Action Probability Distributions are stored by a Policy to determine an 
     Agents Actions.
