@@ -75,25 +75,24 @@ class BasePolicy[SI: StateIndex, A: Action](ABC, Dict[SI, ActionProbabilityDistr
             warnings.warn(f"Sum of Action Probability Distribution is less than 1.")
 
         self[state_index] = distribution
-            
 
-    def get_greedy_actions(
+    def get_greedy_actions_for_state(
         self,
         state_index: SI,
         environment: Environment[SI, A]
     ) -> List[A]:
-        """Return a list of Actions that that result in States with the 
-        greatest value.
+        """Return a list of Actions that result in States with the greatest 
+        estimated value.
 
         Args:
             state_index (SI): State Index of the State to return the greedy 
             actions from.
 
         Returns:
-            List[A]: List of type Action. Each action results in a State with 
+            List[A]: List of type Action. Each Action results in a State with 
             the greatest value from the provided State.
         """
-        self._logger.debug(f"Getting greedy Actions for State with State Index: {state_index}.")
+        self._logger.debug(f"Getting greedy Actions for State: {state_index}.")
 
         state_space: StateSpace[SI, A] = environment.get_state_space()
         action_max_value: Dict[A, float] = {}
@@ -101,9 +100,8 @@ class BasePolicy[SI: StateIndex, A: Action](ABC, Dict[SI, ActionProbabilityDistr
         # Get the Actions for the State.
         state_actions: List[A] = state_space.get_state(state_index).actions
 
-        # Determine which Actions are greedy.
         for action in state_actions:
-            # Get the possible next States.
+            # Get the possible next States following current Action.
             next_states: StateProbabilityDistribution[SI] = (
                 environment.get_next_states(
                     current_state_index=state_index,
@@ -112,19 +110,16 @@ class BasePolicy[SI: StateIndex, A: Action](ABC, Dict[SI, ActionProbabilityDistr
             )
             self._logger.debug(f"State {state_index} next States with Action {action}: {next_states}.")
 
-            # Get the values of the possible next States.
+            # Get the estimated return of the possible next States.
             next_state_values: List[float] = []
             for next_state_index in next_states:
-                if state_index == next_state_index:
-                    continue
 
                 state: State[A] = state_space.get_state(next_state_index)
                 state_value: float = state.estimated_return
-                self._logger.debug(f"Next State {next_state_index} value: {state_value}.")
-                next_state_values.append(state_value)
+                self._logger.debug(f"State {next_state_index} estimated return: {state_value}.")
 
-            if len(next_state_values) == 0:
-                continue
+                # Record next State values for current Action.
+                next_state_values.append(state_value)
 
             # Get the maximum value of the possible next States.
             next_state_max_value: float = max(next_state_values)            
@@ -136,7 +131,7 @@ class BasePolicy[SI: StateIndex, A: Action](ABC, Dict[SI, ActionProbabilityDistr
             [action for action, value in action_max_value.items() if math.isclose(value, max_value, rel_tol=1e-9)]
         )
 
-        self._logger.debug(f"Retrieved reedy Actions for State with State Index: {state_index} successfully.")
+        self._logger.debug(f"Retrieved greedy Actions for State: {state_index} successfully. Greedy Actions: {greedy_actions}.")
         return greedy_actions
 
     def get_greedy_actions_old(
