@@ -10,6 +10,12 @@ from typing import Dict
 from core.dependency.state_index import StateIndex
 
 class StateProbabilityDistribution[SI: StateIndex](Dict[SI, float]):
+    """Probability that a State is achieved.
+    Dictionary mapping State Index type to float.
+
+    State Probability Distribution is a distribution of States following an 
+    Action from a State within the Environment.
+    """
 
     def get_state_probability(
         self,
