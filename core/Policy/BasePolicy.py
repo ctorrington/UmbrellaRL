@@ -50,6 +50,30 @@ class BasePolicy[SI: StateIndex, A: Action](ABC, Dict[SI, ActionProbabilityDistr
         """Return the Action Probability Distribution for the given state."""
         return ActionProbabilityDistribution(self[state_index])
 
+    def set_action_probability_distribution(
+        self,
+        state_index: SI,
+        distribution: ActionProbabilityDistribution[A]
+    ) -> None:
+        """Set the new Action Probability Distribution for the State at the given 
+        State Index.
+
+        Args:
+            state_index (SI): State Index of the State to update the 
+            Action Probability Distribution of.
+            distribution (ActionProbabilityDistribution[A]): 
+            ActionProbabilityDistribution type containing new Action 
+            Probability Distribution values.
+        """
+        self._logger.info(f"Updating State {state_index} Action Probability Distribution with distribution: {distribution}.")
+
+        # Ensure distribution values are not greater than 1.
+        if sum(distribution.values()) > 1:
+            raise ValueError(f"Action Probability Distribution values are greater than 1. A State cannot have Actions with a probability of being chosen being greater than 100%.")
+
+        self[state_index] = distribution
+            
+
     def get_greedy_actions(
         self,
         state_index: SI,
@@ -116,7 +140,7 @@ class BasePolicy[SI: StateIndex, A: Action](ABC, Dict[SI, ActionProbabilityDistr
         self,
         state_index: SI
     ) -> List[A]:
-        raise DeprecationWarning
+        raise DeprecationWarning()
         # TODO This should not be correct?
         """Return the Actions with the highest probability of being chosen."""
 
@@ -139,6 +163,7 @@ class BasePolicy[SI: StateIndex, A: Action](ABC, Dict[SI, ActionProbabilityDistr
         state_index: SI,
         new_actions: List[A]
     ) -> None:
+        raise DeprecationWarning(f"Method {self.__class__.__name__} depracated. Use core.policy.base_policy.set_new_state_policy instead.")
         """Set a new Policy for given State."""
         self._logger.info(
             f"Setting new Policy for State {state_index} - new greedy Actions: {new_actions}."
