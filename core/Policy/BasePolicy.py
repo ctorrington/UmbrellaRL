@@ -8,6 +8,7 @@ their probability of being taken by the Policy.
 """
 
 import math
+import warnings
 
 from abc import ABC, abstractmethod
 from typing import Dict, List
@@ -70,6 +71,8 @@ class BasePolicy[SI: StateIndex, A: Action](ABC, Dict[SI, ActionProbabilityDistr
         # Ensure distribution values are not greater than 1.
         if sum(distribution.values()) > 1:
             raise ValueError(f"Action Probability Distribution values are greater than 1. A State cannot have Actions with a probability of being chosen being greater than 100%.")
+        elif sum(distribution.values()) < 1:
+            warnings.warn(f"Sum of Action Probability Distribution is less than 1.")
 
         self[state_index] = distribution
             
