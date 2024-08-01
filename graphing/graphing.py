@@ -93,7 +93,7 @@ class Graphing[SI: StateIndex, A: Action](IGraphing):
             match action_type:
                 case "greedy":
                     self._logger.info(f"Getting greedy Actions for State: {state_index}.")
-                    actions = self.agent.policy.get_greedy_actions(
+                    actions = self.agent.policy.get_greedy_actions_for_state(
                         state_index=state_index,
                         environment=self.environment
                     )
