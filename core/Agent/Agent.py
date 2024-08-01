@@ -11,6 +11,7 @@ from core.dependency.state import State
 from core.dependency.action import Action
 from core.Agent.AgentService import AgentService
 from core.Agent.History import History
+from core.dependency.action_probability_distribution import ActionProbabilityDistribution
 
 from log.ilogger import ILogger
 
@@ -142,53 +143,36 @@ class Agent[SI: StateIndex, A: Action]:
 
         Determine optimal actions for each State in the State Space.
         """
-        self._logger.info("Beginning Policy Improvement process.")
+        self._logger.info("Beginning Policy Improvement process...")
         state_space: StateSpace[SI, A] = self.environment.get_state_space()
 
+        # Greedify Policy for each State in State Space.
         for state_index in state_space:
             state: State[A] = state_space.get_state(state_index)
 
             # Skip states that have no Actions.
             if not state.has_actions():
-                self._logger.info(
-                    f"State {state_index} has no Actions - skipping State. State Actions: {state.actions}."
-                )
+                self._logger.info(f"State {state_index} has no Actions - skipping State. State Actions: {state.actions}.")
                 continue
-
-            # Get Action value function for State.
-            action_value: Dict[A, float] = {}
-            for action in state.actions:
-                value: float = (
-                    AgentService.calculate_action_value_for_action_in_state(
-                        state_index=state_index,
-                        action=action,
-                        environment=self.environment,
-                        gamma=self.gamma
-                    )
-                )
-                action_value[action] = value
-
-            # Determine greedy Actions.
-            # TODO error here when calculating state value for improved policy.
-            greedy_action_value: float = max(action_value.values())
-            greedy_actions: List[A] = []
-            for action in action_value:
-                if action_value[action] == greedy_action_value:
-                    greedy_actions.append(action)
-            # greedy_actions: List[A] = (
-            #     AgentService.determine_greedy_actions(
-            #         state_index=state_index,
-            #         environment=self.environment,
-            #         gamma=self.gamma,
-            #         logger=self._logger
-            #     )
-            # )
-
-            # Set the Policy for the State to be greedy.
-            self.policy.set_new_state_policy(
+            
+            # Get the greedy Actions for the State..
+            greedy_actions: list[A] = self.policy.get_greedy_actions_for_state(
                 state_index=state_index,
-                new_actions=greedy_actions
+                environment=self.environment
             )
+            
+            # Set the Policy ActionProbabilityDistribution for the State with the greedy Actions.
+            greedy_state_policy: ActionProbabilityDistribution[A] = {}
+            action_probability: float = 1/len(greedy_actions)
+            for action in state.actions:
+                if action in greedy_actions:
+                    greedy_state_policy[action] = action_probability
+                else:
+                    greedy_state_policy[action] = 0
+            self.policy.set_action_probability_distribution(
+                state_index=state_index,
+                distribution=greedy_state_policy
+            )            
 
         self._logger.info("Ending Policy Improvement process.")
 
@@ -203,7 +187,6 @@ class Agent[SI: StateIndex, A: Action]:
             evaluation_synchronous (bool): Boolean value determining if Policy 
             Evaluation is performed synchronously or asynchrnously.
         """
-        
         policy_evaluation_method = (
             self.evaluate_policy_synchronous if evaluation_synchronous else self.evaluate_policy
         )
@@ -216,9 +199,20 @@ class Agent[SI: StateIndex, A: Action]:
             policy_evaluation_method()
             old_policy = deepcopy(self.policy)
             self.improve_policy()
-
-            # Check if the new improved policy equals the old policy.
-            if self.policy == old_policy:
+            
+            policy_stable: bool = True
+            for state_index in old_policy:
+                if old_policy.get_action_probability_distribution(state_index=state_index) == self.policy.get_action_probability_distribution(state_index=state_index):
+                    policy_stable = False
+                    break
+            if policy_stable:
                 self._logger.info("Policy stable. Ending Policy Iteration.")
                 break
-            self._logger.info("Policies not equal - continuing Policy Iteration.")
+            self._logger.info("Policies unstable - continuing Policy Iteration.")
+                    
+
+            # # Check if the new improved policy equals the old policy.
+            # if self.policy == old_policy:
+            #     self._logger.info("Policy stable. Ending Policy Iteration.")
+            #     break
+            # self._logger.info("Policies not equal - continuing Policy Iteration.")
