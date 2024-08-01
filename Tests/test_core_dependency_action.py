@@ -3,7 +3,7 @@ import unittest
 from core.dependency.action import Action
 from tests.utils import timed
 
-class TestAction(unittest.TestCase):
+class TestCoreDependencyAction(unittest.TestCase):
     
     @timed
     def test_inheritance(self):
