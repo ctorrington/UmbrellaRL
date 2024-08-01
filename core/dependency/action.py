@@ -4,7 +4,7 @@ Action Type.
 Actions that can be implemented by a reinforcement learning agent.
 """
 
-from enum import Enum, EnumMeta
+from enum import Enum
 from typing import List, Self
 
 # from core.dependency.enum_meta import UmbrellaRLEnumMeta

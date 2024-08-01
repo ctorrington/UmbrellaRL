@@ -3,23 +3,19 @@ import unittest
 from core.dependency.action import Action
 from tests.utils import timed
 
+class TestActions(Action):
+    ACTION_1 = 1
+    ACTION_2 = 2
+
 class TestCoreDependencyAction(unittest.TestCase):
     
     @timed
     def test_inheritance(self):
-        class TestActions(Action):
-            ACTION_1 = 1
-            ACTION_2 = 2
-        
         self.assertIsInstance(TestActions.ACTION_1, TestActions)
         self.assertIsInstance(TestActions.ACTION_2, TestActions)
 
     @timed
     def test_members_method(self):
-        class TestActions(Action):
-            ACTION_1 = 1
-            ACTION_2 = 2
-        
         expected_members = [TestActions.ACTION_1, TestActions.ACTION_2]
         self.assertListEqual(TestActions.members(), expected_members)
 
