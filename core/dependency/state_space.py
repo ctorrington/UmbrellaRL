@@ -21,7 +21,7 @@ class StateSpace[SI: StateIndex, A: Action](ABC, Dict[SI, State[A]]):
     Structure containing every State in the Environment that can be interacted 
     with by a reinforcement learning Agent.
     
-    Dictionary structure mapping each index to its State.
+    Dictionary structure mapping each State Index to its State object.
     """
     def __init__(
         self,
@@ -29,6 +29,7 @@ class StateSpace[SI: StateIndex, A: Action](ABC, Dict[SI, State[A]]):
         state_estimated_return: float,
         state_reward: float
     ) -> None:
+        # Figure out what these actually do? 🤔 nothing?
         self.state_actions: list[A] = state_actions
         self.state_estimated_return: float = state_estimated_return
         self.state_reward: float = state_reward
