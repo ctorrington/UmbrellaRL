@@ -14,6 +14,6 @@ class LoggerManager(ILogger):
             formatter = logging.Formatter('%(asctime)s [%(levelname)s] %(name)s: %(message)s')
             handler.setFormatter(formatter)
             logger.addHandler(handler)
-            logger.setLevel(logging.INFO)
+            logger.setLevel(logging.DEBUG)
             LoggerManager._loggers[module_name] = logger
         return LoggerManager._loggers[module_name]
