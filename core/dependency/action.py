@@ -7,8 +7,6 @@ Actions that can be implemented by a reinforcement learning agent.
 from enum import Enum
 from typing import List, Self
 
-# from core.dependency.enum_meta import UmbrellaRLEnumMeta
-
 class Action(Enum):
     """
     Inherit from this class to define actions that can be taken by the agent.
