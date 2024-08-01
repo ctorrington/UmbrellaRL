@@ -1,7 +1,5 @@
 import unittest
 
-from typing import List
-
 from core.dependency.action import Action
 from core.dependency.state import State
 
