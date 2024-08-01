@@ -30,10 +30,11 @@ def main():
         #     (number_of_rows - 1, number_of_columns - 1)
         # ]
         terminal_states=[
-            # (0, 0),
+            (0, 0),
             (number_of_rows - 1, number_of_columns - 1),
-            # (1, 2),
-            (2, 1)
+            (1, 2),
+            (2, 1),
+            (2, 0)
         ],
         terminal_state_reward=terminal_state_reward,
         logger=logger_manager
@@ -55,14 +56,14 @@ def main():
     # agent.evaluate_policy()
     # agent.evaluate_policy_synchronous()
     # agent.improve_policy()
-    agent.iterate_policy(evaluation_synchronous=False)
-    
+    agent.iterate_policy(evaluation_synchronous=True)
+
     # for state_index in state_space:
     #     print(f"State ({state_index})")
     #     print(f"Value: {state_space[state_index].estimated_return}")
     #     for action in policy.get_action_probability_distribution(state_index):
     #         print(f"    {action.value}: {policy.get_action_probability_distribution(state_index)[action]}")                
-            
+
 
     graph = Graphing(
         agent=agent,
