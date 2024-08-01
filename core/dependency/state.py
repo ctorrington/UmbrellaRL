@@ -31,10 +31,12 @@ class State[A: Action]:
             state_action_list (List[A]): Agent Actions available within the 
             State. The type of the list is inherited from the 
             core.dependency.action class.
+            estimated_return (float): Float value for the estimated return of 
+            the State.
+            reward (float): Float value for the reward of the Agent reaching 
+            the State.
         """
-        # TODO State class should have a State Index class as a property.
         self._logger: logging.Logger = logger.get_logger(self.__class__.__name__)
-
         self._actions: List[A] = action_list
         self._estimated_return: float = estimated_return
         self._reward: float = reward
