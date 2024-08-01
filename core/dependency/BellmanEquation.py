@@ -4,7 +4,7 @@ from typing import List
 
 from core.dependency.state_index import StateIndex
 from core.dependency.action import Action
-from core.dependency.StateSpace import StateSpace
+from core.dependency.state_space import StateSpace
 from core.dependency.state import State
 from core.Environment.Environment import Environment
 from core.dependency.StateProbabilityDistribution import StateProbabilityDistribution

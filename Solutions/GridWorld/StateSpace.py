@@ -3,7 +3,7 @@ import logging
 
 from typing import List
 
-from core.dependency.StateSpace import StateSpace
+from core.dependency.state_space import StateSpace
 from Solutions.GridWorld.state import GridWorldState
 from Solutions.GridWorld.Action import GridWorldAction
 from Solutions.GridWorld.StateIndex import GridWorldStateIndex

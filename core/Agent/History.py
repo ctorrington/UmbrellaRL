@@ -9,7 +9,7 @@ from typing import Dict
 from copy import deepcopy
 
 from core.dependency.action import Action
-from core.dependency.StateSpace import StateSpace
+from core.dependency.state_space import StateSpace
 from core.dependency.state_index import StateIndex
 
 # TODO Allow for tracking the policy actions as well.

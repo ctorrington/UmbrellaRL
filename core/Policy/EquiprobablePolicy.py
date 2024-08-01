@@ -10,7 +10,7 @@ from typing import List
 
 from core.dependency.action_probability_distribution import ActionProbabilityDistribution
 from core.Policy.BasePolicy import BasePolicy
-from core.dependency.StateSpace import StateSpace
+from core.dependency.state_space import StateSpace
 from core.dependency.state_index import StateIndex
 from core.dependency.action import Action
 

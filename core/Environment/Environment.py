@@ -8,7 +8,7 @@ from abc import ABC
 from typing import Dict
 
 from core.dependency.state_index import StateIndex
-from core.dependency.StateSpace import StateSpace
+from core.dependency.state_space import StateSpace
 from core.dependency.StateProbabilityDistribution import StateProbabilityDistribution
 from core.dependency.StateActions import StateActions
 from core.dependency.action import Action
