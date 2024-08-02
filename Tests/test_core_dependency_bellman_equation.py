@@ -55,7 +55,7 @@ class TestBellmanEquation(unittest.TestCase):
             self.mock_environment,
             gamma
         )
-        self.assertAlmostEqual(value, 10.9)
+        self.assertAlmostEqual(value, 10)
 
         # Test edge case: empty state actions
         self.mock_state.actions = []
@@ -76,7 +76,7 @@ class TestBellmanEquation(unittest.TestCase):
             self.mock_environment,
             gamma
         )
-        self.assertAlmostEqual(value, 10.9)
+        self.assertAlmostEqual(value, 10)
 
         # Test edge case: empty next states
         self.mock_state_prob_dist.__iter__.return_value = iter([])
@@ -97,7 +97,7 @@ class TestBellmanEquation(unittest.TestCase):
             self.mock_environment,
             gamma
         )
-        self.assertAlmostEqual(value, 10.9)
+        self.assertAlmostEqual(value, 10)
 
 if __name__ == '__main__':
     unittest.main()

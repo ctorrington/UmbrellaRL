@@ -32,9 +32,9 @@ def main():
         terminal_states=[
             (0, 0),
             (number_of_rows - 1, number_of_columns - 1),
-            (1, 2),
-            (2, 1),
-            (2, 0)
+            # (1, 2),
+            # (2, 1),
+            # (2, 0)
         ],
         terminal_state_reward=terminal_state_reward,
         logger=logger_manager

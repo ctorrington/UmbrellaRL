@@ -110,6 +110,8 @@ class BellmanEquation[SI: StateIndex, A: Action]():
     ) -> float:
         """
         Calculate the state action-value.
+        
+        q_pi (s, a) = sum of p(s', r | s, a) in [r + (g)(v(s')]
 
         From my understanding, the update value to the state value function is 
         equivalent to the state-action value. When greedy policy simply chooses 
