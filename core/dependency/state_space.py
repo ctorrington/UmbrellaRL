@@ -7,6 +7,7 @@ by a reinforcement learning Agent.
 
 from typing import Dict, Tuple, cast
 from abc import ABC
+from logging import Logger
 
 import numpy as np
 import numpy.typing as npt
@@ -15,6 +16,7 @@ from numpy import float64
 from core.dependency.state import State
 from core.dependency.state_index import StateIndex
 from core.dependency.action import Action
+from log.ilogger import ILogger
 
 class StateSpace[SI: StateIndex, A: Action](ABC, Dict[SI, State[A]]):
     """
@@ -25,14 +27,16 @@ class StateSpace[SI: StateIndex, A: Action](ABC, Dict[SI, State[A]]):
     """
     def __init__(
         self,
-        state_actions: list[A],
-        state_estimated_return: float,
-        state_reward: float
+        # state_actions: list[A],
+        # state_estimated_return: float,
+        # state_reward: float
+        logger: ILogger
     ) -> None:
+        self._logger: Logger = logger.get_logger(self.__class__.__name__)
         # Figure out what these actually do? 🤔 nothing?
-        self.state_actions: list[A] = state_actions
-        self.state_estimated_return: float = state_estimated_return
-        self.state_reward: float = state_reward
+        # self.state_actions: list[A] = state_actions
+        # self.state_estimated_return: float = state_estimated_return
+        # self.state_reward: float = state_reward
 
     def get_state(
         self,
@@ -41,8 +45,22 @@ class StateSpace[SI: StateIndex, A: Action](ABC, Dict[SI, State[A]]):
         """Return the State object of the given State Index."""
         return self[state]
 
+    def set_state_for_state_index(
+        self,
+        state_index: SI,
+        state: State[A]
+    ) -> None:
+        """Set the State for the State Index within the State Space.
+
+        Args:
+            state_index (SI): State Index for the State.
+            state (State[A]): State object of the State within the State Space.
+        """
+        self[state_index] = state
+
     def get_dimensionality(self) -> int:
         """Return the dimensionality of the State Space."""
+        # TODO Have a look at this. 🤔
         
         first_index_key = next(iter(self.keys()))
         
@@ -71,16 +89,3 @@ class StateSpace[SI: StateIndex, A: Action](ABC, Dict[SI, State[A]]):
             return values
         else:
             raise ValueError("Dimensionality currently unsupported.")
-
-    def set_state_for_state_index(
-        self,
-        state_index: SI,
-        state: State[A]
-    ) -> None:
-        """Set the State for the State Index within the State Space.
-
-        Args:
-            state_index (SI): State Index for the State.
-            state (State[A]): State object of the State within the State Space.
-        """
-        self[state_index] = state

@@ -21,34 +21,35 @@ class GridWorldStateSpace(StateSpace[GridWorldStateIndex, GridWorldAction]):
         self,
         number_of_rows: int,
         number_of_columns: int,
-        state_actions: List[GridWorldAction],
-        state_estimated_return: float,
-        state_reward: float,
-        terminal_states: List[GridWorldStateIndex],
-        terminal_state_reward: float,
+        # state_actions: List[GridWorldAction],
+        # state_estimated_return: float,
+        # state_reward: float,
+        # terminal_states: List[GridWorldStateIndex],
+        # terminal_state_reward: float,
         logger: ILogger
     ) -> None:
         self._logger: logging.Logger = logger.get_logger(self.__class__.__name__)
 
-        super().__init__(
-            state_actions=state_actions,
-            state_estimated_return=state_estimated_return,
-            state_reward=state_reward
-        )
+        super().__init__(logger=logger)
+        # super().__init__(
+        #     state_actions=state_actions,
+        #     state_estimated_return=state_estimated_return,
+        #     state_reward=state_reward
+        # )
         self.number_of_rows = number_of_rows
         self.number_of_columns = number_of_columns
-        self.terminal_states = terminal_states
+        # self.terminal_states = terminal_states
         
         self._logger.info(
-            f"Initialising GridWorldStateSpace with number of rows: {number_of_rows}, number of columns: {number_of_columns}, terminal states: {terminal_states}."
+            f"Initialising GridWorldStateSpace with number of rows: {number_of_rows}, number of columns: {number_of_columns}."
         )
 
-        self._initialise_states(
-            logger=logger
-        )
-        self._initialise_terminal_states(
-            reward=terminal_state_reward
-        )
+        # self._initialise_states(
+        #     logger=logger
+        # )
+        # self._initialise_terminal_states(
+        #     reward=terminal_state_reward
+        # )
 
     def _initialise_states(
         self,

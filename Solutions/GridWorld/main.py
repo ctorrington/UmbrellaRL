@@ -7,6 +7,7 @@ from Solutions.GridWorld.Action import GridWorldAction
 from Solutions.GridWorld.GridWorldEnvironment import GridWorldEnvironment
 from Solutions.GridWorld.Policy import GridWorldEquiprobablePolicy
 from Solutions.GridWorld.StateIndex import GridWorldStateIndex
+from Solutions.GridWorld.state import GridWorldState
 
 from graphing.graphing import Graphing
 
@@ -16,33 +17,80 @@ def main():
     logger_manager: LoggerManager = LoggerManager()
     number_of_rows: int = 4
     number_of_columns: int = 4
+    # All States share the same Actions in Grid World solution.
     state_actions: List[GridWorldAction] = GridWorldAction.members()
     state_estimated_return: float = 0
-    state_reward: float = -1
+    non_terminal_state_reward: float = -1
     terminal_state_reward: float = 0
-    state_space: GridWorldStateSpace = GridWorldStateSpace(
-        number_of_rows=number_of_rows,
-        number_of_columns=number_of_columns,
-        state_actions=state_actions,
-        state_estimated_return=state_estimated_return,
-        state_reward=state_reward,
-        # terminal_states=[
-        #     (number_of_rows - 1, number_of_columns - 1)
-        # ]
-        terminal_states=[
+    
+    terminal_states: List[GridWorldStateIndex]=[
             (0, 0),
             (number_of_rows - 1, number_of_columns - 1),
-            # (1, 2),
-            # (2, 1),
-            # (2, 0)
-        ],
-        terminal_state_reward=terminal_state_reward,
+            (1, 2),
+            (2, 1),
+            (2, 0)
+        ]
+
+    # Initialise Grid World State Space.
+    grid_world_state_space: GridWorldStateSpace = GridWorldStateSpace(
+        number_of_rows=number_of_rows,
+        number_of_columns=number_of_columns,
         logger=logger_manager
     )
-    environment: GridWorldEnvironment = GridWorldEnvironment(state_space)
+    
+    # Create the States to populate the State Space.
+    for row in range(number_of_rows):
+            for column in range(number_of_columns):
+                state_index: GridWorldStateIndex = (row, column)
+                grid_world_state: GridWorldState = GridWorldState(
+                    action_list=state_actions,
+                    estimated_return=state_estimated_return,
+                    reward=terminal_state_reward if state_index in terminal_states else non_terminal_state_reward,
+                    is_terminal=True if state_index in terminal_states else False,
+                    logger=logger_manager,
+                    x=row,
+                    y=column
+                )
+                
+                # Set the State within the Grid World State Space.
+                grid_world_state_space.set_state_for_state_index(
+                    state_index=state_index,
+                    state=grid_world_state
+                )
+                # grid_world_state: GridWorldState = GridWorldState(
+                #     action_list=self.state_actions,
+                #     estimated_return=self.state_estimated_return,
+                #     reward=self.state_reward,
+                #     logger=logger,
+                #     x=row,
+                #     y=column
+                # )
+    
+    # state_space: GridWorldStateSpace = GridWorldStateSpace(
+    #     number_of_rows=number_of_rows,
+    #     number_of_columns=number_of_columns,
+    #     state_actions=state_actions,
+    #     state_estimated_return=state_estimated_return,
+    #     state_reward=state_reward,
+    #     # terminal_states=[
+    #     #     (number_of_rows - 1, number_of_columns - 1)
+    #     # ]
+    #     terminal_states=[
+    #         (0, 0),
+    #         (number_of_rows - 1, number_of_columns - 1),
+    #         # (1, 2),
+    #         # (2, 1),
+    #         # (2, 0)
+    #     ],
+    #     terminal_state_reward=terminal_state_reward,
+    #     logger=logger_manager
+    # )
+    environment: GridWorldEnvironment = GridWorldEnvironment(
+        state_space=grid_world_state_space
+    )
     policy: GridWorldEquiprobablePolicy[GridWorldStateIndex, GridWorldAction] = (
         GridWorldEquiprobablePolicy(
-            state_space=state_space,
+            state_space=grid_world_state_space,
             logger=logger_manager
         )
     )
