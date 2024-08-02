@@ -23,6 +23,7 @@ class State[A: Action]:
         action_list: List[A],
         estimated_return: float,
         reward: float,
+        is_terminal: bool,
         logger: ILogger
     ):
         """Initialisation for an individual State.
@@ -36,12 +37,14 @@ class State[A: Action]:
             reward (float): Float value for the reward of the Agent reaching 
             the State.
         """
+        # Assigned properties.
         self._logger: logging.Logger = logger.get_logger(self.__class__.__name__)
         self._actions: List[A] = action_list
         self._estimated_return: float = estimated_return
         self._reward: float = reward
+        self._is_terminal: bool = is_terminal
+
         self._is_current: bool = False
-        self._is_terminal: bool = False
         self._counter: int = 0
 
         self._logger.info(
