@@ -71,3 +71,16 @@ class StateSpace[SI: StateIndex, A: Action](ABC, Dict[SI, State[A]]):
             return values
         else:
             raise ValueError("Dimensionality currently unsupported.")
+
+    def set_state_for_state_index(
+        self,
+        state_index: SI,
+        state: State[A]
+    ) -> None:
+        """Set the State for the State Index within the State Space.
+
+        Args:
+            state_index (SI): State Index for the State.
+            state (State[A]): State object of the State within the State Space.
+        """
+        self[state_index] = state
