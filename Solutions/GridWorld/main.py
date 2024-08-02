@@ -2,7 +2,7 @@ from typing import List
 
 from core.Agent.Agent import Agent
 
-from Solutions.GridWorld.StateSpace import GridWorldStateSpace
+from Solutions.GridWorld.state_space import GridWorldStateSpace
 from Solutions.GridWorld.Action import GridWorldAction
 from Solutions.GridWorld.GridWorldEnvironment import GridWorldEnvironment
 from Solutions.GridWorld.Policy import GridWorldEquiprobablePolicy

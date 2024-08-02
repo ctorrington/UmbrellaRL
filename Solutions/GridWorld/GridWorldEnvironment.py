@@ -6,7 +6,7 @@ from core.Environment.Environment import Environment
 from core.dependency.StateActions import StateActions
 from core.dependency.StateProbabilityDistribution import StateProbabilityDistribution
 
-from Solutions.GridWorld.StateSpace import GridWorldStateSpace
+from Solutions.GridWorld.state_space import GridWorldStateSpace
 from Solutions.GridWorld.Action import GridWorldAction
 from Solutions.GridWorld.StateIndex import GridWorldStateIndex
 

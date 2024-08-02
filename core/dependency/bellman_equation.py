@@ -101,7 +101,7 @@ class BellmanEquation[SI: StateIndex, A: Action]():
         return update_value
 
     @classmethod
-    def calculate_state_action_value(
+    def calculate_action_value_for_state(
         cls,
         state_index: SI,
         action: A,
@@ -116,10 +116,10 @@ class BellmanEquation[SI: StateIndex, A: Action]():
         the maximising state-action (update) value.
         """
         state_action_value: float = cls.calculate_update_value(
-            state_index,
-            action,
-            environment,
-            gamma
+            state_index=state_index,
+            action=action,
+            environment=environment,
+            gamma=gamma
             )
 
         return state_action_value
