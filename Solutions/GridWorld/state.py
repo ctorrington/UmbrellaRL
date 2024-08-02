@@ -17,6 +17,7 @@ class GridWorldState(State[GridWorldAction]):
         action_list: List[GridWorldAction],
         estimated_return: float,
         reward: float,
+        is_terminal: bool,
         logger: ILogger,
         x: int,
         y: int
@@ -37,6 +38,7 @@ class GridWorldState(State[GridWorldAction]):
             action_list=action_list,
             estimated_return=estimated_return,
             reward=reward,
+            is_terminal=is_terminal,
             logger=logger
         )
         
