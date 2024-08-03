@@ -1,10 +1,7 @@
 """State Space for the Grid World."""
 import logging
 
-# from typing import List
-
 from core.dependency.state_space import StateSpace
-# from Solutions.GridWorld.state import GridWorldState
 from Solutions.GridWorld.Action import GridWorldAction
 from Solutions.GridWorld.StateIndex import GridWorldStateIndex
 from log.ilogger import ILogger
