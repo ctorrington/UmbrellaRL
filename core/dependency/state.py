@@ -42,6 +42,7 @@ class State[A: Action]:
         self._validate_parameters(action_list=action_list, estimated_return=estimated_return, reward=reward, is_terminal=is_terminal, logger=logger)
         # Assigned properties.
         self._logger: logging.Logger = logger.get_logger(self.__class__.__name__)
+        self._logger.info(f"Initialising {self.__class__.__name__}...")
         self.actions: List[A] = action_list
         self.estimated_return: float = estimated_return
         self.reward: float = reward
@@ -51,7 +52,7 @@ class State[A: Action]:
         self.counter: int = 0
 
         self._logger.info(
-            f"State initialised with actions: {self.actions}, estimated return: {self.estimated_return}, reward: {self.reward}, current state: {self.is_current}, terminal state: {self.is_terminal}, counter: {self.counter}."
+            f"Initialised {self.__class__.__name__} with actions: {self.actions}, estimated return: {self.estimated_return}, reward: {self.reward}, current state: {self.is_current}, terminal state: {self.is_terminal}, counter: {self.counter}."
         )
 
     def _validate_parameters(
@@ -62,7 +63,7 @@ class State[A: Action]:
         is_terminal: Any,
         logger: Any
     ) -> None:
-        if not isinstance(action_list, list) or not all(isinstance(action, Action) for action in action_list):
+        if not isinstance(action_list, list) or not all(isinstance(action, Action) for action in action_list): #type: ignore
             raise TypeError(f"action_list must be list of type Action instances.")
         if not isinstance(estimated_return, float):
             raise TypeError(f"estimated_return must be of type float.")
