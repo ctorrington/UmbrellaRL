@@ -34,6 +34,9 @@ class GridWorldState(State[GridWorldAction]):
             Defaults to None.
         """
         self._logger: logging.Logger = logger.get_logger(self.__class__.__name__)
+        self._logger.info(f"Initialising {self.__class__.__name__}...")
+        
+        # Core State properties properties.
         super().__init__(
             action_list=action_list,
             estimated_return=estimated_return,
@@ -45,3 +48,5 @@ class GridWorldState(State[GridWorldAction]):
         # Grid World State instance properties.
         self.x: int = x
         self.y: int = y
+
+        self._logger.info(f"Initialised {self.__class__.__name__} with x: {self.x}, y: {self.y}.")
