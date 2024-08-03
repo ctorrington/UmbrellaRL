@@ -12,7 +12,10 @@ from core.dependency.state import State
 from core.dependency.action_probability_distribution import ActionProbabilityDistribution
 from core.dependency.StateProbabilityDistribution import StateProbabilityDistribution
 
+from tests.utils import timed
+
 class TestBellmanEquation(unittest.TestCase):
+    @timed
     def setUp(self):
         # Create mock objects
         self.mock_state_index = create_autospec(StateIndex)
@@ -46,6 +49,7 @@ class TestBellmanEquation(unittest.TestCase):
         self.mock_state_prob_dist.__iter__.return_value = iter([self.mock_state_index])
         self.mock_environment.get_state_transition_probability.return_value = 1.0
 
+    @timed
     def test_calculate_state_value(self):
         # Test normal case
         gamma = 0.9
@@ -67,6 +71,7 @@ class TestBellmanEquation(unittest.TestCase):
         )
         self.assertEqual(value, 0)
 
+    @timed
     def test_calculate_update_value(self):
         # Test normal case
         gamma = 0.9
@@ -88,6 +93,7 @@ class TestBellmanEquation(unittest.TestCase):
         )
         self.assertEqual(value, 0)
 
+    @timed
     def test_calculate_action_value_for_state(self):
         # Test normal case
         gamma = 0.9
