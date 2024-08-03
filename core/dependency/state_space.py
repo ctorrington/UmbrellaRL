@@ -27,16 +27,9 @@ class StateSpace[SI: StateIndex, A: Action](ABC, Dict[SI, State[A]]):
     """
     def __init__(
         self,
-        # state_actions: list[A],
-        # state_estimated_return: float,
-        # state_reward: float
         logger: ILogger
     ) -> None:
         self._logger: Logger = logger.get_logger(self.__class__.__name__)
-        # Figure out what these actually do? 🤔 nothing?
-        # self.state_actions: list[A] = state_actions
-        # self.state_estimated_return: float = state_estimated_return
-        # self.state_reward: float = state_reward
 
     def get_state(
         self,
