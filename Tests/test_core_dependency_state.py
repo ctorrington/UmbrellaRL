@@ -34,8 +34,8 @@ class TestState(unittest.TestCase):
 
     @timed
     def test_initialization_empty_action_list(self):
-        state = State(action_list=[], estimated_return=0.0, reward=0.0, is_terminal=False, logger=self.logger)
-        self.assertEqual(state.actions, [])
+        state = State(action_list=[], estimated_return=0.0, reward=0.0, is_terminal=False, logger=self.logger) #type: ignore
+        self.assertEqual(state.actions, []) #type: ignore
         self.assertEqual(state.estimated_return, 0.0)
         self.assertEqual(state.reward, 0.0)
         self.assertFalse(state.is_terminal)
@@ -52,7 +52,7 @@ class TestState(unittest.TestCase):
         state_with_actions = State(action_list=[self.action1], estimated_return=1.0, reward=0.5, is_terminal=False, logger=self.logger)
         self.assertTrue(state_with_actions.has_actions())
 
-        state_without_actions = State(action_list=[], estimated_return=1.0, reward=0.5, is_terminal=False, logger=self.logger)
+        state_without_actions = State(action_list=[], estimated_return=1.0, reward=0.5, is_terminal=False, logger=self.logger) #type: ignore
         self.assertFalse(state_without_actions.has_actions())
 
     @timed
@@ -66,16 +66,16 @@ class TestState(unittest.TestCase):
     @timed
     def test_invalid_initialization(self):
         with self.assertRaises(TypeError):
-            State(action_list=None, estimated_return=1.0, reward=0.5, is_terminal=False, logger=self.logger)
+            State(action_list=None, estimated_return=1.0, reward=0.5, is_terminal=False, logger=self.logger) #type: ignore
 
         with self.assertRaises(TypeError):
-            State(action_list=[self.action1], estimated_return=None, reward=0.5, is_terminal=False, logger=self.logger)
+            State(action_list=[self.action1], estimated_return=None, reward=0.5, is_terminal=False, logger=self.logger) #type: ignore
 
         with self.assertRaises(TypeError):
-            State(action_list=[self.action1], estimated_return=1.0, reward=None, is_terminal=False, logger=self.logger)
+            State(action_list=[self.action1], estimated_return=1.0, reward=None, is_terminal=False, logger=self.logger) #type: ignore
 
         with self.assertRaises(TypeError):
-            State(action_list=[self.action1], estimated_return=1.0, reward=0.5, is_terminal=None, logger=self.logger)
+            State(action_list=[self.action1], estimated_return=1.0, reward=0.5, is_terminal=None, logger=self.logger) #type: ignore
 
 if __name__ == '__main__':
     unittest.main()
