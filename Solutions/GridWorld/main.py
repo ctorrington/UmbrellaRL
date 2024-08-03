@@ -15,13 +15,15 @@ from log.logger_manager import LoggerManager
 
 def main():
     logger_manager: LoggerManager = LoggerManager()
+    # GridWorld dimensions
     number_of_rows: int = 4
     number_of_columns: int = 4
     # All States share the same Actions in Grid World solution.
     state_actions: List[GridWorldAction] = GridWorldAction.members()
-    state_estimated_return: float = 0
-    non_terminal_state_reward: float = -1
-    terminal_state_reward: float = 0
+    # State properties.
+    state_estimated_return: float = 0.0
+    non_terminal_state_reward: float = -1.0
+    terminal_state_reward: float = 0.0
     
     terminal_states: List[GridWorldStateIndex]=[
             (0, 0),
@@ -57,34 +59,6 @@ def main():
                     state_index=state_index,
                     state=grid_world_state
                 )
-                # grid_world_state: GridWorldState = GridWorldState(
-                #     action_list=self.state_actions,
-                #     estimated_return=self.state_estimated_return,
-                #     reward=self.state_reward,
-                #     logger=logger,
-                #     x=row,
-                #     y=column
-                # )
-    
-    # state_space: GridWorldStateSpace = GridWorldStateSpace(
-    #     number_of_rows=number_of_rows,
-    #     number_of_columns=number_of_columns,
-    #     state_actions=state_actions,
-    #     state_estimated_return=state_estimated_return,
-    #     state_reward=state_reward,
-    #     # terminal_states=[
-    #     #     (number_of_rows - 1, number_of_columns - 1)
-    #     # ]
-    #     terminal_states=[
-    #         (0, 0),
-    #         (number_of_rows - 1, number_of_columns - 1),
-    #         # (1, 2),
-    #         # (2, 1),
-    #         # (2, 0)
-    #     ],
-    #     terminal_state_reward=terminal_state_reward,
-    #     logger=logger_manager
-    # )
     environment: GridWorldEnvironment = GridWorldEnvironment(
         state_space=grid_world_state_space
     )
@@ -119,7 +93,6 @@ def main():
         logger=logger_manager
     )
     graph.plot_graph("state value function")
-    # graph.plot_history("state value function")
     graph.plot_action_annotations("greedy")
     graph.show_graph()
 
