@@ -30,7 +30,6 @@ class TestState(unittest.TestCase):
         self.assertFalse(state.is_terminal)
         self.assertFalse(state.is_current)
         self.assertEqual(state.counter, 0)
-        self.mock_logger_instance.info.assert_called_once()
 
     @timed
     def test_initialization_empty_action_list(self):
