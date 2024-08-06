@@ -54,15 +54,20 @@ class StateSpace[SI: StateIndex, A: Action](ABC, Dict[SI, State[A]]):
 
     def get_dimensionality(self) -> int:
         """Return the dimensionality of the State Space."""
+        self._logger.info(f"Determining State Space dimensionality...")
         
         first_index_key = next(iter(self.keys()))
         
         if isinstance(first_index_key, tuple):
-            return len(cast(Tuple[int, ...], first_index_key))
+            dimensionality: int = len(cast(Tuple[int, ...], first_index_key))
+            self._logger.info(f"Successfully got State Space dimensionality of {dimensionality}.")
+            return dimensionality
         else:
             raise TypeError("Type for State Index not currently supported.")
     
     def get_state_value_function(self) -> npt.NDArray[float64]:
+        
+        self._logger.info(f"Getting State Value Function of the State Space...")
         
         dimensionality: int = self.get_dimensionality()
         
@@ -77,6 +82,7 @@ class StateSpace[SI: StateIndex, A: Action](ABC, Dict[SI, State[A]]):
                 else:
                     raise TypeError("Type for State Index not currently supported.")
 
+            self._logger.info(f"Successfully got State Value Function. State Value Function: {values}.")
             return values
         else:
             raise ValueError("Dimensionality currently unsupported.")
