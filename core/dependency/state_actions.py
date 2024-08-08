@@ -9,7 +9,7 @@ from typing import Dict
 
 from core.dependency.action import Action
 from core.dependency.state_index import StateIndex
-from core.dependency.StateProbabilityDistribution import StateProbabilityDistribution
+from core.dependency.state_probability_distribution import StateProbabilityDistribution
 
 class StateActions[SI: StateIndex, A: Action](ABC, Dict[A, StateProbabilityDistribution[SI]]):
     """Mapping of an Action to it's State Probability Distribution. Actions can 

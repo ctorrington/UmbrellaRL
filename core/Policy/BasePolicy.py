@@ -18,7 +18,7 @@ from core.dependency.state_index import StateIndex
 from core.dependency.action import Action
 from core.Environment.Environment import Environment
 from core.dependency.state_space import StateSpace
-from core.dependency.StateProbabilityDistribution import StateProbabilityDistribution
+from core.dependency.state_probability_distribution import StateProbabilityDistribution
 from core.dependency.state import State
 
 from log.ilogger import ILogger

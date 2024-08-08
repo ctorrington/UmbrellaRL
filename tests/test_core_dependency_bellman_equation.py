@@ -10,7 +10,7 @@ from core.Policy.BasePolicy import BasePolicy
 from core.dependency.state_space import StateSpace
 from core.dependency.state import State
 from core.dependency.action_probability_distribution import ActionProbabilityDistribution
-from core.dependency.StateProbabilityDistribution import StateProbabilityDistribution
+from core.dependency.state_probability_distribution import StateProbabilityDistribution
 
 from tests.utils import timed
 

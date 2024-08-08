@@ -9,8 +9,8 @@ from typing import Dict
 
 from core.dependency.state_index import StateIndex
 from core.dependency.state_space import StateSpace
-from core.dependency.StateProbabilityDistribution import StateProbabilityDistribution
-from core.dependency.StateActions import StateActions
+from core.dependency.state_probability_distribution import StateProbabilityDistribution
+from core.dependency.state_actions import StateActions
 from core.dependency.action import Action
 
 class Environment[SI: StateIndex, A: Action](ABC, Dict[SI, StateActions[SI, A]]):

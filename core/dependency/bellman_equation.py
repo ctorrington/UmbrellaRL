@@ -7,7 +7,7 @@ from core.dependency.action import Action
 from core.dependency.state_space import StateSpace
 from core.dependency.state import State
 from core.Environment.Environment import Environment
-from core.dependency.StateProbabilityDistribution import StateProbabilityDistribution
+from core.dependency.state_probability_distribution import StateProbabilityDistribution
 from core.dependency.action_probability_distribution import ActionProbabilityDistribution
 from core.Policy.BasePolicy import BasePolicy
 
