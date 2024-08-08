@@ -39,6 +39,7 @@ class TestStateSpace(unittest.TestCase):
         self.state_space[state_index] = state
         self.assertEqual(self.state_space.get_state(state_index), state)
 
+    @timed
     def test_set_state_for_state_index(self):
         state_index = (0, 0)
         state = DummyState(
@@ -51,6 +52,7 @@ class TestStateSpace(unittest.TestCase):
         self.state_space.set_state_for_state_index(state_index, state)
         self.assertEqual(self.state_space[state_index], state)
 
+    @timed
     def test_get_dimensionality(self):
         state_index = (0, 0)
         state = DummyState(
@@ -64,10 +66,12 @@ class TestStateSpace(unittest.TestCase):
         self.assertEqual(self.state_space.get_dimensionality(), 2)
 
     # TODO Understand why this doesn't work.
+    # @timed
     # def test_get_dimensionality_unsupported_type(self):
     #     with self.assertRaises(TypeError):
     #         self.state_space.get_dimensionality()
 
+    @timed
     def test_get_state_value_function(self):
         state_index_1 = (0, 0)
         state_index_2 = (1, 1)
@@ -92,6 +96,7 @@ class TestStateSpace(unittest.TestCase):
         expected_values[1, 1] = 2.0
         np.testing.assert_array_equal(self.state_space.get_state_value_function(), expected_values)
 
+    @timed
     def test_get_state_value_function_unsupported_dimensionality(self):
         state_index = (0, 0, 0)
         state = DummyState(
